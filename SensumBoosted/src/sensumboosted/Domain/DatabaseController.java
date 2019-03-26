@@ -46,6 +46,7 @@ public class DatabaseController {
             rs = st.executeQuery(sql);
 
 //          Bliver ikke brugt endnu, mening er at programmet skal vise en boks med hhv. om man er logget ind eller om login info er forkert.
+//          Mikkel får muligvis kigget på dette indenfor en overskuelig fremtid.
 //            Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
 //            Alert alert2 = new Alert(Alert.AlertType.ERROR);
             int count = 0;
