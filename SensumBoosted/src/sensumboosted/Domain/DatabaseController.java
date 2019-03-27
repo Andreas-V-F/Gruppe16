@@ -40,7 +40,7 @@ public class DatabaseController {
     }
 
     public String CheckLogin(String user, String pass) {
-
+        System.out.println("Checking login in progress, please wait.");
         try {
             Statement st = connection.createStatement();
             String sql = "SELECT username,password FROM sbuserdb WHERE username='" + user + "' AND password='" + pass + "'";
