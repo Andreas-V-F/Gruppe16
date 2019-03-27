@@ -2,6 +2,7 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
+ * Mikkel har lavet denne linje som test og skal fjernes igen
  */
 package sensumboosted.Domain;
 
