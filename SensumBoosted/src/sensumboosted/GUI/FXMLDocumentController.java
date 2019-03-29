@@ -5,15 +5,25 @@
  */
 package sensumboosted.GUI;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 import sensumboosted.Domain.DatabaseController;
 
 /**
@@ -23,6 +33,7 @@ import sensumboosted.Domain.DatabaseController;
 public class FXMLDocumentController implements Initializable {
 
     DatabaseController dbController = new DatabaseController();
+    FXMLLoader loader = new FXMLLoader();
 
     private Label label;
     @FXML
@@ -41,18 +52,41 @@ public class FXMLDocumentController implements Initializable {
         // TODO
     }
 
+    public String getUsernameField() {
+        String userField = usernameField.getText();
+        return userField;
+    }
+
+    public String getPasswordField() {
+        String passField = passwordField.getText();
+        return passField;
+    }
+
     @FXML
     private void loginBTNHandler(ActionEvent event) {
 
-        String userField = usernameField.getText();
-        String passField = passwordField.getText();
+        Boolean j = false;
 
-        if (!userField.isEmpty() && !passField.isEmpty()) {
+        // Checks if the username field and password field is empty and sets  Boolean j to true or false if the user exist in the database
+        if (!getUsernameField().isEmpty() && !getPasswordField().isEmpty()) {
             dbController.connect();
-            dbController.CheckLogin(userField, passField);
+            String s = dbController.CheckLogin(getUsernameField(), getPasswordField());
+            loginInfoLabel.setText(s);
+            // Dont think this is the right way to check!!
+            if ("Succesful login".equals(s)) {
+                j = true;
+            }
+            System.out.println(j.toString());
         } else {
             System.out.println("Username or Password is empty!");
             loginInfoLabel.setText("Username or Password is empty!");
+            System.out.println(j.toString());
+        }
+        if (j) {
+            // Hide this current window (if this is what you want)
+            ((Node) (event.getSource())).getScene().getWindow().hide();
+            LoadDiaryWindow();
+            
         }
     }
 
@@ -60,4 +94,36 @@ public class FXMLDocumentController implements Initializable {
     private void cancelBTNHandler(ActionEvent event) {
         System.exit(1);
     }
+
+    @FXML
+    private void passwordFieldHandler(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            //TODO - Should load the loginBTNHandler
+        }
+    }
+
+    @FXML
+    private void usernameFieldHandler(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            //TODO - Should load the loginBTNHandler
+        }
+    }
+
+//    Loads a new window for the diary.
+    private void LoadDiaryWindow() {
+        loader.setLocation(getClass().getResource("DiaryDocument.fxml"));
+        try {
+            loader.load();
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        DiaryDocumentController DiaryDisplay = loader.getController();
+        DiaryDisplay.setText(getUsernameField());
+        Parent p = loader.getRoot();
+        Stage stage = new Stage();
+        stage.setTitle("Diary window");
+        stage.setScene(new Scene(p));
+        stage.showAndWait();
+    }
+
 }

@@ -9,8 +9,8 @@
 
 <AnchorPane id="AnchorPane" prefHeight="234.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sensumboosted.GUI.FXMLDocumentController">
    <children>
-      <PasswordField fx:id="passwordField" layoutX="59.0" layoutY="126.0" prefHeight="25.0" prefWidth="186.0" />
-      <TextField fx:id="usernameField" layoutX="59.0" layoutY="75.0" prefHeight="25.0" prefWidth="186.0" />
+      <PasswordField fx:id="passwordField" layoutX="59.0" layoutY="126.0" onKeyReleased="#passwordFieldHandler" prefHeight="25.0" prefWidth="186.0" />
+      <TextField fx:id="usernameField" layoutX="59.0" layoutY="75.0" onKeyReleased="#usernameFieldHandler" prefHeight="25.0" prefWidth="186.0" />
       <Label layoutX="110.0" layoutY="23.0" text="Login">
          <font>
             <Font size="19.0" />
