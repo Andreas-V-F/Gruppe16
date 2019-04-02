@@ -10,7 +10,9 @@ public class Encrypt {
 
     public Encrypt() {
     }
-
+    
+    //Add decrypt
+    
     public String encryptString(String input) {
         StringBuffer sb = new StringBuffer();
         MessageDigest md;
