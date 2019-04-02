@@ -7,6 +7,8 @@ package sensumboosted.GUI;
 
 import java.io.IOException;
 import java.net.URL;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,6 +29,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import sensumboosted.Domain.DatabaseController;
+import sensumboosted.Domain.Encryption;
 
 /**
  *
@@ -36,6 +39,7 @@ public class FXMLDocumentController implements Initializable {
 
     DatabaseController dbController = new DatabaseController();
     FXMLLoader loader = new FXMLLoader();
+    Encryption encrypt = new Encryption();
 
     private Label label;
     @FXML
@@ -63,11 +67,11 @@ public class FXMLDocumentController implements Initializable {
         return userField;
     }
 
-    public String getPasswordField() {
+    public String getPasswordField() throws NoSuchAlgorithmException {
         String passField = passwordField.getText();
         return passField;
     }
-
+    
     @FXML
     private void loginBTNHandler(ActionEvent event) {
 
@@ -131,26 +135,38 @@ public class FXMLDocumentController implements Initializable {
 
         Boolean j = false;
 
-        // Checks if the username field and password field is empty and sets Boolean j to true or false if the user exist in the database
-        if (!getUsernameField().isEmpty() && !getPasswordField().isEmpty()) {
-            dbController.connect();
-            String s = dbController.CheckLogin(getUsernameField(), getPasswordField());
-            loginInfoLabel.setText(s);
-            // Dont think this is the right way to check!!
-            if ("Succesful login".equals(s)) {
-                j = true;
-            }
-            System.out.println(j.toString());
-        } else {
-            System.out.println("Username or Password is empty!");
-            loginInfoLabel.setText("Username or Password is empty!");
-            System.out.println(j.toString());
-        }
+        try {
+            // Checks if the username field and password field is empty and sets Boolean j to true or false if the user exist in the database
+            if (!getUsernameField().isEmpty() && !getPasswordField().isEmpty()) {
+                dbController.connect();
+                String s;
+                try {
+                    s = dbController.CheckLogin(getUsernameField(), encrypt.encryptString(getPasswordField()));
+                    loginInfoLabel.setText(s);
+                    if ("Succesful login".equals(s)) {
+                        j = true;
+                        
+                        System.out.println(j.toString());
+                    } else {
+                        System.out.println("Username or Password is empty!");
+                        loginInfoLabel.setText("Username or Password is empty!");
+                        System.out.println(j.toString());
+                    }
+                } catch (NoSuchAlgorithmException ex) {
+                    Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                // Dont think this is the right way to check!!
 //        if (j) {
 //            // Hide this current window (if this is what you want)
 //            ((Node) (event.getSource())).getScene().getWindow().hide();
 //            LoadDiaryWindow();  
 //        }
+            
+            }
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return j;
     }
 
