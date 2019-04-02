@@ -8,11 +8,8 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-<<<<<<< HEAD
-    <jar href="SensumBoosted.jar" size="9041" download="eager" />
-=======
-    <jar href="SensumBoosted.jar" size="10097" download="eager" />
->>>>>>> Encryption
+    <jar href="SensumBoosted.jar" size="10598" download="eager" />
+    <jar href="lib\mysql-connector-java-8.0.15.jar" size="2134905" download="eager" />
     <jar href="lib\postgresql-42.2.5.jar" size="825943" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="SensumBoosted" >

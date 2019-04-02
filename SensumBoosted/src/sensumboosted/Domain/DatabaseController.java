@@ -19,9 +19,13 @@ import java.sql.Statement;
 public class DatabaseController {
 
     // Localhost som kan styres via pgAdmin 4
-    private final String url = "jdbc:postgresql://localhost:5432/example";
-    private final String userDB = "postgres";
-    private final String passDB = "postgres";
+//    private final String url = "jdbc:postgresql://localhost:5432/example";
+//    private final String userDB = "postgres";
+//    private final String passDB = "postgres";
+    // Controlled by phpMySql
+    private final String url = "jdbc:mysql://db4free.net:3306/sensumbosted";
+    private final String userDB = "group16";
+    private final String passDB = "sensum123";
 
     public DatabaseController() {
     }
@@ -30,6 +34,11 @@ public class DatabaseController {
     private Connection connection = null;
 
     public Connection connect() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (java.lang.ClassNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
         try {
             connection = DriverManager.getConnection(url, userDB, passDB);
             System.out.println("Connected to the PostgreSQL server successfully.");
@@ -44,7 +53,7 @@ public class DatabaseController {
         System.out.println("Checking login in progress, please wait.");
         try {
             Statement st = connection.createStatement();
-            String sql = "SELECT username,password FROM sbuserdb WHERE username='" + user + "' AND password='" + pass + "'";
+            String sql = "SELECT username,password FROM users WHERE username='" + user + "' AND password='" + pass + "'";
             rs = st.executeQuery(sql);
 
 //          Bliver ikke brugt endnu, mening er at programmet skal vise en boks med hhv. om man er logget ind eller om login info er forkert.
