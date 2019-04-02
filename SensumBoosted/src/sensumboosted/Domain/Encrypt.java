@@ -11,7 +11,7 @@ public class Encrypt {
     public Encrypt() {
     }
 
-    public String encrypt(String input) {
+    public String encryptString(String input) {
         StringBuffer sb = new StringBuffer();
         MessageDigest md;
         try {
@@ -26,7 +26,6 @@ public class Encrypt {
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         return sb.toString().toUpperCase();
     }
 }
