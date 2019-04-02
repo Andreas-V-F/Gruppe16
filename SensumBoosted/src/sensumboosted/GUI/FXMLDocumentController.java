@@ -27,7 +27,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import sensumboosted.Domain.DatabaseController;
-import sensumboosted.Domain.Encrypt;
+import sensumboosted.Domain.Encryption;
 
 /**
  *
@@ -37,7 +37,7 @@ public class FXMLDocumentController implements Initializable {
 
     DatabaseController dbController = new DatabaseController();
     FXMLLoader loader = new FXMLLoader();
-    Encrypt encrypt = new Encrypt();
+    Encryption encrypt = new Encryption();
 
     private Label label;
     @FXML

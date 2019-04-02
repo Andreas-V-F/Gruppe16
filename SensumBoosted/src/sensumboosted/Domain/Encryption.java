@@ -6,9 +6,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import sensumboosted.GUI.FXMLDocumentController;
 
-public class Encrypt {
+public class Encryption {
 
-    public Encrypt() {
+    public Encryption() {
     }
     
     //Add decrypt
