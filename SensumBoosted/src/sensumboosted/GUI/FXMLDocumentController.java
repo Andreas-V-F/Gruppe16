@@ -66,26 +66,6 @@ public class FXMLDocumentController implements Initializable {
         return passField;
     }
     
-    //Metode der krypterer password til SHA-256
-//    public String cryptPassword(String password) {
-//        StringBuffer sb = new StringBuffer();
-//        MessageDigest md;
-//        try {
-//            md = MessageDigest.getInstance("SHA-256");
-//            md.update(password.getBytes());
-//
-//            byte[] digest = md.digest();
-//
-//            for (byte b : digest) {
-//                sb.append(String.format("%02x", b & 0xff));
-//            }
-//        } catch (NoSuchAlgorithmException ex) {
-//            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//
-//        return sb.toString().toUpperCase();
-//    }
-
     @FXML
     private void loginBTNHandler(ActionEvent event) {
 
@@ -148,7 +128,7 @@ public class FXMLDocumentController implements Initializable {
                 dbController.connect();
                 String s;
                 try {
-                    s = dbController.CheckLogin(getUsernameField(), encrypt.encryptPassword(getPasswordField()));
+                    s = dbController.CheckLogin(getUsernameField(), encrypt.encryptString(getPasswordField()));
                     loginInfoLabel.setText(s);
                     if ("Succesful login".equals(s)) {
                         j = true;

@@ -9,15 +9,14 @@ import sensumboosted.GUI.FXMLDocumentController;
 public class Encrypt {
 
     public Encrypt() {
-
     }
 
-    public String encryptPassword(String password) {
+    public String encrypt(String input) {
         StringBuffer sb = new StringBuffer();
         MessageDigest md;
         try {
             md = MessageDigest.getInstance("SHA-256");
-            md.update(password.getBytes());
+            md.update(input.getBytes());
 
             byte[] digest = md.digest();
 
