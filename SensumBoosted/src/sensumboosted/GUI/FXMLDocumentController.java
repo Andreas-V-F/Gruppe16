@@ -23,6 +23,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import sensumboosted.Domain.DatabaseController;
 
@@ -46,6 +48,10 @@ public class FXMLDocumentController implements Initializable {
     private Button cancelBTN;
     @FXML
     private Label loginInfoLabel;
+    @FXML
+    private Pane loginPane;
+    @FXML
+    private BorderPane diaryPane;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -86,7 +92,7 @@ public class FXMLDocumentController implements Initializable {
         if (j) {
             // Hide this current window (if this is what you want)
             ((Node) (event.getSource())).getScene().getWindow().hide();
-            LoadDiaryWindow();
+            LoadDiaryScene();
         }
     }
 
@@ -99,7 +105,10 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void passwordFieldHandler(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
-            TestTest();
+            if (TestTest()) {
+                
+                LoadDiaryScene();
+            }
 //            loginBTNHandler(event);
             //TODO - Should load the loginBTNHandler
         }
@@ -108,7 +117,11 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void usernameFieldHandler(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
-            TestTest();
+            if (TestTest()) {
+                
+                LoadDiaryScene();
+            }
+            
 //            loginBTNHandler(event);
             //TODO - Should load the loginBTNHandler
         }
@@ -157,5 +170,10 @@ public class FXMLDocumentController implements Initializable {
         stage.setScene(new Scene(p));
         stage.showAndWait();
     }
-
+    
+        private void LoadDiaryScene() {
+        loginPane.setVisible(false);
+        diaryPane.setVisible(true);
+    }
+    
 }
