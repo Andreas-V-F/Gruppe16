@@ -66,8 +66,59 @@ public class FXMLDocumentController implements Initializable {
     private void loginBTNHandler(ActionEvent event) {
 
         Boolean j = false;
+        j = TestTest();
+//
+//        // Checks if the username field and password field is empty and sets  Boolean j to true or false if the user exist in the database
+//        if (!getUsernameField().isEmpty() && !getPasswordField().isEmpty()) {
+//            dbController.connect();
+//            String s = dbController.CheckLogin(getUsernameField(), getPasswordField());
+//            loginInfoLabel.setText(s);
+//            // Dont think this is the right way to check!!
+//            if ("Succesful login".equals(s)) {
+//                j = true;
+//            }
+//            System.out.println(j.toString());
+//        } else {
+//            System.out.println("Username or Password is empty!");
+//            loginInfoLabel.setText("Username or Password is empty!");
+//            System.out.println(j.toString());
+//        }
+        if (j) {
+            // Hide this current window (if this is what you want)
+            ((Node) (event.getSource())).getScene().getWindow().hide();
+            LoadDiaryWindow();
+        }
+    }
 
-        // Checks if the username field and password field is empty and sets  Boolean j to true or false if the user exist in the database
+    // Måske skal der trækkes noget ud af loginBTNHanlder, så metoderne under kan laves? Udfordingen er at det er et ActionEvent og KeyEvent.
+    @FXML
+    private void cancelBTNHandler(ActionEvent event) {
+        System.exit(1);
+    }
+
+    @FXML
+    private void passwordFieldHandler(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            TestTest();
+//            loginBTNHandler(event);
+            //TODO - Should load the loginBTNHandler
+        }
+    }
+
+    @FXML
+    private void usernameFieldHandler(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            TestTest();
+//            loginBTNHandler(event);
+            //TODO - Should load the loginBTNHandler
+        }
+    }
+
+    private boolean TestTest() {
+
+        Boolean j = false;
+
+        // Checks if the username field and password field is empty and sets Boolean j to true or false if the user exist in the database
         if (!getUsernameField().isEmpty() && !getPasswordField().isEmpty()) {
             dbController.connect();
             String s = dbController.CheckLogin(getUsernameField(), getPasswordField());
@@ -82,31 +133,12 @@ public class FXMLDocumentController implements Initializable {
             loginInfoLabel.setText("Username or Password is empty!");
             System.out.println(j.toString());
         }
-        if (j) {
-            // Hide this current window (if this is what you want)
-            ((Node) (event.getSource())).getScene().getWindow().hide();
-            LoadDiaryWindow();
-            
-        }
-    }
-
-    @FXML
-    private void cancelBTNHandler(ActionEvent event) {
-        System.exit(1);
-    }
-
-    @FXML
-    private void passwordFieldHandler(KeyEvent event) {
-        if (event.getCode() == KeyCode.ENTER) {
-            //TODO - Should load the loginBTNHandler
-        }
-    }
-
-    @FXML
-    private void usernameFieldHandler(KeyEvent event) {
-        if (event.getCode() == KeyCode.ENTER) {
-            //TODO - Should load the loginBTNHandler
-        }
+//        if (j) {
+//            // Hide this current window (if this is what you want)
+//            ((Node) (event.getSource())).getScene().getWindow().hide();
+//            LoadDiaryWindow();  
+//        }
+        return j;
     }
 
 //    Loads a new window for the diary.

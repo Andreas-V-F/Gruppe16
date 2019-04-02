@@ -55,19 +55,21 @@ public class DatabaseController {
             while (rs.next()) {
                 count++;
             }
-//          If there is not user in the database if returns the string "Username or password is wrong!"
+//          If there is no user found in the database
             if (count == 0) {
-                System.out.println("No user found"); // Delete this when we hand in our code
-                return "Username or password is wrong!";
+                System.out.println("No user found");  // Delete this when we hand in our code
+                return "Username or Password is wrong!";
             }
-//          Hvis der er en og kun en "bruger"
+//          If there is only 1 of the user in the database
             if (count == 1) {
-                System.out.println("User found"); // Delete this when we hand in our code
+                System.out.println("User found");  // Delete this when we hand in our code
                 return "Succesful login";
             }
-//          Hvis der er flere af samme "brugere"
+
+            /* Should be deleted, there should never be the same user/data twice in a database */
+//          If there is more of the same user in the database
 //            if (count > 1) {
-//                System.out.println("FEJL");
+//                System.out.println("FEJL"); 
 //            }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
