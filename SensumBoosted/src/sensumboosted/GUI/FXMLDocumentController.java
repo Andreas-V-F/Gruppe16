@@ -69,6 +69,8 @@ public class FXMLDocumentController implements Initializable {
     private TextField createRoleField;
     @FXML
     private Button createBtn;
+    @FXML
+    private Label insertDbLabel;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -120,10 +122,9 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void createBtnEventHandler(ActionEvent event) {
         if (!createUserIDField.getText().isEmpty() && !createUsernameField.getText().isEmpty() && !createPasswordField.getText().isEmpty() && !createRoleField.getText().isEmpty()) {
-//            dbController.connect();
             dbController.createUser(Integer.parseInt(createUserIDField.getText()), createUsernameField.getText(), encrypt.encryptString(createPasswordField.getText()), createRoleField.getText());
+            insertDbLabel.setText("User created in database!");
         }
-        System.out.println("IT WORKS!!!");
     }
 
     // Måske skal der trækkes noget ud af loginBTNHanlder, så metoderne under kan laves? Udfordingen er at det er et ActionEvent og KeyEvent.
@@ -164,7 +165,6 @@ public class FXMLDocumentController implements Initializable {
         try {
             // Checks if the username field and password field is empty and sets Boolean j to true or false if the user exist in the database
             if (!getUsernameField().isEmpty() && !getPasswordField().isEmpty()) {
-//                dbController.connect();
                 String s;
                 try {
                     s = dbController.checkLogin(getUsernameField(), encrypt.encryptString(getPasswordField()));
