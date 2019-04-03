@@ -8,9 +8,12 @@ package sensumboosted.Domain;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -23,9 +26,10 @@ public class DatabaseController {
 //    private final String userDB = "postgres";
 //    private final String passDB = "postgres";
     // Controlled by phpMySql
-    private final String url = "jdbc:mysql://db4free.net:3306/sensumbosted";
-    private final String userDB = "group16";
-    private final String passDB = "sensum123";
+    private final String url = "jdbc:postgresql://balarama.db.elephantsql.com:5432/rsrrjzno";
+    private final String userDB = "rsrrjzno";
+    private final String passDB = "afVcwMqs2zGaNtod0axmHcsrAuy5u7uD";
+    private Encryption encrypt;
 
     public DatabaseController() {
     }
@@ -35,7 +39,7 @@ public class DatabaseController {
 
     public Connection connect() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName("org.postgresql.Driver");
         } catch (java.lang.ClassNotFoundException e) {
             System.out.println(e.getMessage());
         }
@@ -49,11 +53,11 @@ public class DatabaseController {
         return connection;
     }
 
-    public String CheckLogin(String user, String pass) {
+    public String checkLogin(String user, String pass) {
         System.out.println("Checking login in progress, please wait.");
         try {
             Statement st = connection.createStatement();
-            String sql = "SELECT username,password FROM users WHERE username='" + user + "' AND password='" + pass + "'";
+            String sql = "SELECT username,password FROM userTest WHERE username='" + user + "' AND password='" + pass + "'";
             rs = st.executeQuery(sql);
 
 //          Bliver ikke brugt endnu, mening er at programmet skal vise en boks med hhv. om man er logget ind eller om login info er forkert.
@@ -84,5 +88,21 @@ public class DatabaseController {
             System.out.println(ex.getMessage());
         }
         return "Login check failed!";
+    }
+    
+    public void createUser(int userID, String username, String password, String role) {
+        try {
+            Statement st = connection.createStatement();
+            String sql = "INSERT INTO usertest " 
+                    + "(userid,username,password,role)" 
+                    + " VALUES " 
+                    + "(" + userID + ',' + "'" + username + "'" + ',' + "'" + password + "'" + ',' + "'" + role + "')";
+            st.execute(sql);
+            st.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            System.out.println("User created");
+        }
     }
 }
