@@ -11,6 +11,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,6 +20,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -60,17 +62,31 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Pane createUserPane;
     @FXML
-    private TextField createUserIDField;
-    @FXML
     private TextField createUsernameField;
     @FXML
     private TextField createPasswordField;
     @FXML
-    private TextField createRoleField;
+    private ChoiceBox<String> createUserTypeChoiceBox;
     @FXML
     private Button createBtn;
     @FXML
     private Label insertDbLabel;
+    @FXML
+    private TextField createFirstnameField;
+    @FXML
+    private TextField createLastnameField;
+    @FXML
+    private TextField createMiddlenameField;
+    @FXML
+    private TextField createCPRField;
+    @FXML
+    private TextField createAddressField;
+    @FXML
+    private TextField createPostalCodeField;
+    @FXML
+    private TextField createCityField;
+    @FXML
+    private TextField createEmailField;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -121,8 +137,9 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void createBtnEventHandler(ActionEvent event) {
-        if (!createUserIDField.getText().isEmpty() && !createUsernameField.getText().isEmpty() && !createPasswordField.getText().isEmpty() && !createRoleField.getText().isEmpty()) {
-            dbController.createUser(Integer.parseInt(createUserIDField.getText()), createUsernameField.getText(), encrypt.encryptString(createPasswordField.getText()), createRoleField.getText());
+
+        if (!createUserIDField.getText().isEmpty() && !createUsernameField.getText().isEmpty() && !createPasswordField.getText().isEmpty() && !createUserTypeChoiceBox.getItems().isEmpty()) {
+            dbController.createUser(Integer.parseInt(createUserIDField.getText()), createUsernameField.getText(), encrypt.encryptString(createPasswordField.getText()), createUserTypeChoiceBox.getValue());
             insertDbLabel.setText("User created in database!");
         }
     }
@@ -220,6 +237,10 @@ public class FXMLDocumentController implements Initializable {
     }
 
     private void createUserScene() {
+        String[] userType = {"Adminstrator", "Sagsbehandler", "Medicinansvarlig", "Vikar", "Pædagog", "Pårørerende"};
+
+        createUserTypeChoiceBox.getItems().addAll(userType);
+
         diaryPane.setVisible(false);
         diaryPane.setDisable(true);
         createUserPane.setVisible(true);

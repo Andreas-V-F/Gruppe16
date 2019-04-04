@@ -57,7 +57,7 @@ public class DatabaseController {
         System.out.println("Checking login in progress, please wait.");
         try {
             Statement st = connection.createStatement();
-            String sql = "SELECT username,password FROM userTest WHERE username='" + user + "' AND password='" + pass + "'";
+            String sql = "SELECT username,password FROM users WHERE username='" + user + "' AND password='" + pass + "'";
             rs = st.executeQuery(sql);
 
 //          Bliver ikke brugt endnu, mening er at programmet skal vise en boks med hhv. om man er logget ind eller om login info er forkert.
@@ -89,20 +89,49 @@ public class DatabaseController {
         }
         return "Login check failed!";
     }
-    
-    public void createUser(int userID, String username, String password, String role) {
+
+    public void createUser(int userID, String username, String password, String userType) {
         try {
             Statement st = connection.createStatement();
-            String sql = "INSERT INTO usertest " 
-                    + "(userid,username,password,role)" 
-                    + " VALUES " 
-                    + "(" + userID + ',' + "'" + username + "'" + ',' + "'" + password + "'" + ',' + "'" + role + "')";
+            String sql = "INSERT INTO users "
+                    + "(user_id,username,password,user_type)"
+                    + " VALUES "
+                    + "(" + userID + ',' + "'" + username + "'" + ',' + "'" + password + "'" + ',' + "'" + userType + "')";
             st.execute(sql);
             st.close();
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            System.out.println("User created");
         }
+    }
+
+    public void createUserInformation(int userID, String firstname, String middlename, String lastname,
+            String address, int postalcode, String city, String email) {
+        try {
+            Statement st = connection.createStatement();
+            String sql = "INSERT INTO user_information "
+                    + "(user_id,firstname,middlename,lastname,cpr,address,"
+                    + "postal_code,city,email)"
+                    + " VALUES (" + userID + ",'" + firstname + "','" + middlename
+                    + "','" + lastname + "','" + address + "'," + postalcode
+                    + ",'" + city + "','" + email + "')";
+            st.execute(sql);
+            st.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public int getUserID() {
+        int i = 0;
+        try {
+            Statement st = connection.createStatement();
+            String sql = "SELECT user_id FROM users WHERE user_id=(SELECT max(user_id) FROM users)";
+            st.execute(sql);
+            st.close();
+                   
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return i;
     }
 }
