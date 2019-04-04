@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="222.0" prefWidth="328.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sensumboosted.GUI.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sensumboosted.GUI.FXMLDocumentController">
    <children>
-      <ImageView fitHeight="420.0" fitWidth="519.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
-      <Pane fx:id="loginPane" layoutX="110.0" layoutY="98.0" prefHeight="225.0" prefWidth="299.0" visible="false">
+      <ImageView fitHeight="700.0" fitWidth="1000.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
+      <Pane fx:id="loginPane" layoutX="351.0" layoutY="238.0" prefHeight="225.0" prefWidth="299.0">
          <children>
             <TextField fx:id="usernameField" layoutX="57.0" layoutY="73.0" onKeyReleased="#usernameFieldHandler" prefHeight="25.0" prefWidth="186.0" />
             <PasswordField fx:id="passwordField" layoutX="57.0" layoutY="125.0" onKeyReleased="#passwordFieldHandler" prefHeight="25.0" prefWidth="186.0" />
@@ -32,24 +29,13 @@
             <Label fx:id="loginInfoLabel" layoutX="57.0" layoutY="194.0" prefHeight="17.0" prefWidth="186.0" />
          </children>
       </Pane>
-      <BorderPane fx:id="diaryPane" disable="true" prefHeight="420.0" prefWidth="519.0" visible="false">
-         <left>
-            <PasswordField BorderPane.alignment="CENTER" />
-         </left>
-         <center>
-            <TextArea prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-         </center>
-         <top>
-            <Button fx:id="createUserBtn" mnemonicParsing="false" onAction="#createUserBtnEventHandler" prefHeight="46.0" prefWidth="137.0" text="Create User" BorderPane.alignment="CENTER">
-               <BorderPane.margin>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </BorderPane.margin>
-            </Button>
-         </top>
-      </BorderPane>
-      <Pane fx:id="createUserPane" prefHeight="421.0" prefWidth="519.0">
+      <Pane fx:id="diaryPane" disable="true" prefHeight="700.0" prefWidth="1000.0" visible="false">
          <children>
-            <TextField fx:id="createCityField" layoutX="356.0" layoutY="109.0" />
+            <Button fx:id="createUserBtn" layoutX="432.0" layoutY="327.0" mnemonicParsing="false" onAction="#createUserBtnEventHandler" prefHeight="46.0" prefWidth="137.0" text="Registrer borger" />
+         </children>
+      </Pane>
+      <Pane fx:id="createUserPane" disable="true" prefHeight="421.0" prefWidth="519.0" visible="false">
+         <children>
             <Label fx:id="createUsernameLabel" layoutX="18.0" layoutY="212.0" text="Brugernavn">
                <font>
                   <Font size="14.0" />
@@ -116,6 +102,7 @@
             <TextField fx:id="createCPRField" layoutX="101.0" layoutY="146.0" />
             <TextField fx:id="createAddressField" layoutX="356.0" layoutY="34.0" />
             <TextField fx:id="createPostalCodeField" layoutX="356.0" layoutY="70.0" />
+            <TextField fx:id="createCityField" layoutX="356.0" layoutY="109.0" />
             <TextField fx:id="createEmailField" layoutX="356.0" layoutY="146.0" />
          </children>
       </Pane>

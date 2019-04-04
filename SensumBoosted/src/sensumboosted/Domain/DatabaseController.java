@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.postgresql.core.QueryExecutor;
 
 /**
  *
@@ -30,6 +31,7 @@ public class DatabaseController {
     private final String userDB = "rsrrjzno";
     private final String passDB = "afVcwMqs2zGaNtod0axmHcsrAuy5u7uD";
     private Encryption encrypt;
+    private int count;
 
     public DatabaseController() {
     }
@@ -105,14 +107,14 @@ public class DatabaseController {
     }
 
     public void createUserInformation(int userID, String firstname, String middlename, String lastname,
-            String address, int postalcode, String city, String email) {
+            int cpr, String address, int postalcode, String city, String email) {
         try {
             Statement st = connection.createStatement();
             String sql = "INSERT INTO user_information "
                     + "(user_id,firstname,middlename,lastname,cpr,address,"
                     + "postal_code,city,email)"
                     + " VALUES (" + userID + ",'" + firstname + "','" + middlename
-                    + "','" + lastname + "','" + address + "'," + postalcode
+                    + "','" + lastname + "','" + cpr + "','" + address + "'," + postalcode
                     + ",'" + city + "','" + email + "')";
             st.execute(sql);
             st.close();
@@ -120,18 +122,21 @@ public class DatabaseController {
             Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public int getUserID() {
-        int i = 0;
-        try {
-            Statement st = connection.createStatement();
-            String sql = "SELECT user_id FROM users WHERE user_id=(SELECT max(user_id) FROM users)";
-            st.execute(sql);
-            st.close();
-                   
+
+    public int getUserIDCount() {
+        try (Statement st = connection.createStatement()) {
+            String sql = "SELECT COUNT(*) AS user_id FROM Users";
+            
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                count = rs.getInt("user_id");
+                
+            }
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return i;
+        return count;
     }
+
 }
+

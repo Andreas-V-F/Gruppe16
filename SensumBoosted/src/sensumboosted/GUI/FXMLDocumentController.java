@@ -8,6 +8,7 @@ package sensumboosted.GUI;
 import java.io.IOException;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -56,7 +57,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Pane loginPane;
     @FXML
-    private BorderPane diaryPane;
+    private Pane diaryPane;
     @FXML
     private Button createUserBtn;
     @FXML
@@ -137,11 +138,19 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void createBtnEventHandler(ActionEvent event) {
-
-        if (!createUserIDField.getText().isEmpty() && !createUsernameField.getText().isEmpty() && !createPasswordField.getText().isEmpty() && !createUserTypeChoiceBox.getItems().isEmpty()) {
-            dbController.createUser(Integer.parseInt(createUserIDField.getText()), createUsernameField.getText(), encrypt.encryptString(createPasswordField.getText()), createUserTypeChoiceBox.getValue());
+        if (!createUsernameField.getText().isEmpty() && !createPasswordField.getText().isEmpty() && !createUserTypeChoiceBox.getItems().isEmpty()) {
+            dbController.createUser((dbController.getUserIDCount() + 1), createUsernameField.getText(), encrypt.encryptString(createPasswordField.getText()), createUserTypeChoiceBox.getValue());
             insertDbLabel.setText("User created in database!");
         }
+        
+        if (!createFirstnameField.getText().isEmpty() && !createMiddlenameField.getText().isEmpty() && !createLastnameField.getText().isEmpty()
+                && !createCPRField.getText().isEmpty() && !createAddressField.getText().isEmpty() && !createPostalCodeField.getText().isEmpty()
+                && !createCityField.getText().isEmpty() && !createEmailField.getText().isEmpty()) {
+            dbController.createUserInformation((dbController.getUserIDCount()), createFirstnameField.getText(), createMiddlenameField.getText(),
+                    createLastnameField.getText(), Integer.parseInt(createCPRField.getText()),createAddressField.getText(), Integer.parseInt(createPostalCodeField.getText()), createCityField.getText(),
+                    createEmailField.getText());
+        }
+        
     }
 
     // Måske skal der trækkes noget ud af loginBTNHanlder, så metoderne under kan laves? Udfordingen er at det er et ActionEvent og KeyEvent.
