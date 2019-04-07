@@ -50,7 +50,7 @@ public class FXMLDocumentController implements Initializable {
     private Log myLog;
 
     private Label label; // Is this even used??
-    
+
     @FXML
     private ChoiceBox<String> createUserTypeChoiceBox;
     @FXML
@@ -82,7 +82,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Button createBtn;
     @FXML
-    private Button backToDiaryPaneFromCreate;
+    private Button createToUserSettingBtn;
     @FXML
     private TextField createUsernameField;
     @FXML
@@ -105,8 +105,10 @@ public class FXMLDocumentController implements Initializable {
     private TextField createEmailField;
     @FXML
     private TextField usernameField;
-    
-    
+    @FXML
+    private Pane userSettingPane;
+    @FXML
+    private Button userSettingBtn;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -155,6 +157,11 @@ public class FXMLDocumentController implements Initializable {
                     createEmailField.getText());
         }
     }
+    
+    @FXML
+    private void userSettingBtnHandler(ActionEvent event) {
+        userSettingScene();
+    }
 
     @FXML
     private void cancelBTNHandler(ActionEvent event) {
@@ -178,7 +185,7 @@ public class FXMLDocumentController implements Initializable {
             }
         }
     }
-    
+
 // Should be renamed!
     private boolean TestTest() {
         Boolean j = false;
@@ -248,7 +255,6 @@ public class FXMLDocumentController implements Initializable {
 //        stage.setScene(new Scene(p));
 //        stage.showAndWait();
 //    }
-
     private void loadDiaryScene() {
         loginPane.setVisible(false);
         loginPane.setDisable(true);
@@ -256,13 +262,20 @@ public class FXMLDocumentController implements Initializable {
         diaryPane.setDisable(false);
     }
 
+    public void userSettingScene() {
+        diaryPane.setVisible(false);
+        diaryPane.setDisable(true);
+        userSettingPane.setVisible(true);
+        userSettingPane.setDisable(false);
+    }
+
     private void createUserScene() {
         String[] userType = {"Adminstrator", "Sagsbehandler", "Medicinansvarlig", "Vikar", "Pædagog", "Pårørerende"};
 
         createUserTypeChoiceBox.getItems().addAll(userType);
-
-        diaryPane.setVisible(false);
-        diaryPane.setDisable(true);
+        
+        userSettingPane.setVisible(false);
+        userSettingPane.setDisable(true);
         createUserPane.setVisible(true);
         createUserPane.setDisable(false);
     }
@@ -279,9 +292,9 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-    private void backToDiaryPaneFromCreateHandler(ActionEvent event) {
-        diaryPane.setVisible(true);
-        diaryPane.setDisable(false);
+    private void createToUserSettingHandler(ActionEvent event) {
+        userSettingPane.setVisible(true);
+        userSettingPane.setDisable(false);
         createUserPane.setVisible(false);
         createUserPane.setDisable(true);
     }

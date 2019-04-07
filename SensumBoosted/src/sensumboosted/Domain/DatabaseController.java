@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.postgresql.core.QueryExecutor;
+import sun.security.x509.X500Name;
 
 /**
  *
@@ -32,6 +32,10 @@ public class DatabaseController {
     private final String passDB = "afVcwMqs2zGaNtod0axmHcsrAuy5u7uD";
     private Encryption encrypt;
     private int count;
+    private int userid;
+    private String username;
+    private String password;
+    private String usertype;
 
     public DatabaseController() {
     }
@@ -126,11 +130,11 @@ public class DatabaseController {
     public int getUserIDCount() {
         try (Statement st = connection.createStatement()) {
             String sql = "SELECT COUNT(*) AS user_id FROM Users";
-            
+
             rs = st.executeQuery(sql);
             while (rs.next()) {
                 count = rs.getInt("user_id");
-                
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
@@ -138,5 +142,106 @@ public class DatabaseController {
         return count;
     }
 
-}
+    public void getUserInformation() {
+        try (Statement st = connection.createStatement()) {
+            String sql = "SELECT * FROM USER_INFORMATION";
 
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                int userid = rs.getInt("user_id");
+                String getFirstname = rs.getString("firstname");
+                String getMiddlename = rs.getString("middlename");
+                String getLastname = rs.getString("lastname");
+                int getCPR = rs.getInt("cpr");
+                String getAddress = rs.getString("address");
+                int getPostalCode = rs.getInt("postal_code");
+                String getCity = rs.getString("city");
+                String getEmail = rs.getString("email");
+
+                hasUserInformation = Integer.toString(userid) + "\t|" + getFirstname + "\t|" + getMiddlename
+                        + "\t|" + getLastname + "\t|" + Integer.toString(getCPR)
+                        + "\t|" + getAddress + "\t|" + Integer.toString(getPostalCode)
+                        + "\t|" + getCity + "\t|" + getEmail;
+
+                System.out.println(hasUserInformation);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void getUsers() {
+        try (Statement st = connection.createStatement()) {
+            String sql = "SELECT * FROM USERS";
+
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                int userid = rs.getInt("user_id");
+                String getUsername = rs.getString("username");
+                String getPassword = rs.getString("password");
+                String getUsertype = rs.getString("user_type");
+
+                hasUser = Integer.toString(userid) + "\t|" + getUsername + "\t|"
+                        + getPassword + "\t" + getUsertype;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public int getUserID() {
+        try (Statement st = connection.createStatement()) {
+            String sql = "SELECT user_id FROM users";
+
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                userid = rs.getInt("user_id");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return userid;
+    }
+
+    public String getUsername() {
+        try (Statement st = connection.createStatement()) {
+            String sql = "SELECT username FROM users";
+
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                username = rs.getString("username");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return username;
+    }
+
+    public String getPassword() {
+        try (Statement st = connection.createStatement()) {
+            String sql = "SELECT password FROM users";
+
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                password = rs.getString("password");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return password;
+    }
+    
+        public String getUserType() {
+        try (Statement st = connection.createStatement()) {
+            String sql = "SELECT user_type FROM users";
+
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                usertype = rs.getString("user_type");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return usertype;
+    }
+}
