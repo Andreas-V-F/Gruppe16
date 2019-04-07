@@ -25,6 +25,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -109,6 +110,14 @@ public class FXMLDocumentController implements Initializable {
     private Pane userSettingPane;
     @FXML
     private Button userSettingBtn;
+    @FXML
+    private TableColumn userIDColumn;
+    @FXML
+    private TableColumn usernameColumn;
+    @FXML
+    private TableColumn passwordColumn;
+    @FXML
+    private TableColumn userTypeColumn;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -263,6 +272,8 @@ public class FXMLDocumentController implements Initializable {
     }
 
     public void userSettingScene() {
+
+        
         diaryPane.setVisible(false);
         diaryPane.setDisable(true);
         userSettingPane.setVisible(true);
