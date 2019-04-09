@@ -8,9 +8,13 @@ package sensumboosted.Domain;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.postgresql.core.QueryExecutor;
 
 /**
  *
@@ -23,9 +27,11 @@ public class DatabaseController {
 //    private final String userDB = "postgres";
 //    private final String passDB = "postgres";
     // Controlled by phpMySql
-    private final String url = "jdbc:mysql://db4free.net:3306/sensumbosted";
-    private final String userDB = "group16";
-    private final String passDB = "sensum123";
+    private final String url = "jdbc:postgresql://balarama.db.elephantsql.com:5432/rsrrjzno";
+    private final String userDB = "rsrrjzno";
+    private final String passDB = "afVcwMqs2zGaNtod0axmHcsrAuy5u7uD";
+    private Encryption encrypt;
+    private int count;
 
     public DatabaseController() {
     }
@@ -35,7 +41,7 @@ public class DatabaseController {
 
     public Connection connect() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName("org.postgresql.Driver");
         } catch (java.lang.ClassNotFoundException e) {
             System.out.println(e.getMessage());
         }
@@ -49,7 +55,7 @@ public class DatabaseController {
         return connection;
     }
 
-    public String CheckLogin(String user, String pass) {
+    public String checkLogin(String user, String pass) {
         System.out.println("Checking login in progress, please wait.");
         try {
             Statement st = connection.createStatement();
@@ -85,4 +91,52 @@ public class DatabaseController {
         }
         return "Login check failed!";
     }
+
+    public void createUser(int userID, String username, String password, String userType) {
+        try {
+            Statement st = connection.createStatement();
+            String sql = "INSERT INTO users "
+                    + "(user_id,username,password,user_type)"
+                    + " VALUES "
+                    + "(" + userID + ',' + "'" + username + "'" + ',' + "'" + password + "'" + ',' + "'" + userType + "')";
+            st.execute(sql);
+            st.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void createUserInformation(int userID, String firstname, String middlename, String lastname,
+            int cpr, String address, int postalcode, String city, String email) {
+        try {
+            Statement st = connection.createStatement();
+            String sql = "INSERT INTO user_information "
+                    + "(user_id,firstname,middlename,lastname,cpr,address,"
+                    + "postal_code,city,email)"
+                    + " VALUES (" + userID + ",'" + firstname + "','" + middlename
+                    + "','" + lastname + "','" + cpr + "','" + address + "'," + postalcode
+                    + ",'" + city + "','" + email + "')";
+            st.execute(sql);
+            st.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public int getUserIDCount() {
+        try (Statement st = connection.createStatement()) {
+            String sql = "SELECT COUNT(*) AS user_id FROM Users";
+            
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                count = rs.getInt("user_id");
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return count;
+    }
+
 }
+
