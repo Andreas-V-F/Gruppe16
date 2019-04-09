@@ -44,13 +44,10 @@ public class FXMLDocumentController implements Initializable {
     private DatabaseController dbController = new DatabaseController();
     private FXMLLoader loader = new FXMLLoader();
     private Encryption encrypt = new Encryption();
-
-//    private final static Log logger = new Log("LogTest.txt");
-//    private Log myLog = new Log(fileName);
     private Log myLog;
 
     private Label label; // Is this even used??
-    
+
     @FXML
     private ChoiceBox<String> createUserTypeChoiceBox;
     @FXML
@@ -105,13 +102,14 @@ public class FXMLDocumentController implements Initializable {
     private TextField createEmailField;
     @FXML
     private TextField usernameField;
-    
-    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         dbController.connect();
         loginInfoLabel.setAlignment(Pos.CENTER);
+        String[] userType = {"Adminstrator", "Sagsbehandler", "Medicinansvarlig", "Vikar", "Pædagog", "Pårørerende"};
+
+        createUserTypeChoiceBox.getItems().addAll(userType);
     }
 
     public String getUsernameField() {
@@ -154,6 +152,7 @@ public class FXMLDocumentController implements Initializable {
                     createLastnameField.getText(), Integer.parseInt(createCPRField.getText()), createAddressField.getText(), Integer.parseInt(createPostalCodeField.getText()), createCityField.getText(),
                     createEmailField.getText());
         }
+        clearCreateTextField();
     }
 
     @FXML
@@ -178,7 +177,7 @@ public class FXMLDocumentController implements Initializable {
             }
         }
     }
-    
+
 // Should be renamed!
     private boolean TestTest() {
         Boolean j = false;
@@ -248,7 +247,6 @@ public class FXMLDocumentController implements Initializable {
 //        stage.setScene(new Scene(p));
 //        stage.showAndWait();
 //    }
-
     private void loadDiaryScene() {
         loginPane.setVisible(false);
         loginPane.setDisable(true);
@@ -257,9 +255,7 @@ public class FXMLDocumentController implements Initializable {
     }
 
     private void createUserScene() {
-        String[] userType = {"Adminstrator", "Sagsbehandler", "Medicinansvarlig", "Vikar", "Pædagog", "Pårørerende"};
-
-        createUserTypeChoiceBox.getItems().addAll(userType);
+        
 
         diaryPane.setVisible(false);
         diaryPane.setDisable(true);
@@ -280,6 +276,7 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void backToDiaryPaneFromCreateHandler(ActionEvent event) {
+        clearCreateTextField();
         diaryPane.setVisible(true);
         diaryPane.setDisable(false);
         createUserPane.setVisible(false);
@@ -296,5 +293,18 @@ public class FXMLDocumentController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private void clearCreateTextField() {
+        createUsernameField.clear();
+        createPasswordField.clear();
+        createFirstnameField.clear();
+        createLastnameField.clear();
+        createMiddlenameField.clear();
+        createCPRField.clear();
+        createAddressField.clear();
+        createPostalCodeField.clear();
+        createCityField.clear();
+        createEmailField.clear();
     }
 }
