@@ -1,0 +1,2 @@
+apr. 09, 2019 1:26:54 PM sensumboosted.GUI.FXMLDocumentController logLoginAttempt
+INFO: Bruger: "q" har logget ind i systemet.
