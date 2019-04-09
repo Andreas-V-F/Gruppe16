@@ -14,7 +14,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import sun.security.x509.X500Name;
 
 /**
  *
@@ -142,52 +141,52 @@ public class DatabaseController {
         return count;
     }
 
-    public void getUserInformation() {
-        try (Statement st = connection.createStatement()) {
-            String sql = "SELECT * FROM USER_INFORMATION";
-
-            rs = st.executeQuery(sql);
-            while (rs.next()) {
-                int userid = rs.getInt("user_id");
-                String getFirstname = rs.getString("firstname");
-                String getMiddlename = rs.getString("middlename");
-                String getLastname = rs.getString("lastname");
-                int getCPR = rs.getInt("cpr");
-                String getAddress = rs.getString("address");
-                int getPostalCode = rs.getInt("postal_code");
-                String getCity = rs.getString("city");
-                String getEmail = rs.getString("email");
-
-                hasUserInformation = Integer.toString(userid) + "\t|" + getFirstname + "\t|" + getMiddlename
-                        + "\t|" + getLastname + "\t|" + Integer.toString(getCPR)
-                        + "\t|" + getAddress + "\t|" + Integer.toString(getPostalCode)
-                        + "\t|" + getCity + "\t|" + getEmail;
-
-                System.out.println(hasUserInformation);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void getUsers() {
-        try (Statement st = connection.createStatement()) {
-            String sql = "SELECT * FROM USERS";
-
-            rs = st.executeQuery(sql);
-            while (rs.next()) {
-                int userid = rs.getInt("user_id");
-                String getUsername = rs.getString("username");
-                String getPassword = rs.getString("password");
-                String getUsertype = rs.getString("user_type");
-
-                hasUser = Integer.toString(userid) + "\t|" + getUsername + "\t|"
-                        + getPassword + "\t" + getUsertype;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+//    public void getUserInformation() {
+//        try (Statement st = connection.createStatement()) {
+//            String sql = "SELECT * FROM USER_INFORMATION";
+//
+//            rs = st.executeQuery(sql);
+//            while (rs.next()) {
+//                int userid = rs.getInt("user_id");
+//                String getFirstname = rs.getString("firstname");
+//                String getMiddlename = rs.getString("middlename");
+//                String getLastname = rs.getString("lastname");
+//                int getCPR = rs.getInt("cpr");
+//                String getAddress = rs.getString("address");
+//                int getPostalCode = rs.getInt("postal_code");
+//                String getCity = rs.getString("city");
+//                String getEmail = rs.getString("email");
+//
+//                hasUserInformation = Integer.toString(userid) + "\t|" + getFirstname + "\t|" + getMiddlename
+//                        + "\t|" + getLastname + "\t|" + Integer.toString(getCPR)
+//                        + "\t|" + getAddress + "\t|" + Integer.toString(getPostalCode)
+//                        + "\t|" + getCity + "\t|" + getEmail;
+//
+//                System.out.println(hasUserInformation);
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
+//
+//    public void getUsers() {
+//        try (Statement st = connection.createStatement()) {
+//            String sql = "SELECT * FROM USERS";
+//
+//            rs = st.executeQuery(sql);
+//            while (rs.next()) {
+//                int userid = rs.getInt("user_id");
+//                String getUsername = rs.getString("username");
+//                String getPassword = rs.getString("password");
+//                String getUsertype = rs.getString("user_type");
+//
+//                hasUser = Integer.toString(userid) + "\t|" + getUsername + "\t|"
+//                        + getPassword + "\t" + getUsertype;
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
 
     public int getUserID() {
         try (Statement st = connection.createStatement()) {
