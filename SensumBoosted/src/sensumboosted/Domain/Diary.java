@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 public class Diary {
 
     public void createDiary() {
-        String fileName = getFileName("Enter output file name.");
+        String fileName = getFileName("Enter file name.");
 
         File output = new File(fileName);
 
