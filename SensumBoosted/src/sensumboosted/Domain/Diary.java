@@ -12,8 +12,8 @@ import java.util.logging.Logger;
 
 public class Diary {
 
-    public void createDiary() {
-        String fileName = getFileName("Enter file name.");
+    public void createDiary(String fileName) {
+//        String fileName = getFileName("Enter file name.");
 
         File output = new File(fileName);
 
@@ -31,12 +31,12 @@ public class Diary {
         }
     }
 
-    private static String getFileName(String prompt) {
-        Scanner keyboard = new Scanner(System.in);
-        String fileName = null;
-        System.out.println(prompt);
-        fileName = keyboard.next();
-
-        return fileName;
-    }
+//    private static String getFileName(String prompt) {
+//        Scanner keyboard = new Scanner(System.in);
+//        String fileName = null;
+//        System.out.println(prompt);
+//        fileName = keyboard.next();
+//
+//        return fileName;
+//    }
 }
