@@ -149,6 +149,8 @@ public class FXMLDocumentController implements Initializable {
     private TableColumn<UserInformation, String> cityColumn;
     @FXML
     private TableColumn<UserInformation, String> emailColumn;
+    @FXML
+    private Button updateBtn;
 
     ObservableList<UserAccount> obListUA = FXCollections.observableArrayList();
     ObservableList<UserInformation> obListUI = FXCollections.observableArrayList();
@@ -392,14 +394,14 @@ public class FXMLDocumentController implements Initializable {
             ResultSet rs = con.createStatement().executeQuery("SELECT * FROM user_information");
             while (rs.next()) {
                 obListUI.add(new UserInformation(rs.getInt("user_id"), rs.getString("firstname"),
-                rs.getString("middlename"), rs.getString("lastname"), rs.getInt("cpr"),
-                rs.getString("address"), rs.getInt("postal_code"), rs.getString("city"),
-                rs.getString("email")));
+                        rs.getString("middlename"), rs.getString("lastname"), rs.getInt("cpr"),
+                        rs.getString("address"), rs.getInt("postal_code"), rs.getString("city"),
+                        rs.getString("email")));
             }
         } catch (SQLException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         userIDInfoColumn.setCellValueFactory(new PropertyValueFactory<>("userid"));
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         middleNameColumn.setCellValueFactory(new PropertyValueFactory<>("middleName"));
@@ -409,7 +411,7 @@ public class FXMLDocumentController implements Initializable {
         postalCodeColumn.setCellValueFactory(new PropertyValueFactory<>("postalcode"));
         cityColumn.setCellValueFactory(new PropertyValueFactory<>("city"));
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
-        
+
         userInformationTableView.setItems(obListUI);
         userInformationTableView.setEditable(true);
     }
@@ -422,5 +424,13 @@ public class FXMLDocumentController implements Initializable {
     public void userInformationBtnHandler(ActionEvent event) {
         userInformationTableView.setVisible(true);
         usersTableView.setVisible(false);
+    }
+
+    public void updateBtnEventHandler(ActionEvent event) {
+        usersTableView.getItems().clear();
+        userInformationTableView.getItems().clear();
+        userInformationTableView();
+        userAccountTableView();
+
     }
 }

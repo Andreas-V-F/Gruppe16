@@ -71,7 +71,7 @@
             </TableView>
             <Button fx:id="userAccountBtn" layoutX="289.0" layoutY="87.0" mnemonicParsing="false" onAction="#userAccountBtnHandler" text="User Account" />
             <Button fx:id="userInformationBtn" layoutX="606.0" layoutY="87.0" mnemonicParsing="false" onAction="#userInformationBtnHandler" text="User Information" />
-            <Button fx:id="updateBtn" layoutX="473.0" layoutY="100.0" mnemonicParsing="false" text="Update" />
+            <Button fx:id="updateBtn" layoutX="473.0" layoutY="100.0" mnemonicParsing="false" onAction="#updateBtnEventHandler" text="Update" />
          </children>
       </Pane>
       <Pane fx:id="createUserPane" disable="true" prefHeight="421.0" prefWidth="519.0" visible="false">

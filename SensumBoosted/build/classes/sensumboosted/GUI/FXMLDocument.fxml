@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sensumboosted.GUI.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sensumboosted.GUI.FXMLDocumentController">
    <children>
       <Pane fx:id="loginPane" layoutX="351.0" layoutY="238.0" prefHeight="225.0" prefWidth="299.0">
          <children>
@@ -71,7 +71,7 @@
             </TableView>
             <Button fx:id="userAccountBtn" layoutX="289.0" layoutY="87.0" mnemonicParsing="false" onAction="#userAccountBtnHandler" text="User Account" />
             <Button fx:id="userInformationBtn" layoutX="606.0" layoutY="87.0" mnemonicParsing="false" onAction="#userInformationBtnHandler" text="User Information" />
-            <Button fx:id="updateBtn" layoutX="473.0" layoutY="100.0" mnemonicParsing="false" text="Update" />
+            <Button fx:id="updateBtn" layoutX="473.0" layoutY="100.0" mnemonicParsing="false" onAction="#updateBtnEventHandler" text="Update" />
          </children>
       </Pane>
       <Pane fx:id="createUserPane" disable="true" prefHeight="421.0" prefWidth="519.0" visible="false">
@@ -127,24 +127,24 @@
             <TextField fx:id="createCityField" layoutX="356.0" layoutY="109.0" />
             <TextField fx:id="createEmailField" layoutX="356.0" layoutY="146.0" />
             <Button fx:id="createToUserSettingBtn" layoutX="450.0" layoutY="325.0" mnemonicParsing="false" onAction="#createToUserSettingHandler" text="Tilbage" />
-            <Label fx:id="createUsernameLabel" text="Brugernavn">
+            <Label fx:id="createUsernameLabel" layoutX="20.0" layoutY="248.0" text="Brugernavn">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="createPasswordLabel" text="Password">
+            <Label fx:id="createPasswordLabel" layoutX="18.0" layoutY="288.0" text="Password">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="createUserTypeLabel" prefHeight="20.0" prefWidth="80.0" text="Bruger type">
+            <Label fx:id="createUserTypeLabel" layoutX="16.0" layoutY="328.0" prefHeight="20.0" prefWidth="80.0" text="Bruger type">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="createUsernameField" />
-            <TextField fx:id="createPasswordField" />
-            <ChoiceBox fx:id="createUserTypeChoiceBox" prefWidth="150.0" />
+            <TextField fx:id="createUsernameField" layoutX="101.0" layoutY="245.0" />
+            <TextField fx:id="createPasswordField" layoutX="101.0" layoutY="285.0" />
+            <ChoiceBox fx:id="createUserTypeChoiceBox" layoutX="100.0" layoutY="325.0" prefWidth="150.0" />
          </children>
       </Pane>
    </children>
