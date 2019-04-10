@@ -12,6 +12,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.postgresql.core.QueryExecutor;
@@ -136,6 +138,38 @@ public class DatabaseController {
             Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return count;
+    }
+    
+    public void createLogbook(int userID) {
+        try {
+            Statement st = connection.createStatement();
+            Long id = System.currentTimeMillis();
+            String sql = "INSERT INTO logbook "
+                    + "(user_id, id)"
+                    + " VALUES "
+                    + "(" + userID + ',' + id + ")";
+            st.execute(sql);
+            st.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+        public void createLogbookEntry(long logbookID, String text) {
+        try {
+            Statement st = connection.createStatement();
+            Long entryID = System.currentTimeMillis();
+            Date date = new Date();
+            Timestamp timestamp = new Timestamp(date.getTime());
+            String sql = "INSERT INTO logbook_entry "
+                    + "(logbook_entry_id, logbook_id, entry_text, create_timestamp)"
+                    + " VALUES "
+                    + "(" + entryID + ',' + logbookID + "','" + text + "', " + timestamp + ")";
+            st.execute(sql);
+            st.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }
