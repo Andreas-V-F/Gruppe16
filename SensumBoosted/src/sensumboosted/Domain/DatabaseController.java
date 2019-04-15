@@ -22,7 +22,7 @@ import org.postgresql.core.QueryExecutor;
  *
  * @author Mikkel Hoeyberg
  */
-public class DatabaseController {
+public class DatabaseController  implements DatalayerInterface {
 
     // Localhost som kan styres via pgAdmin 4
 //    private final String url = "jdbc:postgresql://localhost:5432/example";
@@ -57,6 +57,7 @@ public class DatabaseController {
         return connection;
     }
 
+    @Override
     public String checkLogin(String user, String pass) {
         System.out.println("Checking login in progress, please wait.");
         try {
@@ -140,19 +141,21 @@ public class DatabaseController {
         return count;
     }
     
-    public void createLogbook(int userID) {
+    public Long createLogbook(int userID) {
         try {
             Statement st = connection.createStatement();
             Long id = System.currentTimeMillis();
             String sql = "INSERT INTO logbook "
-                    + "(user_id, id)"
+                    + "(user_id, logbook_id)"
                     + " VALUES "
                     + "(" + userID + ',' + id + ")";
             st.execute(sql);
             st.close();
+            return id;
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return null;
     }
 
         public void createLogbookEntry(long logbookID, String text) {
@@ -164,7 +167,8 @@ public class DatabaseController {
             String sql = "INSERT INTO logbook_entry "
                     + "(logbook_entry_id, logbook_id, entry_text, create_timestamp)"
                     + " VALUES "
-                    + "(" + entryID + ',' + logbookID + "','" + text + "', " + timestamp + ")";
+                    + "(" + entryID + ',' + logbookID + ",'" + text + "', '" + timestamp + "')";
+            System.out.println("slq :" + sql);
             st.execute(sql);
             st.close();
         } catch (SQLException ex) {
@@ -172,5 +176,37 @@ public class DatabaseController {
         }
     }
 
+    Long getLogBook(int userId) {
+        Long id = null;
+        try (Statement st = connection.createStatement()) {
+            String sql = "SELECT logbook_id FROM logbook where user_id = " + userId;
+            
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                id = rs.getLong("logbook_id");
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return id;
+    }
+
+     public int getCount(String tableName) {
+         int cnt = 0;
+        try (Statement st = connection.createStatement()) {
+            String sql = "SELECT COUNT(*) AS cnt FROM " + tableName;
+            
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                cnt = rs.getInt("cnt");
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return cnt;
+    }
+   
 }
 
