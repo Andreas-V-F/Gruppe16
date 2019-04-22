@@ -94,6 +94,65 @@ public class DatabaseController {
         return "Login check failed!";
     }
 
+    public void createCase(String userID, String text) {
+        closeAllCases(userID);
+        try {
+            Statement st = connection.createStatement();
+            String sql = "INSERT INTO sager3 (sagsid,brugerid,isopen,text) VALUES ('" + (int) (Math.random() * 100) + "','" + userID + "','true','" + text + "');";
+            rs = st.executeQuery(sql);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    public void closeAllCases(String userID) {
+         try {
+            Statement st = connection.createStatement();
+            String sql = "UPDATE sager3 SET isopen = 'false' WHERE brugerid = '" + userID + "';";
+            rs = st.executeQuery(sql);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    
+    public int findCaseID(int userID) {
+         try {
+            Statement st = connection.createStatement();
+            String sql = "SELECT sagsid FROM sager3 WHERE brugerid='" + userID + "' AND isopen='true';";
+            rs = st.executeQuery(sql);
+            rs.next();
+            return rs.getInt(1);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return -1;
+    }
+    public boolean hasOpenCase(String userID) {
+        try {
+            Statement st = connection.createStatement();
+            String sql = "SELECT brugerid FROM sager3 WHERE brugerid='" + userID + "' AND isopen='true';";
+            rs = st.executeQuery(sql);
+            rs.next();
+            if (rs.getInt(1) == Integer.parseInt(userID)) {
+                return true;
+            }
+            
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return false;
+    }
+
+    public void saveCase(int caseID, String userID, String text) {
+        try {
+            Statement st = connection.createStatement();
+            String sql = "UPDATE sager3 SET text = '" + text + "' WHERE brugerid ='" + userID + "' AND isopen ='true';";
+            rs = st.executeQuery(sql);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+    }
+
     public void createUser(int userID, String username, String password, String userType) {
         try {
             Statement st = connection.createStatement();
@@ -155,9 +214,9 @@ public class DatabaseController {
                 int getPostalCode = rs.getInt("postal_code");
                 String getCity = rs.getString("city");
                 String getEmail = rs.getString("email");
-                
+
                 String[] info = {Integer.toString(userid), getFirstname, getMiddlename, getLastname, Integer.toString(getCPR), getAddress, Integer.toString(getPostalCode), getCity, getEmail};
-                
+
                 hasUserInformation = Integer.toString(userid) + "\t|" + getFirstname + "\t|" + getMiddlename
                         + "\t|" + getLastname + "\t|" + Integer.toString(getCPR)
                         + "\t|" + getAddress + "\t|" + Integer.toString(getPostalCode)

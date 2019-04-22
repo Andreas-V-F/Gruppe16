@@ -8,6 +8,8 @@ package sensumboosted.GUI;
 import java.io.IOException;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -46,6 +48,7 @@ public class FXMLDocumentController implements Initializable {
     private FXMLLoader loader = new FXMLLoader();
     private Encryption encrypt = new Encryption();
     private Log myLog;
+    
 
     private Label label; // Is this even used??
 
@@ -105,6 +108,8 @@ public class FXMLDocumentController implements Initializable {
     private TextField usernameField;
     @FXML
     private TextArea infoBox;
+    @FXML
+    private TextArea textArea;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -313,18 +318,39 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     void handleUpdateAction(ActionEvent event) {
         String[] info = dbController.getUserInformation();
-        String userID = info[0];
-        String Firstname = info[1];
-        String Middlename = info[2];
-        String Lastname = info[3];
-        String CPR = info[4];
-        String Address = info[5];
-        String PostalCode = info[6];
-        String City = info[7];
-        String Email = info[8];
+    String userID = info[0];
+    String Firstname = info[1];
+    String Middlename = info[2];
+    String Lastname = info[3];
+    String CPR = info[4];
+    String Address = info[5];
+    String PostalCode = info[6];
+    String City = info[7];
+    String Email = info[8];
+
         infoBox.setText("Fulde navn: " + Firstname + " " + Middlename + " " + Lastname + "\n"
-        + "CPR nr: " + CPR + "\n"
-        + "Adresse: " + Address + ", " + City + ", " + PostalCode);
+                + "CPR nr: " + CPR + "\n"
+                + "Adresse: " + Address + ", " + City + ", " + PostalCode);
     }
 
+    @FXML
+    void handleGemActon(ActionEvent event) {
+    String[] info = dbController.getUserInformation();
+    String userID = info[0];
+    String input = textArea.getText();
+        if (dbController.hasOpenCase(userID)) {
+            System.out.println(input);
+            dbController.saveCase(dbController.findCaseID(Integer.parseInt(userID)), userID, input);
+        }
+        else {
+            dbController.createCase(userID, input);
+        }
+    }
+    @FXML
+    void handleCloseAction(ActionEvent event) {
+        String[] info = dbController.getUserInformation();
+        String userID = info[0];
+        dbController.closeAllCases(userID);
+        
+    }
 }
