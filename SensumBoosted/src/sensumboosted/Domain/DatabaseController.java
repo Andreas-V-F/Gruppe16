@@ -32,6 +32,8 @@ public class DatabaseController {
     private final String passDB = "afVcwMqs2zGaNtod0axmHcsrAuy5u7uD";
     private Encryption encrypt;
     private int count;
+    private String hasUserInformation;
+    private String hasUser;
 
     public DatabaseController() {
     }
@@ -126,11 +128,11 @@ public class DatabaseController {
     public int getUserIDCount() {
         try (Statement st = connection.createStatement()) {
             String sql = "SELECT COUNT(*) AS user_id FROM Users";
-            
+
             rs = st.executeQuery(sql);
             while (rs.next()) {
                 count = rs.getInt("user_id");
-                
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
@@ -138,5 +140,56 @@ public class DatabaseController {
         return count;
     }
 
-}
+    public String[] getUserInformation() {
+        try (Statement st = connection.createStatement()) {
+            String sql = "SELECT * FROM USER_INFORMATION";
 
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                int userid = rs.getInt("user_id");
+                String getFirstname = rs.getString("firstname");
+                String getMiddlename = rs.getString("middlename");
+                String getLastname = rs.getString("lastname");
+                int getCPR = rs.getInt("cpr");
+                String getAddress = rs.getString("address");
+                int getPostalCode = rs.getInt("postal_code");
+                String getCity = rs.getString("city");
+                String getEmail = rs.getString("email");
+                
+                String[] info = {Integer.toString(userid), getFirstname, getMiddlename, getLastname, Integer.toString(getCPR), getAddress, Integer.toString(getPostalCode), getCity, getEmail};
+                
+                hasUserInformation = Integer.toString(userid) + "\t|" + getFirstname + "\t|" + getMiddlename
+                        + "\t|" + getLastname + "\t|" + Integer.toString(getCPR)
+                        + "\t|" + getAddress + "\t|" + Integer.toString(getPostalCode)
+                        + "\t|" + getCity + "\t|" + getEmail;
+
+                System.out.println(hasUserInformation);
+                return info;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        return null;
+    }
+
+    public void getUsers() {
+        try (Statement st = connection.createStatement()) {
+            String sql = "SELECT * FROM USERS";
+
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                int userid = rs.getInt("user_id");
+                String getUsername = rs.getString("username");
+                String getPassword = rs.getString("password");
+                String getUsertype = rs.getString("user_type");
+
+                hasUser = Integer.toString(userid) + "\t|" + getUsername + "\t|"
+                        + getPassword + "\t" + getUsertype;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+}

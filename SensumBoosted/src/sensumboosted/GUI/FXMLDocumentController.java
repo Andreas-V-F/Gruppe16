@@ -25,6 +25,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -102,6 +103,8 @@ public class FXMLDocumentController implements Initializable {
     private TextField createEmailField;
     @FXML
     private TextField usernameField;
+    @FXML
+    private TextArea infoBox;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -255,7 +258,6 @@ public class FXMLDocumentController implements Initializable {
     }
 
     private void createUserScene() {
-        
 
         diaryPane.setVisible(false);
         diaryPane.setDisable(true);
@@ -307,4 +309,22 @@ public class FXMLDocumentController implements Initializable {
         createCityField.clear();
         createEmailField.clear();
     }
+
+    @FXML
+    void handleUpdateAction(ActionEvent event) {
+        String[] info = dbController.getUserInformation();
+        String userID = info[0];
+        String Firstname = info[1];
+        String Middlename = info[2];
+        String Lastname = info[3];
+        String CPR = info[4];
+        String Address = info[5];
+        String PostalCode = info[6];
+        String City = info[7];
+        String Email = info[8];
+        infoBox.setText("Fulde navn: " + Firstname + " " + Middlename + " " + Lastname + "\n"
+        + "CPR nr: " + CPR + "\n"
+        + "Adresse: " + Address + ", " + City + ", " + PostalCode);
+    }
+
 }
