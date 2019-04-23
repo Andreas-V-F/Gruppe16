@@ -155,6 +155,8 @@ public class FXMLDocumentController implements Initializable {
     private TableColumn<UserInformation, String> emailColumn;
     @FXML
     private Button updateBtn;
+    @FXML
+    private Button userSettingToDiaryPaneBtn;
 
     ObservableList<UserAccount> obListUA = FXCollections.observableArrayList();
     ObservableList<UserInformation> obListUI = FXCollections.observableArrayList();
@@ -251,6 +253,11 @@ public class FXMLDocumentController implements Initializable {
             }
         }
     }
+    
+    @FXML
+    private void userSettingToDiaryPaneBtnHandler(ActionEvent event) {
+        userSettingToDiaryPane();
+    }
 
 // Should be renamed! and dont think this method should do so much logic. should be moved
     private boolean TestTest() {
@@ -318,10 +325,17 @@ public class FXMLDocumentController implements Initializable {
         userSettingPane.setVisible(true);
         userSettingPane.setDisable(false);
     }
+    
+    public void userSettingToDiaryPane() {
+        userSettingPane.setVisible(false);
+        userSettingPane.setDisable(true);
+        diaryPane.setVisible(true);
+        diaryPane.setDisable(false);
+    }
 
     private void createUserScene() {
-        diaryPane.setVisible(false);
-        diaryPane.setDisable(true);
+        userSettingPane.setVisible(false);
+        userSettingPane.setDisable(true);
         createUserPane.setVisible(true);
         createUserPane.setDisable(false);
     }
@@ -339,10 +353,10 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-    private void backToDiaryPaneFromCreateHandler(ActionEvent event) {
+    private void backToUserSettingFromCreateHandler(ActionEvent event) {
         clearCreateTextField();
-        diaryPane.setVisible(true);
-        diaryPane.setDisable(false);
+        userSettingPane.setVisible(true);
+        userSettingPane.setDisable(false);
         createUserPane.setVisible(false);
         createUserPane.setDisable(true);
     }
