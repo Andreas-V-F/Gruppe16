@@ -18,7 +18,7 @@ import java.util.logging.SimpleFormatter;
 public class Log {
 
     private Logger logger;
-    FileHandler fH;
+    private FileHandler fH;
 
     public Log(String fileName) throws SecurityException, IOException {
 

@@ -137,7 +137,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void createBtnEventHandler(ActionEvent event) {
         if (!createUsernameField.getText().isEmpty() && !createPasswordField.getText().isEmpty() && !createUserTypeChoiceBox.getItems().isEmpty()) {
-            dbController.createUser((dbController.getUserIDCount() + 1), createUsernameField.getText(), encrypt.encryptString(createPasswordField.getText()), createUserTypeChoiceBox.getValue());
+            dbController.createUser((dbController.getUserIDCount() + 1), createUsernameField.getText(),encrypt.encryptString(createPasswordField.getText()), createUserTypeChoiceBox.getValue());
             insertDbLabel.setText("User created in database!");
         }
 

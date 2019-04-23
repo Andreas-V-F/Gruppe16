@@ -27,7 +27,7 @@ import javafx.stage.Stage;
  */
 public class DiaryDocumentController {
 
-    FXMLLoader loader = new FXMLLoader();
+    private FXMLLoader loader = new FXMLLoader();
 
     @FXML
     private Hyperlink logoutLink;

@@ -1,0 +1,68 @@
+Apr 09, 2019 10:44:07 AM sensumboosted.GUI.FXMLDocumentController logLoginAttempt
+INFO: Bruger: "q" har logget ind i systemet.
+Apr 09, 2019 10:44:10 AM sensumboosted.GUI.FXMLDocumentController logLoginAttempt
+INFO: Bruger: "q" har logget ind i systemet.
+Apr 09, 2019 10:44:18 AM sensumboosted.GUI.FXMLDocumentController logLoginAttempt
+INFO: Bruger: "123" har forsøgt at logge ind
+Apr 09, 2019 10:44:22 AM sensumboosted.GUI.FXMLDocumentController logLoginAttempt
+INFO: Bruger: "INTET BRUGERNAVN INDTASTET" har forsøgt at logge ind
+Apr 09, 2019 10:44:28 AM sensumboosted.GUI.FXMLDocumentController logLoginAttempt
+INFO: Bruger: "asd" har forsøgt at logge ind
+Apr 09, 2019 10:44:31 AM sensumboosted.GUI.FXMLDocumentController logLoginAttempt
+INFO: Bruger: "asd" har forsøgt at logge ind
+Apr 09, 2019 10:44:37 AM sensumboosted.GUI.FXMLDocumentController logLoginAttempt
+INFO: Bruger: "1" har forsøgt at logge ind
+Apr 09, 2019 10:44:39 AM sensumboosted.GUI.FXMLDocumentController logLoginAttempt
+INFO: Bruger: "INTET BRUGERNAVN INDTASTET" har forsøgt at logge ind
+Apr 09, 2019 10:52:13 AM sensumboosted.GUI.FXMLDocumentController logLoginAttempt
+INFO: Bruger: "q" har logget ind i systemet.
+Apr 09, 2019 10:52:25 AM sensumboosted.GUI.FXMLDocumentController logLoginAttempt
+INFO: Bruger: "q" har logget ind i systemet.
+Apr 09, 2019 10:52:29 AM sensumboosted.GUI.FXMLDocumentController logLoginAttempt
+INFO: Bruger: "q" har logget ind i systemet.
+Apr 09, 2019 10:56:50 AM sensumboosted.GUI.FXMLDocumentController logLoginAttempt
+INFO: Bruger: "q" har logget ind i systemet.
+Apr 09, 2019 10:59:53 AM sensumboosted.GUI.FXMLDocumentController logLoginAttempt
+INFO: Bruger: "q" har logget ind i systemet.
+Apr 09, 2019 1:14:53 PM sensumboosted.GUI.FXMLDocumentController logLoginAttempt
+INFO: Bruger: "qwe" har forsøgt at logge ind
+Apr 09, 2019 1:14:57 PM sensumboosted.GUI.FXMLDocumentController logLoginAttempt
+INFO: Bruger: "q" har logget ind i systemet.
+Apr 09, 2019 2:20:26 PM sensumboosted.GUI.FXMLDocumentController logLoginAttempt
+INFO: Bruger: "q" har logget ind i systemet.
+apr. 09, 2019 8:57:23 PM sensumboosted.GUI.FXMLDocumentController logLoginAttempt
+INFO: Bruger: "' or 1=1 ; --" har forsøgt at logge ind
+apr. 09, 2019 8:57:25 PM sensumboosted.GUI.FXMLDocumentController logLoginAttempt
+INFO: Bruger: "' or 1=1 ; --" har forsøgt at logge ind
+apr. 09, 2019 8:57:25 PM sensumboosted.GUI.FXMLDocumentController logLoginAttempt
+INFO: Bruger: "' or 1=1 ; --" har forsøgt at logge ind
+apr. 09, 2019 8:57:27 PM sensumboosted.GUI.FXMLDocumentController logLoginAttempt
+INFO: Bruger: "' or 1=1 ; --" har forsøgt at logge ind
+Apr 11, 2019 11:35:23 AM sensumboosted.GUI.FXMLDocumentController logLoginAttempt
+INFO: Bruger: "q" har logget ind i systemet.
+Apr 11, 2019 11:39:13 AM sensumboosted.GUI.FXMLDocumentController logLoginAttempt
+INFO: Bruger: "q" har logget ind i systemet.
+Apr 11, 2019 11:39:39 AM sensumboosted.GUI.FXMLDocumentController logLoginAttempt
+INFO: Bruger: "q" har logget ind i systemet.
+Apr 11, 2019 11:59:29 AM sensumboosted.GUI.FXMLDocumentController logLoginAttempt
+INFO: Bruger: "q" har logget ind i systemet.
+Apr 11, 2019 5:06:32 PM sensumboosted.GUI.FXMLDocumentController logLoginAttempt
+INFO: Bruger: "q" har logget ind i systemet.
+Apr 11, 2019 5:09:15 PM sensumboosted.GUI.FXMLDocumentController logLoginAttempt
+INFO: Bruger: "q" har logget ind i systemet.
+Apr 11, 2019 5:09:29 PM sensumboosted.GUI.FXMLDocumentController logLoginAttempt
+INFO: Bruger: "q" har logget ind i systemet.
+Apr 11, 2019 5:11:36 PM sensumboosted.GUI.FXMLDocumentController logLoginAttempt
+INFO: Bruger: "q" har logget ind i systemet.
+Apr 11, 2019 5:11:40 PM sensumboosted.GUI.FXMLDocumentController logLoginAttempt
+INFO: Bruger: "asd" har forsøgt at logge ind
+Apr 11, 2019 5:12:31 PM sensumboosted.GUI.FXMLDocumentController logLoginAttempt
+INFO: Bruger: "q" har logget ind i systemet.
+Apr 23, 2019 10:25:02 AM sensumboosted.GUI.FXMLDocumentController logLoginAttempt
+INFO: Bruger: "q" har logget ind i systemet.
+Apr 23, 2019 10:25:13 AM sensumboosted.GUI.FXMLDocumentController logLoginAttempt
+INFO: Bruger: "q" har logget ind i systemet.
+Apr 23, 2019 10:26:36 AM sensumboosted.GUI.FXMLDocumentController logLoginAttempt
+INFO: Bruger: "q" har logget ind i systemet.
+Apr 23, 2019 10:26:55 AM sensumboosted.GUI.FXMLDocumentController logLoginAttempt
+INFO: Bruger: "q" har logget ind i systemet.
