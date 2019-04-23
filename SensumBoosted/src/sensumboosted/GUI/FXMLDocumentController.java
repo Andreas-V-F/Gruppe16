@@ -8,32 +8,41 @@ package sensumboosted.GUI;
 import java.io.IOException;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
-import sensumboosted.Domain.DatabaseController;
+import sensumboosted.Persistence.DatabaseController;
 import sensumboosted.Domain.Encryption;
-import sensumboosted.Domain.Log;
+import sensumboosted.Persistence.Log;
+import sensumboosted.Domain.UserAccount;
+import sensumboosted.Domain.UserInformation;
 
 /**
  *
@@ -79,7 +88,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Button createBtn;
     @FXML
-    private Button backToDiaryPaneFromCreate;
+    private Button createToUserSettingBtn;
     @FXML
     private TextField createUsernameField;
     @FXML
@@ -102,14 +111,67 @@ public class FXMLDocumentController implements Initializable {
     private TextField createEmailField;
     @FXML
     private TextField usernameField;
+    @FXML
+    private TextArea infoBox;
+    @FXML
+    private TextArea textArea;
+    @FXML
+    private Pane casePane;
+    @FXML
+    private Pane userSettingPane;
+    @FXML
+    private Button userAccountBtn;
+    @FXML
+    private Button userInformationBtn;
+    @FXML
+    private TableView<UserAccount> usersTableView;
+    @FXML
+    private TableColumn<UserAccount, Integer> userIDColumn;
+    @FXML
+    private TableColumn<UserAccount, String> usernameColumn;
+    @FXML
+    private TableColumn<UserAccount, String> passwordColumn;
+    @FXML
+    private TableColumn<UserAccount, String> userTypeColumn;
+    @FXML
+    private TableView<UserInformation> userInformationTableView;
+    @FXML
+    private TableColumn<UserInformation, Integer> userIDInfoColumn;
+    @FXML
+    private TableColumn<UserInformation, String> firstNameColumn;
+    @FXML
+    private TableColumn<UserInformation, String> middleNameColumn;
+    @FXML
+    private TableColumn<UserInformation, String> lastNameColumn;
+    @FXML
+    private TableColumn<UserInformation, Integer> cprColumn;
+    @FXML
+    private TableColumn<UserInformation, String> addressColumn;
+    @FXML
+    private TableColumn<UserInformation, Integer> postalCodeColumn;
+    @FXML
+    private TableColumn<UserInformation, String> cityColumn;
+    @FXML
+    private TableColumn<UserInformation, String> emailColumn;
+    @FXML
+    private Button updateBtn;
+
+    ObservableList<UserAccount> obListUA = FXCollections.observableArrayList();
+    ObservableList<UserInformation> obListUI = FXCollections.observableArrayList();
+
+    private Connection con = dbController.connect();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        dbController.connect();
+// Måske ikke nødvendigt at connect. Kun bruges, hvis der skal kommunikeres med databasen
+// og det gør de brugte metoder i dbController allerede.
+//        dbController.connect();
         loginInfoLabel.setAlignment(Pos.CENTER);
         String[] userType = {"Adminstrator", "Sagsbehandler", "Medicinansvarlig", "Vikar", "Pædagog", "Pårørerende"};
 
         createUserTypeChoiceBox.getItems().addAll(userType);
+        userAccountTableView();
+        userInformationTableView();
     }
 
     public String getUsernameField() {
@@ -129,6 +191,7 @@ public class FXMLDocumentController implements Initializable {
         Boolean j = false;
         j = TestTest();
         if (j) {
+            setWindowSizeDiary(event);
             loadDiaryScene();
         }
     }
@@ -156,6 +219,15 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
+    private void userSettingBtnHandler(ActionEvent event) {
+        userSettingScene();
+
+        int userid = dbController.getUserIDCount();
+        String kage = Integer.toString(userid);
+
+    }
+
+    @FXML
     private void cancelBTNHandler(ActionEvent event) {
         System.exit(1);
     }
@@ -164,6 +236,7 @@ public class FXMLDocumentController implements Initializable {
     private void passwordFieldHandler(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
             if (TestTest()) {
+                setWindowSizeDiary(event);
                 loadDiaryScene();
             }
         }
@@ -173,12 +246,13 @@ public class FXMLDocumentController implements Initializable {
     private void usernameFieldHandler(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
             if (TestTest()) {
+                setWindowSizeDiary(event);
                 loadDiaryScene();
             }
         }
     }
 
-// Should be renamed!
+// Should be renamed! and dont think this method should do so much logic. should be moved
     private boolean TestTest() {
         Boolean j = false;
         String s;
@@ -230,23 +304,6 @@ public class FXMLDocumentController implements Initializable {
         return j;
     }
 
-//    This should be deleted if we use the same stage and not creating a new stage
-//    Loads a new window for the diary.
-//    private void loadDiaryWindow() {
-//        loader.setLocation(getClass().getResource("DiaryDocument.fxml"));
-//        try {
-//            loader.load();
-//        } catch (IOException ex) {
-//            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        DiaryDocumentController DiaryDisplay = loader.getController();
-//        DiaryDisplay.setText(getUsernameField());
-//        Parent p = loader.getRoot();
-//        Stage stage = new Stage();
-//        stage.setTitle("Diary window");
-//        stage.setScene(new Scene(p));
-//        stage.showAndWait();
-//    }
     private void loadDiaryScene() {
         loginPane.setVisible(false);
         loginPane.setDisable(true);
@@ -254,9 +311,15 @@ public class FXMLDocumentController implements Initializable {
         diaryPane.setDisable(false);
     }
 
-    private void createUserScene() {
-        
+    public void userSettingScene() {
 
+        diaryPane.setVisible(false);
+        diaryPane.setDisable(true);
+        userSettingPane.setVisible(true);
+        userSettingPane.setDisable(false);
+    }
+
+    private void createUserScene() {
         diaryPane.setVisible(false);
         diaryPane.setDisable(true);
         createUserPane.setVisible(true);
@@ -268,6 +331,7 @@ public class FXMLDocumentController implements Initializable {
         usernameField.clear();
         passwordField.clear();
         loginInfoLabel.setText("");
+        setWindowSizeLogin(event);
         loginPane.setVisible(true);
         loginPane.setDisable(false);
         diaryPane.setVisible(false);
@@ -306,5 +370,128 @@ public class FXMLDocumentController implements Initializable {
         createPostalCodeField.clear();
         createCityField.clear();
         createEmailField.clear();
+    }
+
+    @FXML
+    void handleUpdateAction(ActionEvent event) {
+        String[] info = dbController.getUserInformation();
+        String userID = info[0];
+        String Firstname = info[1];
+        String Middlename = info[2];
+        String Lastname = info[3];
+        String CPR = info[4];
+        String Address = info[5];
+        String PostalCode = info[6];
+        String City = info[7];
+        String Email = info[8];
+
+        infoBox.setText("Fulde navn: " + Firstname + " " + Middlename + " " + Lastname + "\n"
+                + "CPR nr: " + CPR + "\n"
+                + "Adresse: " + Address + ", " + City + ", " + PostalCode);
+    }
+
+    @FXML
+    void handleGemActon(ActionEvent event) {
+        String[] info = dbController.getUserInformation();
+        String userID = info[0];
+        String input = textArea.getText();
+        if (dbController.hasOpenCase(userID)) {
+            System.out.println(input);
+            dbController.saveCase(dbController.findCaseID(Integer.parseInt(userID)), userID, input);
+        } else {
+            dbController.createCase(userID, input);
+        }
+    }
+
+    @FXML
+    void handleCloseAction(ActionEvent event) {
+        String[] info = dbController.getUserInformation();
+        String userID = info[0];
+        dbController.closeAllCases(userID);
+    }
+
+    // Dont change the window to the right size.
+    private void setWindowSizeLogin(Event event) {
+        ((Node) (event.getSource())).getScene().getWindow().setWidth(299);
+        ((Node) (event.getSource())).getScene().getWindow().setHeight(250);
+    }
+
+    private void setWindowSizeDiary(Event event) {
+        ((Node) (event.getSource())).getScene().getWindow().setWidth(1000);
+        ((Node) (event.getSource())).getScene().getWindow().setHeight(700);
+    }
+
+    @FXML
+    private void openCaseHandler(ActionEvent event) {
+        diaryPane.setDisable(true);
+        diaryPane.setVisible(false);
+        casePane.setVisible(true);
+        casePane.setDisable(false);
+    }
+
+    private void userAccountTableView() {
+
+        try {
+            ResultSet rs = con.createStatement().executeQuery("SELECT * FROM users");
+
+            while (rs.next()) {
+                obListUA.add(new UserAccount(rs.getInt("user_id"), rs.getString("username"),
+                        rs.getString("password"), rs.getString("user_type")));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        userIDColumn.setCellValueFactory(new PropertyValueFactory<>("userid"));
+        usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
+        passwordColumn.setCellValueFactory(new PropertyValueFactory<>("password"));
+        userTypeColumn.setCellValueFactory(new PropertyValueFactory<>("usertype"));
+
+        usersTableView.setItems(obListUA);
+        usersTableView.setEditable(true);
+    }
+
+    private void userInformationTableView() {
+        try {
+            ResultSet rs = con.createStatement().executeQuery("SELECT * FROM user_information");
+            while (rs.next()) {
+                obListUI.add(new UserInformation(rs.getInt("user_id"), rs.getString("firstname"),
+                        rs.getString("middlename"), rs.getString("lastname"), rs.getInt("cpr"),
+                        rs.getString("address"), rs.getInt("postal_code"), rs.getString("city"),
+                        rs.getString("email")));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        userIDInfoColumn.setCellValueFactory(new PropertyValueFactory<>("userid"));
+        firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        middleNameColumn.setCellValueFactory(new PropertyValueFactory<>("middleName"));
+        lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        cprColumn.setCellValueFactory(new PropertyValueFactory<>("cpr"));
+        addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
+        postalCodeColumn.setCellValueFactory(new PropertyValueFactory<>("postalcode"));
+        cityColumn.setCellValueFactory(new PropertyValueFactory<>("city"));
+        emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
+
+        userInformationTableView.setItems(obListUI);
+        userInformationTableView.setEditable(true);
+    }
+
+    public void userAccountBtnHandler(ActionEvent event) {
+        usersTableView.setVisible(true);
+        userInformationTableView.setVisible(false);
+    }
+
+    public void userInformationBtnHandler(ActionEvent event) {
+        userInformationTableView.setVisible(true);
+        usersTableView.setVisible(false);
+    }
+
+    public void updateBtnEventHandler(ActionEvent event) {
+        usersTableView.getItems().clear();
+        userInformationTableView.getItems().clear();
+        userInformationTableView();
+        userAccountTableView();
     }
 }

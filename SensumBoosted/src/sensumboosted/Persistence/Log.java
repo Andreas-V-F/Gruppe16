@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sensumboosted.Domain;
+package sensumboosted.Persistence;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,7 +18,7 @@ import java.util.logging.SimpleFormatter;
 public class Log {
 
     private Logger logger;
-    FileHandler fH;
+    private FileHandler fH;
 
     public Log(String fileName) throws SecurityException, IOException {
 

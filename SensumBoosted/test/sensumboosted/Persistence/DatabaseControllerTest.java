@@ -3,36 +3,36 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sensumboosted.Domain;
+package sensumboosted.Persistence;
 
 import java.sql.Connection;
 import java.sql.Statement;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import sensumboosted.Domain.DBcontroller;
 
 /**
  *
  * @author andersschjonning
  */
-public class DatabaseControllerTest1 {
+public class DatabaseControllerTest {
     
     DatabaseController db;
-    int userId = 111;
     
     @Before
     public void setUp() throws Exception {
         db = new DatabaseController();
         db.connect();
-        db.createUser(userId, "username", "password", "userType");
+        db.deleteUser(111);
     }
   
     
     @Test
-    public void deleteUser() {
+    public void createUser() {
        int i = db.getUserIDCount();
-       db.deleteUser(userId);
-       Assert.assertTrue(db.getUserIDCount() == i-1);
+       db.createUser(111, "username", "password", "userType");
+       Assert.assertTrue(db.getUserIDCount() == i+1);
    }
     
    

@@ -16,13 +16,12 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.postgresql.core.QueryExecutor;
 
 /**
  *
  * @author Mikkel Hoeyberg
  */
-public class DatabaseController  implements DatalayerInterface {
+public class DBcontroller {
 
     // Localhost som kan styres via pgAdmin 4
 //    private final String url = "jdbc:postgresql://localhost:5432/example";
@@ -34,8 +33,12 @@ public class DatabaseController  implements DatalayerInterface {
     private final String passDB = "afVcwMqs2zGaNtod0axmHcsrAuy5u7uD";
     private Encryption encrypt;
     private int count;
+    private int userid;
+    private String username;
+    private String password;
+    private String usertype;
 
-    public DatabaseController() {
+    public DBcontroller() {
     }
 
     private ResultSet rs = null;
@@ -57,7 +60,6 @@ public class DatabaseController  implements DatalayerInterface {
         return connection;
     }
 
-    @Override
     public String checkLogin(String user, String pass) {
         System.out.println("Checking login in progress, please wait.");
         try {
@@ -105,7 +107,7 @@ public class DatabaseController  implements DatalayerInterface {
             st.execute(sql);
             st.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DBcontroller.class.getName()).log(Level.SEVERE, null, ex);
         }
         //createLogbook(userID);
         //createLogbookEntry(userID, "Personen hedder " + username);
@@ -124,21 +126,21 @@ public class DatabaseController  implements DatalayerInterface {
             st.execute(sql);
             st.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DBcontroller.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public int getUserIDCount() {
         try (Statement st = connection.createStatement()) {
             String sql = "SELECT COUNT(*) AS user_id FROM Users";
-            
+
             rs = st.executeQuery(sql);
             while (rs.next()) {
                 count = rs.getInt("user_id");
-                
+
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DBcontroller.class.getName()).log(Level.SEVERE, null, ex);
         }
         return count;
     }
@@ -155,7 +157,7 @@ public class DatabaseController  implements DatalayerInterface {
             st.close();
             return id;
         } catch (SQLException ex) {
-            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DBcontroller.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
@@ -174,7 +176,7 @@ public class DatabaseController  implements DatalayerInterface {
             st.execute(sql);
             st.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DBcontroller.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -189,7 +191,7 @@ public class DatabaseController  implements DatalayerInterface {
                 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DBcontroller.class.getName()).log(Level.SEVERE, null, ex);
         }
         return id;
     }
@@ -205,7 +207,7 @@ public class DatabaseController  implements DatalayerInterface {
                 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DBcontroller.class.getName()).log(Level.SEVERE, null, ex);
         }
         return cnt;
     }
@@ -218,7 +220,7 @@ public class DatabaseController  implements DatalayerInterface {
             st.execute(sql);
           
         } catch (SQLException ex) {
-            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DBcontroller.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         try (Statement st = connection.createStatement()) {
@@ -226,7 +228,7 @@ public class DatabaseController  implements DatalayerInterface {
             st.execute(sql);
             
         } catch (SQLException ex) {
-            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DBcontroller.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -235,8 +237,110 @@ public class DatabaseController  implements DatalayerInterface {
             String sql = "DELETE FROM public.users WHERE user_id = " + userID;
             st.execute(sql);         
         } catch (SQLException ex) {
-            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DBcontroller.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-}
 
+//    public void getUserInformation() {
+//        try (Statement st = connection.createStatement()) {
+//            String sql = "SELECT * FROM USER_INFORMATION";
+//
+//            rs = st.executeQuery(sql);
+//            while (rs.next()) {
+//                int userid = rs.getInt("user_id");
+//                String getFirstname = rs.getString("firstname");
+//                String getMiddlename = rs.getString("middlename");
+//                String getLastname = rs.getString("lastname");
+//                int getCPR = rs.getInt("cpr");
+//                String getAddress = rs.getString("address");
+//                int getPostalCode = rs.getInt("postal_code");
+//                String getCity = rs.getString("city");
+//                String getEmail = rs.getString("email");
+//
+//                hasUserInformation = Integer.toString(userid) + "\t|" + getFirstname + "\t|" + getMiddlename
+//                        + "\t|" + getLastname + "\t|" + Integer.toString(getCPR)
+//                        + "\t|" + getAddress + "\t|" + Integer.toString(getPostalCode)
+//                        + "\t|" + getCity + "\t|" + getEmail;
+//
+//                System.out.println(hasUserInformation);
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
+//
+//    public void getUsers() {
+//        try (Statement st = connection.createStatement()) {
+//            String sql = "SELECT * FROM USERS";
+//
+//            rs = st.executeQuery(sql);
+//            while (rs.next()) {
+//                int userid = rs.getInt("user_id");
+//                String getUsername = rs.getString("username");
+//                String getPassword = rs.getString("password");
+//                String getUsertype = rs.getString("user_type");
+//
+//                hasUser = Integer.toString(userid) + "\t|" + getUsername + "\t|"
+//                        + getPassword + "\t" + getUsertype;
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
+
+    public int getUserID() {
+        try (Statement st = connection.createStatement()) {
+            String sql = "SELECT user_id FROM users";
+
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                userid = rs.getInt("user_id");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBcontroller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return userid;
+    }
+
+    public String getUsername() {
+        try (Statement st = connection.createStatement()) {
+            String sql = "SELECT username FROM users";
+
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                username = rs.getString("username");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBcontroller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return username;
+    }
+
+    public String getPassword() {
+        try (Statement st = connection.createStatement()) {
+            String sql = "SELECT password FROM users";
+
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                password = rs.getString("password");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBcontroller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return password;
+    }
+    
+        public String getUserType() {
+        try (Statement st = connection.createStatement()) {
+            String sql = "SELECT user_type FROM users";
+
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                usertype = rs.getString("user_type");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBcontroller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return usertype;
+    }
+}

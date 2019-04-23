@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sensumboosted.Domain;
+package sensumboosted.Persistence;
 
 import java.sql.Connection;
 import java.sql.Statement;
@@ -17,13 +17,12 @@ import org.junit.Test;
  */
 public class BusinessServiceTest {
     
-    BusinessServiceImpl service; 
+
     DatabaseController db;
     int userId = 111;
     
     @Before
     public void setUp() throws Exception {
-        service = new BusinessServiceImpl();
         db = new DatabaseController();
         db.connect();
         db.deleteUser(userId);
@@ -35,7 +34,7 @@ public class BusinessServiceTest {
     @Test
     public void createLogEntry() {
        int cnt = db.getCount("logbook");
-       service.addLog(userId, "text");
+       //
        Assert.assertEquals(db.getCount("logbook"), cnt );
    }
         
