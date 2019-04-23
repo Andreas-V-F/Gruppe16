@@ -11,6 +11,14 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -23,13 +31,18 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import sensumboosted.Persistence.DatabaseController;
 import sensumboosted.Domain.Encryption;
 import sensumboosted.Persistence.Log;
+import sensumboosted.Domain.UserAccount;
+import sensumboosted.Domain.UserInformation;
 
 /**
  *
@@ -75,7 +88,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Button createBtn;
     @FXML
-    private Button backToDiaryPaneFromCreate;
+    private Button createToUserSettingBtn;
     @FXML
     private TextField createUsernameField;
     @FXML
@@ -104,14 +117,61 @@ public class FXMLDocumentController implements Initializable {
     private TextArea textArea;
     @FXML
     private Pane casePane;
+    @FXML
+    private Pane userSettingPane;
+    @FXML
+    private Button userAccountBtn;
+    @FXML
+    private Button userInformationBtn;
+    @FXML
+    private TableView<UserAccount> usersTableView;
+    @FXML
+    private TableColumn<UserAccount, Integer> userIDColumn;
+    @FXML
+    private TableColumn<UserAccount, String> usernameColumn;
+    @FXML
+    private TableColumn<UserAccount, String> passwordColumn;
+    @FXML
+    private TableColumn<UserAccount, String> userTypeColumn;
+    @FXML
+    private TableView<UserInformation> userInformationTableView;
+    @FXML
+    private TableColumn<UserInformation, Integer> userIDInfoColumn;
+    @FXML
+    private TableColumn<UserInformation, String> firstNameColumn;
+    @FXML
+    private TableColumn<UserInformation, String> middleNameColumn;
+    @FXML
+    private TableColumn<UserInformation, String> lastNameColumn;
+    @FXML
+    private TableColumn<UserInformation, Integer> cprColumn;
+    @FXML
+    private TableColumn<UserInformation, String> addressColumn;
+    @FXML
+    private TableColumn<UserInformation, Integer> postalCodeColumn;
+    @FXML
+    private TableColumn<UserInformation, String> cityColumn;
+    @FXML
+    private TableColumn<UserInformation, String> emailColumn;
+    @FXML
+    private Button updateBtn;
+
+    ObservableList<UserAccount> obListUA = FXCollections.observableArrayList();
+    ObservableList<UserInformation> obListUI = FXCollections.observableArrayList();
+
+    private Connection con = dbController.connect();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        dbController.connect();
+// Måske ikke nødvendigt at connect. Kun bruges, hvis der skal kommunikeres med databasen
+// og det gør de brugte metoder i dbController allerede.
+//        dbController.connect();
         loginInfoLabel.setAlignment(Pos.CENTER);
         String[] userType = {"Adminstrator", "Sagsbehandler", "Medicinansvarlig", "Vikar", "Pædagog", "Pårørerende"};
 
         createUserTypeChoiceBox.getItems().addAll(userType);
+        userAccountTableView();
+        userInformationTableView();
     }
 
     public String getUsernameField() {
@@ -159,6 +219,15 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
+    private void userSettingBtnHandler(ActionEvent event) {
+        userSettingScene();
+
+        int userid = dbController.getUserIDCount();
+        String kage = Integer.toString(userid);
+
+    }
+
+    @FXML
     private void cancelBTNHandler(ActionEvent event) {
         System.exit(1);
     }
@@ -183,7 +252,7 @@ public class FXMLDocumentController implements Initializable {
         }
     }
 
-// Should be renamed! and dont think this method should do so much logic.
+// Should be renamed! and dont think this method should do so much logic. should be moved
     private boolean TestTest() {
         Boolean j = false;
         String s;
@@ -235,28 +304,19 @@ public class FXMLDocumentController implements Initializable {
         return j;
     }
 
-//    This should be deleted if we use the same stage and not creating a new stage
-//    Loads a new window for the diary.
-//    private void loadDiaryWindow() {
-//        loader.setLocation(getClass().getResource("DiaryDocument.fxml"));
-//        try {
-//            loader.load();
-//        } catch (IOException ex) {
-//            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        DiaryDocumentController DiaryDisplay = loader.getController();
-//        DiaryDisplay.setText(getUsernameField());
-//        Parent p = loader.getRoot();
-//        Stage stage = new Stage();
-//        stage.setTitle("Diary window");
-//        stage.setScene(new Scene(p));
-//        stage.showAndWait();
-//    }
     private void loadDiaryScene() {
         loginPane.setVisible(false);
         loginPane.setDisable(true);
         diaryPane.setVisible(true);
         diaryPane.setDisable(false);
+    }
+
+    public void userSettingScene() {
+
+        diaryPane.setVisible(false);
+        diaryPane.setDisable(true);
+        userSettingPane.setVisible(true);
+        userSettingPane.setDisable(false);
     }
 
     private void createUserScene() {
@@ -360,13 +420,78 @@ public class FXMLDocumentController implements Initializable {
         ((Node) (event.getSource())).getScene().getWindow().setWidth(1000);
         ((Node) (event.getSource())).getScene().getWindow().setHeight(700);
     }
-    
+
     @FXML
-    void openCaseHandler(ActionEvent event) {
+    private void openCaseHandler(ActionEvent event) {
         diaryPane.setDisable(true);
         diaryPane.setVisible(false);
         casePane.setVisible(true);
         casePane.setDisable(false);
-        
+    }
+
+    private void userAccountTableView() {
+
+        try {
+            ResultSet rs = con.createStatement().executeQuery("SELECT * FROM users");
+
+            while (rs.next()) {
+                obListUA.add(new UserAccount(rs.getInt("user_id"), rs.getString("username"),
+                        rs.getString("password"), rs.getString("user_type")));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        userIDColumn.setCellValueFactory(new PropertyValueFactory<>("userid"));
+        usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
+        passwordColumn.setCellValueFactory(new PropertyValueFactory<>("password"));
+        userTypeColumn.setCellValueFactory(new PropertyValueFactory<>("usertype"));
+
+        usersTableView.setItems(obListUA);
+        usersTableView.setEditable(true);
+    }
+
+    private void userInformationTableView() {
+        try {
+            ResultSet rs = con.createStatement().executeQuery("SELECT * FROM user_information");
+            while (rs.next()) {
+                obListUI.add(new UserInformation(rs.getInt("user_id"), rs.getString("firstname"),
+                        rs.getString("middlename"), rs.getString("lastname"), rs.getInt("cpr"),
+                        rs.getString("address"), rs.getInt("postal_code"), rs.getString("city"),
+                        rs.getString("email")));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        userIDInfoColumn.setCellValueFactory(new PropertyValueFactory<>("userid"));
+        firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        middleNameColumn.setCellValueFactory(new PropertyValueFactory<>("middleName"));
+        lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        cprColumn.setCellValueFactory(new PropertyValueFactory<>("cpr"));
+        addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
+        postalCodeColumn.setCellValueFactory(new PropertyValueFactory<>("postalcode"));
+        cityColumn.setCellValueFactory(new PropertyValueFactory<>("city"));
+        emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
+
+        userInformationTableView.setItems(obListUI);
+        userInformationTableView.setEditable(true);
+    }
+
+    public void userAccountBtnHandler(ActionEvent event) {
+        usersTableView.setVisible(true);
+        userInformationTableView.setVisible(false);
+    }
+
+    public void userInformationBtnHandler(ActionEvent event) {
+        userInformationTableView.setVisible(true);
+        usersTableView.setVisible(false);
+    }
+
+    public void updateBtnEventHandler(ActionEvent event) {
+        usersTableView.getItems().clear();
+        userInformationTableView.getItems().clear();
+        userInformationTableView();
+        userAccountTableView();
     }
 }
