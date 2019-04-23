@@ -253,7 +253,7 @@ public class FXMLDocumentController implements Initializable {
             }
         }
     }
-    
+
     @FXML
     private void userSettingToDiaryPaneBtnHandler(ActionEvent event) {
         userSettingToDiaryPane();
@@ -325,7 +325,7 @@ public class FXMLDocumentController implements Initializable {
         userSettingPane.setVisible(true);
         userSettingPane.setDisable(false);
     }
-    
+
     public void userSettingToDiaryPane() {
         userSettingPane.setVisible(false);
         userSettingPane.setDisable(true);

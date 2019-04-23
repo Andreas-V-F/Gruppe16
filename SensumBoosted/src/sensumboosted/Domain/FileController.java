@@ -5,6 +5,8 @@
  */
 package sensumboosted.Domain;
 
+import sensumboosted.Interface.DatalayerInterface;
+
 /**
  *
  * @author andersschjonning
