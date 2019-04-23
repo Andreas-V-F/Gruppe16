@@ -8,21 +8,16 @@ package sensumboosted.GUI;
 import java.io.IOException;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -31,12 +26,10 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
-import sensumboosted.Domain.DatabaseController;
+import sensumboosted.Persistence.DatabaseController;
 import sensumboosted.Domain.Encryption;
-import sensumboosted.Domain.Log;
+import sensumboosted.Persistence.Log;
 
 /**
  *
@@ -48,7 +41,6 @@ public class FXMLDocumentController implements Initializable {
     private FXMLLoader loader = new FXMLLoader();
     private Encryption encrypt = new Encryption();
     private Log myLog;
-    
 
     private Label label; // Is this even used??
 
@@ -110,6 +102,8 @@ public class FXMLDocumentController implements Initializable {
     private TextArea infoBox;
     @FXML
     private TextArea textArea;
+    @FXML
+    private Pane casePane;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -137,6 +131,7 @@ public class FXMLDocumentController implements Initializable {
         Boolean j = false;
         j = TestTest();
         if (j) {
+            setWindowSizeDiary(event);
             loadDiaryScene();
         }
     }
@@ -172,6 +167,7 @@ public class FXMLDocumentController implements Initializable {
     private void passwordFieldHandler(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
             if (TestTest()) {
+                setWindowSizeDiary(event);
                 loadDiaryScene();
             }
         }
@@ -181,12 +177,13 @@ public class FXMLDocumentController implements Initializable {
     private void usernameFieldHandler(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
             if (TestTest()) {
+                setWindowSizeDiary(event);
                 loadDiaryScene();
             }
         }
     }
 
-// Should be renamed!
+// Should be renamed! and dont think this method should do so much logic.
     private boolean TestTest() {
         Boolean j = false;
         String s;
@@ -263,7 +260,6 @@ public class FXMLDocumentController implements Initializable {
     }
 
     private void createUserScene() {
-
         diaryPane.setVisible(false);
         diaryPane.setDisable(true);
         createUserPane.setVisible(true);
@@ -275,6 +271,7 @@ public class FXMLDocumentController implements Initializable {
         usernameField.clear();
         passwordField.clear();
         loginInfoLabel.setText("");
+        setWindowSizeLogin(event);
         loginPane.setVisible(true);
         loginPane.setDisable(false);
         diaryPane.setVisible(false);
@@ -318,15 +315,15 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     void handleUpdateAction(ActionEvent event) {
         String[] info = dbController.getUserInformation();
-    String userID = info[0];
-    String Firstname = info[1];
-    String Middlename = info[2];
-    String Lastname = info[3];
-    String CPR = info[4];
-    String Address = info[5];
-    String PostalCode = info[6];
-    String City = info[7];
-    String Email = info[8];
+        String userID = info[0];
+        String Firstname = info[1];
+        String Middlename = info[2];
+        String Lastname = info[3];
+        String CPR = info[4];
+        String Address = info[5];
+        String PostalCode = info[6];
+        String City = info[7];
+        String Email = info[8];
 
         infoBox.setText("Fulde navn: " + Firstname + " " + Middlename + " " + Lastname + "\n"
                 + "CPR nr: " + CPR + "\n"
@@ -335,22 +332,41 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     void handleGemActon(ActionEvent event) {
-    String[] info = dbController.getUserInformation();
-    String userID = info[0];
-    String input = textArea.getText();
+        String[] info = dbController.getUserInformation();
+        String userID = info[0];
+        String input = textArea.getText();
         if (dbController.hasOpenCase(userID)) {
             System.out.println(input);
             dbController.saveCase(dbController.findCaseID(Integer.parseInt(userID)), userID, input);
-        }
-        else {
+        } else {
             dbController.createCase(userID, input);
         }
     }
+
     @FXML
     void handleCloseAction(ActionEvent event) {
         String[] info = dbController.getUserInformation();
         String userID = info[0];
         dbController.closeAllCases(userID);
+    }
+
+    // Dont change the window to the right size.
+    private void setWindowSizeLogin(Event event) {
+        ((Node) (event.getSource())).getScene().getWindow().setWidth(299);
+        ((Node) (event.getSource())).getScene().getWindow().setHeight(250);
+    }
+
+    private void setWindowSizeDiary(Event event) {
+        ((Node) (event.getSource())).getScene().getWindow().setWidth(1000);
+        ((Node) (event.getSource())).getScene().getWindow().setHeight(700);
+    }
+    
+    @FXML
+    void openCaseHandler(ActionEvent event) {
+        diaryPane.setDisable(true);
+        diaryPane.setVisible(false);
+        casePane.setVisible(true);
+        casePane.setDisable(false);
         
     }
 }

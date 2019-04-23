@@ -4,7 +4,7 @@
  * and open the template in the editor.
  * Mikkel har lavet denne linje som test og skal fjernes igen
  */
-package sensumboosted.Domain;
+package sensumboosted.Persistence;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,6 +15,7 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.postgresql.core.QueryExecutor;
+import sensumboosted.Domain.Encryption;
 
 /**
  *
@@ -22,11 +23,6 @@ import org.postgresql.core.QueryExecutor;
  */
 public class DatabaseController {
 
-    // Localhost som kan styres via pgAdmin 4
-//    private final String url = "jdbc:postgresql://localhost:5432/example";
-//    private final String userDB = "postgres";
-//    private final String passDB = "postgres";
-    // Controlled by phpMySql
     private final String url = "jdbc:postgresql://balarama.db.elephantsql.com:5432/rsrrjzno";
     private final String userDB = "rsrrjzno";
     private final String passDB = "afVcwMqs2zGaNtod0axmHcsrAuy5u7uD";
@@ -63,11 +59,6 @@ public class DatabaseController {
             Statement st = connection.createStatement();
             String sql = "SELECT username,password FROM users WHERE username='" + user + "' AND password='" + pass + "'";
             rs = st.executeQuery(sql);
-
-//          Bliver ikke brugt endnu, mening er at programmet skal vise en boks med hhv. om man er logget ind eller om login info er forkert.
-//          Mikkel får muligvis kigget på dette indenfor en overskuelig fremtid.
-//            Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
-//            Alert alert2 = new Alert(Alert.AlertType.ERROR);
             int count = 0;
             while (rs.next()) {
                 count++;
@@ -82,12 +73,6 @@ public class DatabaseController {
                 System.out.println("User found");  // Delete this when we hand in our code
                 return "Succesful login";
             }
-
-            /* Should be deleted, there should never be the same user/data twice in a database */
-//          If there is more of the same user in the database
-//            if (count > 1) {
-//                System.out.println("FEJL"); 
-//            }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -104,8 +89,9 @@ public class DatabaseController {
             System.out.println(ex.getMessage());
         }
     }
+
     public void closeAllCases(String userID) {
-         try {
+        try {
             Statement st = connection.createStatement();
             String sql = "UPDATE sager3 SET isopen = 'false' WHERE brugerid = '" + userID + "';";
             rs = st.executeQuery(sql);
@@ -113,9 +99,9 @@ public class DatabaseController {
             System.out.println(ex.getMessage());
         }
     }
-    
+
     public int findCaseID(int userID) {
-         try {
+        try {
             Statement st = connection.createStatement();
             String sql = "SELECT sagsid FROM sager3 WHERE brugerid='" + userID + "' AND isopen='true';";
             rs = st.executeQuery(sql);
@@ -126,6 +112,7 @@ public class DatabaseController {
         }
         return -1;
     }
+
     public boolean hasOpenCase(String userID) {
         try {
             Statement st = connection.createStatement();
@@ -135,7 +122,7 @@ public class DatabaseController {
             if (rs.getInt(1) == Integer.parseInt(userID)) {
                 return true;
             }
-            
+
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -184,14 +171,13 @@ public class DatabaseController {
         }
     }
 
+//Database should increment on its own by adding SERIAL to user ID
     public int getUserIDCount() {
         try (Statement st = connection.createStatement()) {
             String sql = "SELECT COUNT(*) AS user_id FROM Users";
-
             rs = st.executeQuery(sql);
             while (rs.next()) {
                 count = rs.getInt("user_id");
-
             }
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
@@ -250,5 +236,4 @@ public class DatabaseController {
             Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
 }
