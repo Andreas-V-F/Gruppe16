@@ -64,3 +64,5 @@ SensumBoosted/nbproject/private/configs/Run_as_WebStart.properties
 SensumBoosted/nbproject/private/configs/Run_in_Browser.properties
 SensumBoosted/nbproject/project.properties
 SensumBoosted/nbproject/UPDATED.TXT
+*.TXT
+*.xml
