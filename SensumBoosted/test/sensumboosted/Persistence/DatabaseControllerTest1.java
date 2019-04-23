@@ -32,7 +32,7 @@ public class DatabaseControllerTest1 {
     @Test
     public void deleteUser() {
        int i = db.getUserIDCount();
-       db.deleteUser(userId);
+       db.deleteLogbook(db.getCaseId(userId));
        Assert.assertTrue(db.getUserIDCount() == i-1);
    }
     
