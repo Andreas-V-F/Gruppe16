@@ -56,3 +56,11 @@ SensumBoosted/LoginLog.txt.1
 *.6
 *.5
 *.4
+SensumBoosted/nbproject/configs/Run_as_WebStart.properties
+SensumBoosted/nbproject/configs/Run_in_Browser.properties
+SensumBoosted/nbproject/jfx-impl.xml
+SensumBoosted/nbproject/jfx-impl_backup_1.xml
+SensumBoosted/nbproject/private/configs/Run_as_WebStart.properties
+SensumBoosted/nbproject/private/configs/Run_in_Browser.properties
+SensumBoosted/nbproject/project.properties
+SensumBoosted/nbproject/UPDATED.TXT

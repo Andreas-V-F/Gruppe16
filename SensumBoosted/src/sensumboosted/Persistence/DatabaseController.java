@@ -12,6 +12,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import sensumboosted.Domain.Encryption;
@@ -80,19 +82,38 @@ public class DatabaseController {
 
     public void createCase(String userID, String text) {
         closeAllCases(userID);
+        int sagsId = (int)(Math.random() * 100);
         try {
             Statement st = connection.createStatement();
-            String sql = "INSERT INTO sager3 (sagsid,brugerid,isopen,text) VALUES ('" + (int) (Math.random() * 100) + "','" + userID + "','true','" + text + "');";
+            String sql = "INSERT INTO sager (sags_id,user_id,isopen,text) VALUES ('" + sagsId + "','" + userID + "','true','" + text + "');";
             rs = st.executeQuery(sql);
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+        createLogbook(sagsId);
+        createLogbookEntry(getLogBookId(sagsId), "");
+    }
+    
+    Long getCaseId(int userId) {
+        Long id = null;
+        try (Statement st = connection.createStatement()) {
+            String sql = "SELECT sags_id FROM sager where user_id = " + userId;
+            
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                id = rs.getLong("sags_id");
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return id;
     }
 
     public void closeAllCases(String userID) {
         try {
             Statement st = connection.createStatement();
-            String sql = "UPDATE sager3 SET isopen = 'false' WHERE brugerid = '" + userID + "';";
+            String sql = "UPDATE sager SET isopen = 'false' WHERE user_id = '" + userID + "';";
             rs = st.executeQuery(sql);
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -102,7 +123,7 @@ public class DatabaseController {
     public int findCaseID(int userID) {
         try {
             Statement st = connection.createStatement();
-            String sql = "SELECT sagsid FROM sager3 WHERE brugerid='" + userID + "' AND isopen='true';";
+            String sql = "SELECT sags_id FROM sager WHERE user_id='" + userID + "' AND isopen='true';";
             rs = st.executeQuery(sql);
             rs.next();
             return rs.getInt(1);
@@ -115,7 +136,7 @@ public class DatabaseController {
     public boolean hasOpenCase(String userID) {
         try {
             Statement st = connection.createStatement();
-            String sql = "SELECT brugerid FROM sager3 WHERE brugerid='" + userID + "' AND isopen='true';";
+            String sql = "SELECT user_id FROM sager WHERE user_id='" + userID + "' AND isopen='true';";
             rs = st.executeQuery(sql);
             rs.next();
             if (rs.getInt(1) == Integer.parseInt(userID)) {
@@ -131,7 +152,7 @@ public class DatabaseController {
     public void saveCase(int caseID, String userID, String text) {
         try {
             Statement st = connection.createStatement();
-            String sql = "UPDATE sager3 SET text = '" + text + "' WHERE brugerid ='" + userID + "' AND isopen ='true';";
+            String sql = "UPDATE sager SET text = '" + text + "' WHERE user_id ='" + userID + "' AND isopen ='true';";
             rs = st.executeQuery(sql);
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -231,6 +252,102 @@ public class DatabaseController {
                 hasUser = Integer.toString(userid) + "\t|" + getUsername + "\t|"
                         + getPassword + "\t" + getUsertype;
             }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public Long createLogbook(int sagsId) {
+        try {
+            Statement st = connection.createStatement();
+            Long id = System.currentTimeMillis();
+            String sql = "INSERT INTO logbook "
+                    + "(sags_id, logbook_id)"
+                    + " VALUES "
+                    + "(" + sagsId + ',' + id + ")";
+            st.execute(sql);
+            st.close();
+            return id;
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+        public void createLogbookEntry(long logbookID, String text) {
+        try {
+            Statement st = connection.createStatement();
+            Long entryID = System.currentTimeMillis();
+            Date date = new Date();
+            Timestamp timestamp = new Timestamp(date.getTime());
+            String sql = "INSERT INTO logbook_entry "
+                    + "(logbook_entry_id, logbook_id, entry_text, create_timestamp)"
+                    + " VALUES "
+                    + "(" + entryID + ',' + logbookID + ",'" + text + "', '" + timestamp + "')";
+            System.out.println("slq :" + sql);
+            st.execute(sql);
+            st.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    Long getLogBookId(int sagsId) {
+        Long id = null;
+        try (Statement st = connection.createStatement()) {
+            String sql = "SELECT logbook_id FROM logbook where sags_id = " + sagsId;
+            
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                id = rs.getLong("logbook_id");
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return id;
+    }
+
+     public int getCount(String tableName) {
+         int cnt = 0;
+        try (Statement st = connection.createStatement()) {
+            String sql = "SELECT COUNT(*) AS cnt FROM " + tableName;
+            
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                cnt = rs.getInt("cnt");
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return cnt;
+    }
+     public void deleteLogbook(int sagsId) {
+        Long id = getLogBookId(sagsId);
+        System.out.print(id);
+        
+        try (Statement st = connection.createStatement()) {
+            String sql = "DELETE FROM public.logbook_entry WHERE logbook_id = " + id;
+            st.execute(sql);
+          
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        try (Statement st = connection.createStatement()) {
+            String sql = "DELETE FROM public.logbook WHERE logbook_id = " + id;
+            st.execute(sql);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void deleteUser(int userID) {
+        try (Statement st = connection.createStatement()) {
+            String sql = "DELETE FROM public.users WHERE user_id = " + userID;
+            st.execute(sql);         
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
         }

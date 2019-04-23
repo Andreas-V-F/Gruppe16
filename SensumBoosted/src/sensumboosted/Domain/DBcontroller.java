@@ -12,6 +12,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -107,6 +109,8 @@ public class DBcontroller {
         } catch (SQLException ex) {
             Logger.getLogger(DBcontroller.class.getName()).log(Level.SEVERE, null, ex);
         }
+        //createLogbook(userID);
+        //createLogbookEntry(userID, "Personen hedder " + username);
     }
 
     public void createUserInformation(int userID, String firstname, String middlename, String lastname,
@@ -139,6 +143,102 @@ public class DBcontroller {
             Logger.getLogger(DBcontroller.class.getName()).log(Level.SEVERE, null, ex);
         }
         return count;
+    }
+    
+    public Long createLogbook(int userID) {
+        try {
+            Statement st = connection.createStatement();
+            Long id = System.currentTimeMillis();
+            String sql = "INSERT INTO logbook "
+                    + "(sags_id, logbook_id)"
+                    + " VALUES "
+                    + "(" + userID + ',' + id + ")";
+            st.execute(sql);
+            st.close();
+            return id;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBcontroller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+        public void createLogbookEntry(long logbookID, String text) {
+        try {
+            Statement st = connection.createStatement();
+            Long entryID = System.currentTimeMillis();
+            Date date = new Date();
+            Timestamp timestamp = new Timestamp(date.getTime());
+            String sql = "INSERT INTO logbook_entry "
+                    + "(logbook_entry_id, logbook_id, entry_text, create_timestamp)"
+                    + " VALUES "
+                    + "(" + entryID + ',' + logbookID + ",'" + text + "', '" + timestamp + "')";
+            System.out.println("slq :" + sql);
+            st.execute(sql);
+            st.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBcontroller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    Long getLogBook(int userId) {
+        Long id = null;
+        try (Statement st = connection.createStatement()) {
+            String sql = "SELECT logbook_id FROM logbook where sags_id = " + userId;
+            
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                id = rs.getLong("logbook_id");
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBcontroller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return id;
+    }
+
+     public int getCount(String tableName) {
+         int cnt = 0;
+        try (Statement st = connection.createStatement()) {
+            String sql = "SELECT COUNT(*) AS cnt FROM " + tableName;
+            
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                cnt = rs.getInt("cnt");
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBcontroller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return cnt;
+    }
+     public void deleteLogbook(int userID) {
+        Long id = getLogBook(userID);
+        System.out.print(id);
+        
+        try (Statement st = connection.createStatement()) {
+            String sql = "DELETE FROM public.logbook_entry WHERE logbook_id = " + id;
+            st.execute(sql);
+          
+        } catch (SQLException ex) {
+            Logger.getLogger(DBcontroller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        try (Statement st = connection.createStatement()) {
+            String sql = "DELETE FROM public.logbook WHERE logbook_id = " + id;
+            st.execute(sql);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(DBcontroller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void deleteUser(int userID) {
+        try (Statement st = connection.createStatement()) {
+            String sql = "DELETE FROM public.users WHERE user_id = " + userID;
+            st.execute(sql);         
+        } catch (SQLException ex) {
+            Logger.getLogger(DBcontroller.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 //    public void getUserInformation() {
