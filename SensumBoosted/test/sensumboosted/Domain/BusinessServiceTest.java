@@ -19,19 +19,23 @@ public class BusinessServiceTest {
     
     BusinessServiceImpl service; 
     DatabaseController db;
+    int userId = 111;
     
     @Before
     public void setUp() throws Exception {
         service = new BusinessServiceImpl();
         db = new DatabaseController();
         db.connect();
+        db.deleteUser(userId);
+        db.createUser(userId, "username", "password", "userType");
+        db.deleteLogbook(userId);
     }
   
     
     @Test
     public void createLogEntry() {
        int cnt = db.getCount("logbook");
-       service.addLog(111, "text");
+       service.addLog(userId, "text");
        Assert.assertEquals(db.getCount("logbook"), cnt );
    }
         

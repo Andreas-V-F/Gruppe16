@@ -107,6 +107,8 @@ public class DatabaseController  implements DatalayerInterface {
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        //createLogbook(userID);
+        //createLogbookEntry(userID, "Personen hedder " + username);
     }
 
     public void createUserInformation(int userID, String firstname, String middlename, String lastname,
@@ -146,7 +148,7 @@ public class DatabaseController  implements DatalayerInterface {
             Statement st = connection.createStatement();
             Long id = System.currentTimeMillis();
             String sql = "INSERT INTO logbook "
-                    + "(user_id, logbook_id)"
+                    + "(sags_id, logbook_id)"
                     + " VALUES "
                     + "(" + userID + ',' + id + ")";
             st.execute(sql);
@@ -179,7 +181,7 @@ public class DatabaseController  implements DatalayerInterface {
     Long getLogBook(int userId) {
         Long id = null;
         try (Statement st = connection.createStatement()) {
-            String sql = "SELECT logbook_id FROM logbook where user_id = " + userId;
+            String sql = "SELECT logbook_id FROM logbook where sags_id = " + userId;
             
             rs = st.executeQuery(sql);
             while (rs.next()) {
@@ -207,6 +209,34 @@ public class DatabaseController  implements DatalayerInterface {
         }
         return cnt;
     }
-   
+     public void deleteLogbook(int userID) {
+        Long id = getLogBook(userID);
+        System.out.print(id);
+        
+        try (Statement st = connection.createStatement()) {
+            String sql = "DELETE FROM public.logbook_entry WHERE logbook_id = " + id;
+            st.execute(sql);
+          
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        try (Statement st = connection.createStatement()) {
+            String sql = "DELETE FROM public.logbook WHERE logbook_id = " + id;
+            st.execute(sql);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void deleteUser(int userID) {
+        try (Statement st = connection.createStatement()) {
+            String sql = "DELETE FROM public.users WHERE user_id = " + userID;
+            st.execute(sql);         
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
 

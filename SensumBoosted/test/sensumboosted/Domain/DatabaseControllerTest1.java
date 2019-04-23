@@ -15,23 +15,24 @@ import org.junit.Test;
  *
  * @author andersschjonning
  */
-public class DatabaseControllerTest {
+public class DatabaseControllerTest1 {
     
     DatabaseController db;
+    int userId = 111;
     
     @Before
     public void setUp() throws Exception {
         db = new DatabaseController();
         db.connect();
-        db.deleteUser(111);
+        db.createUser(userId, "username", "password", "userType");
     }
   
     
     @Test
-    public void createUser() {
+    public void deleteUser() {
        int i = db.getUserIDCount();
-       db.createUser(111, "username", "password", "userType");
-       Assert.assertTrue(db.getUserIDCount() == i+1);
+       db.deleteUser(userId);
+       Assert.assertTrue(db.getUserIDCount() == i-1);
    }
     
    
