@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,14 +33,18 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import sensumboosted.Persistence.DatabaseController;
 import sensumboosted.Domain.Encryption;
+import sensumboosted.Domain.LogEntry;
 import sensumboosted.Persistence.Log;
 import sensumboosted.Domain.UserAccount;
 import sensumboosted.Domain.UserInformation;
@@ -160,8 +165,30 @@ public class FXMLDocumentController implements Initializable {
 
     ObservableList<UserAccount> obListUA = FXCollections.observableArrayList();
     ObservableList<UserInformation> obListUI = FXCollections.observableArrayList();
+    ObservableList<UserAccount> obListCT = FXCollections.observableArrayList();
+    ObservableList<LogEntry> obListLE = FXCollections.observableArrayList();
 
     private Connection con = dbController.connect();
+    @FXML
+    private TableView<UserAccount> citizenTableView;
+    @FXML
+    private TableColumn<UserAccount, String> citizenName;
+    @FXML
+    private TableColumn<UserAccount, Integer> citizenId;
+    @FXML
+    private Pane logbookPane;
+    @FXML
+    private TextArea logbookTextField;
+    @FXML
+    private Button saveLogbookButton;
+    @FXML
+    private TableView<LogEntry> logEntryTableView;
+    @FXML
+    private TableColumn<LogEntry, String> text;
+    @FXML
+    private Button DeleteLogbookBTN;
+    @FXML
+    private Button caseBackBTN;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -174,6 +201,7 @@ public class FXMLDocumentController implements Initializable {
         createUserTypeChoiceBox.getItems().addAll(userType);
         userAccountTableView();
         userInformationTableView();
+        citizenTableView();
     }
 
     public String getUsernameField() {
@@ -253,7 +281,7 @@ public class FXMLDocumentController implements Initializable {
             }
         }
     }
-    
+
     @FXML
     private void userSettingToDiaryPaneBtnHandler(ActionEvent event) {
         userSettingToDiaryPane();
@@ -325,7 +353,7 @@ public class FXMLDocumentController implements Initializable {
         userSettingPane.setVisible(true);
         userSettingPane.setDisable(false);
     }
-    
+
     public void userSettingToDiaryPane() {
         userSettingPane.setVisible(false);
         userSettingPane.setDisable(true);
@@ -407,11 +435,11 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     void handleGemActon(ActionEvent event) {
         String[] info = dbController.getUserInformation();
-        String userID = info[0];
+        int userID = Integer.parseInt(info[0]);
         String input = textArea.getText();
         if (dbController.hasOpenCase(userID)) {
             System.out.println(input);
-            dbController.saveCase(dbController.findCaseID(Integer.parseInt(userID)), userID, input);
+            dbController.saveCase(dbController.findCaseID(userID), userID, input);
         } else {
             dbController.createCase(userID, input);
         }
@@ -420,7 +448,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     void handleCloseAction(ActionEvent event) {
         String[] info = dbController.getUserInformation();
-        String userID = info[0];
+        int userID = Integer.parseInt(info[0]);
         dbController.closeAllCases(userID);
     }
 
@@ -492,20 +520,116 @@ public class FXMLDocumentController implements Initializable {
         userInformationTableView.setEditable(true);
     }
 
+    @FXML
     public void userAccountBtnHandler(ActionEvent event) {
         usersTableView.setVisible(true);
         userInformationTableView.setVisible(false);
     }
 
+    @FXML
     public void userInformationBtnHandler(ActionEvent event) {
         userInformationTableView.setVisible(true);
         usersTableView.setVisible(false);
     }
 
+    @FXML
     public void updateBtnEventHandler(ActionEvent event) {
         usersTableView.getItems().clear();
         userInformationTableView.getItems().clear();
         userInformationTableView();
         userAccountTableView();
     }
+
+    private void citizenTableView() {
+
+        try {
+            ResultSet rs = con.createStatement().executeQuery("SELECT * FROM users");
+
+            while (rs.next()) {
+                obListCT.add(new UserAccount(rs.getInt("user_id"), rs.getString("username")));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        citizenName.setCellValueFactory(new PropertyValueFactory<>("username"));
+        citizenId.setCellValueFactory(new PropertyValueFactory<>("userid"));
+
+        citizenTableView.setItems(obListCT);
+        usersTableView.setEditable(true);
+
+    }
+
+    @FXML
+    private void logbookButtonHandler(ActionEvent event) {
+        casePane.setVisible(false);
+        casePane.setDisable(true);
+
+        logbookPane.setVisible(true);
+        logbookPane.setDisable(false);
+    }
+
+    @FXML
+    private void backToCasePaneHandler(ActionEvent event) {
+        logbookPane.setVisible(false);
+        logbookPane.setDisable(true);
+
+        casePane.setVisible(true);
+        casePane.setDisable(false);
+    }
+
+    @FXML
+    private void saveLogbookButtonHandler(ActionEvent event) {
+        UserAccount x = citizenTableView.getSelectionModel().getSelectedItem();
+        dbController.editLogBook(x.getUserid(), logbookTextField.getText());
+    }
+
+    @FXML
+    private void dbClickRowHandler(MouseEvent event) {
+        if (event.getClickCount() > 1) {
+            System.out.println("dbClickRowHandler");
+            logbookTextField.clear();
+            UserAccount x = citizenTableView.getSelectionModel().getSelectedItem();
+            long id = dbController.getLogBookId(dbController.getCaseId(x.getUserid()));
+            System.out.println("id : " + id);
+            logEntryTableView(id);
+        }
+    }
+
+    private void logEntryTableView(long logbookID) {
+        System.out.println("logEntryTableView id : " + logbookID);
+        obListLE.clear();
+        try {
+            ResultSet rs = con.createStatement().executeQuery("SELECT * FROM logbook_entry WHERE logbook_id = " + logbookID + "order by create_timestamp DESC");
+
+            while (rs.next()) {
+                obListLE.add(new LogEntry(rs.getString("entry_text"), rs.getLong("logbook_entry_id")));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        text.setCellValueFactory(new PropertyValueFactory<>("text"));
+
+        logEntryTableView.setItems(obListLE);
+        logEntryTableView.setEditable(true);
+
+    }
+
+    @FXML
+    private void DeleteLogbookBTN(MouseEvent event) {
+        System.out.println("DeleteLogbookBTN b");
+        LogEntry le = logEntryTableView.getSelectionModel().getSelectedItem();
+        dbController.deleteLogbookEntry(le.getLogbookId());
+        System.out.println("DeleteLogbookBTN a");
+    }
+
+    @FXML
+    private void caseBackBTN(MouseEvent event) {
+        diaryPane.setDisable(false);
+        diaryPane.setVisible(true);
+        casePane.setVisible(false);
+        casePane.setDisable(true);
+    }
+
 }
