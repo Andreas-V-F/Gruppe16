@@ -412,11 +412,11 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     void handleGemActon(ActionEvent event) {
         String[] info = dbController.getUserInformation();
-        String userID = info[0];
+        int userID = Integer.parseInt(info[0]);
         String input = textArea.getText();
         if (dbController.hasOpenCase(userID)) {
             System.out.println(input);
-            dbController.saveCase(dbController.findCaseID(Integer.parseInt(userID)), userID, input);
+            dbController.saveCase(dbController.findCaseID(userID), userID, input);
         } else {
             dbController.createCase(userID, input);
         }
@@ -425,7 +425,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     void handleCloseAction(ActionEvent event) {
         String[] info = dbController.getUserInformation();
-        String userID = info[0];
+        int userID = Integer.parseInt(info[0]);
         dbController.closeAllCases(userID);
     }
 
