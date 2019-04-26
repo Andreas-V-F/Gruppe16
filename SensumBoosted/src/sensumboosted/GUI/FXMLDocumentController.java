@@ -158,8 +158,23 @@ public class FXMLDocumentController implements Initializable {
 
     ObservableList<UserAccount> obListUA = FXCollections.observableArrayList();
     ObservableList<UserInformation> obListUI = FXCollections.observableArrayList();
+    ObservableList<UserAccount> obListCT = FXCollections.observableArrayList();
 
     private Connection con = dbController.connect();
+    @FXML
+    private Button chooseCitizenButton;
+    @FXML
+    private TableView<UserAccount> citizenTableView;
+    @FXML
+    private TableColumn<UserAccount, String> citizenName;
+    @FXML
+    private TableColumn<UserAccount, Integer> citizenId;
+    @FXML
+    private Pane logbookPane;
+    @FXML
+    private TextArea logbookTextField;
+    @FXML
+    private Button saveLogbookButton;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -172,6 +187,7 @@ public class FXMLDocumentController implements Initializable {
         createUserTypeChoiceBox.getItems().addAll(userType);
         userAccountTableView();
         userInformationTableView();
+        citizenTableView();
     }
 
     public String getUsernameField() {
@@ -478,20 +494,72 @@ public class FXMLDocumentController implements Initializable {
         userInformationTableView.setEditable(true);
     }
 
+    @FXML
     public void userAccountBtnHandler(ActionEvent event) {
         usersTableView.setVisible(true);
         userInformationTableView.setVisible(false);
     }
 
+    @FXML
     public void userInformationBtnHandler(ActionEvent event) {
         userInformationTableView.setVisible(true);
         usersTableView.setVisible(false);
     }
 
+    @FXML
     public void updateBtnEventHandler(ActionEvent event) {
         usersTableView.getItems().clear();
         userInformationTableView.getItems().clear();
         userInformationTableView();
         userAccountTableView();
+    }
+    
+    
+    private void citizenTableView() {
+
+        try {
+            ResultSet rs = con.createStatement().executeQuery("SELECT * FROM users");
+
+            while (rs.next()) {
+                obListCT.add(new UserAccount(rs.getInt("user_id"), rs.getString("username")));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        citizenName.setCellValueFactory(new PropertyValueFactory<>("username"));
+        citizenId.setCellValueFactory(new PropertyValueFactory<>("userid"));
+
+        citizenTableView.setItems(obListCT);
+        usersTableView.setEditable(true);
+        
+    }
+
+    @FXML
+    private void logbookButtonHandler(ActionEvent event) {
+        casePane.setVisible(false);
+        casePane.setDisable(true);
+        
+        logbookPane.setVisible(true);
+        logbookPane.setDisable(false);
+    }
+
+    @FXML
+    private void backToCasePaneHandler(ActionEvent event) {
+        logbookPane.setVisible(false);
+        logbookPane.setDisable(true);
+        
+        casePane.setVisible(true);
+        casePane.setDisable(false);
+    }
+
+    @FXML
+    private void saveLogbookButtonHandler(ActionEvent event) {
+    }
+    
+
+    @FXML
+    private void chooseCitizenButtonHandler(ActionEvent event) {
+        
     }
 }
