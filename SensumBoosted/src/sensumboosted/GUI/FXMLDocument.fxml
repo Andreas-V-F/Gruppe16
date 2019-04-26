@@ -26,7 +26,7 @@
                </font>
             </Text>
             <Button layoutX="878.0" layoutY="553.0" mnemonicParsing="false" onAction="#backToCasePaneHandler" text="Tilbage" />
-            <TableView fx:id="citizenTableView" layoutX="40.0" layoutY="84.0" prefHeight="200.0" prefWidth="404.0">
+            <TableView fx:id="citizenTableView" layoutX="40.0" layoutY="84.0" onMouseClicked="#dbClickRowHandler" prefHeight="200.0" prefWidth="404.0">
               <columns>
                 <TableColumn fx:id="citizenName" prefWidth="201.0" text="Borger navn" />
                 <TableColumn fx:id="citizenId" prefWidth="202.0" text="Borger ID" />

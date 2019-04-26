@@ -15,18 +15,18 @@
 
 <AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sensumboosted.GUI.FXMLDocumentController">
    <children>
-      <Pane fx:id="logbookPane" disable="true" prefHeight="700.0" prefWidth="1000.0" visible="false">
+      <Pane fx:id="logbookPane" prefHeight="700.0" prefWidth="1000.0">
          <children>
-            <TextArea layoutX="14.0" layoutY="350.0" prefHeight="324.0" prefWidth="810.0" />
-            <Button layoutX="864.0" layoutY="512.0" mnemonicParsing="false" text="Gem logbog" />
-            <Button fx:id="chooseCitizenButton" layoutX="500.0" layoutY="159.0" mnemonicParsing="false" text="Vælg borger" />
+            <TextArea fx:id="logbookTextField" layoutX="14.0" layoutY="350.0" prefHeight="324.0" prefWidth="810.0" />
+            <Button fx:id="saveLogbookButton" layoutX="864.0" layoutY="512.0" mnemonicParsing="false" onAction="#saveLogbookButtonHandler" text="Gem logbog" />
+            <Button fx:id="chooseCitizenButton" layoutX="500.0" layoutY="159.0" mnemonicParsing="false" onAction="#chooseCitizenButtonHandler" text="Vælg borger" />
             <Text layoutX="185.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Liste af borgere">
                <font>
                   <Font size="20.0" />
                </font>
             </Text>
-            <Button layoutX="878.0" layoutY="553.0" mnemonicParsing="false" text="Tilbage" />
-            <TableView fx:id="citizenTableView" layoutX="40.0" layoutY="84.0" prefHeight="200.0" prefWidth="404.0">
+            <Button layoutX="878.0" layoutY="553.0" mnemonicParsing="false" onAction="#backToCasePaneHandler" text="Tilbage" />
+            <TableView fx:id="citizenTableView" layoutX="40.0" layoutY="84.0" onMouseClicked="#dbClickRowHandler" prefHeight="200.0" prefWidth="404.0">
               <columns>
                 <TableColumn fx:id="citizenName" prefWidth="201.0" text="Borger navn" />
                 <TableColumn fx:id="citizenId" prefWidth="202.0" text="Borger ID" />
@@ -62,7 +62,7 @@
             <Button layoutX="633.0" layoutY="338.0" mnemonicParsing="false" onAction="#userSettingBtnHandler" text="Borgere" />
          </children>
       </Pane>
-      <Pane fx:id="loginPane" prefHeight="225.0" prefWidth="299.0">
+      <Pane fx:id="loginPane" prefHeight="225.0" prefWidth="299.0" visible="false">
          <children>
             <TextField fx:id="usernameField" layoutX="57.0" layoutY="73.0" onKeyReleased="#usernameFieldHandler" prefHeight="25.0" prefWidth="186.0" />
             <PasswordField fx:id="passwordField" layoutX="57.0" layoutY="125.0" onKeyReleased="#passwordFieldHandler" prefHeight="25.0" prefWidth="186.0" />

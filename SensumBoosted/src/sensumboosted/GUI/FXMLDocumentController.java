@@ -32,11 +32,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import sensumboosted.Persistence.DatabaseController;
 import sensumboosted.Domain.Encryption;
@@ -513,8 +516,7 @@ public class FXMLDocumentController implements Initializable {
         userInformationTableView();
         userAccountTableView();
     }
-    
-    
+
     private void citizenTableView() {
 
         try {
@@ -532,14 +534,14 @@ public class FXMLDocumentController implements Initializable {
 
         citizenTableView.setItems(obListCT);
         usersTableView.setEditable(true);
-        
+
     }
 
     @FXML
     private void logbookButtonHandler(ActionEvent event) {
         casePane.setVisible(false);
         casePane.setDisable(true);
-        
+
         logbookPane.setVisible(true);
         logbookPane.setDisable(false);
     }
@@ -548,7 +550,7 @@ public class FXMLDocumentController implements Initializable {
     private void backToCasePaneHandler(ActionEvent event) {
         logbookPane.setVisible(false);
         logbookPane.setDisable(true);
-        
+
         casePane.setVisible(true);
         casePane.setDisable(false);
     }
@@ -556,10 +558,24 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void saveLogbookButtonHandler(ActionEvent event) {
     }
-    
 
     @FXML
     private void chooseCitizenButtonHandler(ActionEvent event) {
+
+    }
+
+    @FXML
+    private void dbClickRowHandler(MouseEvent event) {
+        citizenTableView.setRowFactory(tv -> {
+        TableRow<UserAccount> row = new TableRow<>();
+         row.setOnMouseClicked(e -> {
+        if (e.getClickCount() == 2 && (! row.isEmpty()) ) {
+            UserAccount rowData = row.getItem();
+            System.out.println(rowData);
+        }
+    });
+    return row ;
+});
         
     }
 }
