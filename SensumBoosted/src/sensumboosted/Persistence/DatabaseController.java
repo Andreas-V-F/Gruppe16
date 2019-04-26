@@ -16,7 +16,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.postgresql.core.QueryExecutor;
+//import org.postgresql.core.QueryExecutor;
 import sensumboosted.Domain.Encryption;
 
 /**
