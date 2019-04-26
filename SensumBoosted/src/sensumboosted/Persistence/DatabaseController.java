@@ -81,9 +81,9 @@ public class DatabaseController {
         return "Login check failed!";
     }
 
-    public void createCase(String userID, String text) {
+    public void createCase(int userID, String text) {
         closeAllCases(userID);
-        int sagsId = (int) (Math.random() * 100);
+        int sagsId = (int) (Math.random() * 1000);
         try {
             Statement st = connection.createStatement();
             String sql = "INSERT INTO sager (sags_id,user_id,isopen,text) VALUES ('" + sagsId + "','" + userID + "','true','" + text + "');";
@@ -111,7 +111,7 @@ public class DatabaseController {
         return id;
     }
 
-    public void closeAllCases(String userID) {
+    public void closeAllCases(int userID) {
         try {
             Statement st = connection.createStatement();
             String sql = "UPDATE sager SET isopen = 'false' WHERE user_id = '" + userID + "';";
@@ -134,13 +134,13 @@ public class DatabaseController {
         return -1;
     }
 
-    public boolean hasOpenCase(String userID) {
+    public boolean hasOpenCase(int userID) {
         try {
             Statement st = connection.createStatement();
             String sql = "SELECT user_id FROM sager WHERE user_id='" + userID + "' AND isopen='true';";
             rs = st.executeQuery(sql);
             rs.next();
-            if (rs.getInt(1) == Integer.parseInt(userID)) {
+            if (rs.getInt(1) == userID) {
                 return true;
             }
 
@@ -150,7 +150,7 @@ public class DatabaseController {
         return false;
     }
 
-    public void saveCase(int caseID, String userID, String text) {
+    public void saveCase(int caseID, int userID, String text) {
         try {
             Statement st = connection.createStatement();
             String sql = "UPDATE sager SET text = '" + text + "' WHERE user_id ='" + userID + "' AND isopen ='true';";
@@ -172,6 +172,9 @@ public class DatabaseController {
             st.close();
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(userType == ""){
+            createCase(userID, "");
         }
     }
 
