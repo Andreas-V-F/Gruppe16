@@ -13,7 +13,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 //import org.postgresql.core.QueryExecutor;
@@ -95,7 +97,7 @@ public class DatabaseController {
         createLogbookEntry(getLogBookId(sagsId), "");
     }
 
-    Long getCaseId(int userId) {
+    public Long getCaseId(int userId) {
         Long id = null;
         try (Statement st = connection.createStatement()) {
             String sql = "SELECT sags_id FROM sager where user_id = " + userId;
@@ -296,7 +298,7 @@ public class DatabaseController {
         }
     }
 
-    Long getLogBookId(long sagsId) {
+    public Long getLogBookId(long sagsId) {
         Long id = null;
         try (Statement st = connection.createStatement()) {
             String sql = "SELECT logbook_id FROM logbook where sags_id = " + sagsId;
@@ -312,23 +314,24 @@ public class DatabaseController {
         return id;
     }
 
-    public String getLogBook(long logbookID) {
-        String text = null;
+    public List<String> getLogBookEntries(long logbookID) {
+        List<String> entries = new ArrayList<String>();
         long timestamp = 0;
         
         try (Statement st = connection.createStatement()) {
-            String sql = "SELECT entry_text, create_timestamp FROM logbook_entry WHERE logbook_id = " + logbookID;
+            String sql = "SELECT entry_text, create_timestamp FROM logbook_entry WHERE logbook_id = " + logbookID + "order by create_timestamp DESC";
 
             rs = st.executeQuery(sql);
             while (rs.next()) {
-                text = rs.getString("entry_text");
-                timestamp = rs.getLong("create_timestamp");
+                System.out.println("");
+               entries.add(rs.getString("entry_text"));
+                //timestamp = rs.getLong("create_timestamp");
 
             }
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return text + timestamp;
+        return entries;
     }
 
     public String editLogBook(int userid, String text) {
@@ -356,20 +359,12 @@ public class DatabaseController {
         return cnt;
     }
 
-    public void deleteLogbook(int sagsId) {
-        Long id = getLogBookId(sagsId);
-        System.out.print(id);
+    public void deleteLogbookEntry(long logbookEntryId) {
+        //long id = getLogBookId(getCaseId(logbookEntryId));
+        //System.out.print(id);
 
         try (Statement st = connection.createStatement()) {
-            String sql = "DELETE FROM public.logbook_entry WHERE logbook_id = " + id;
-            st.execute(sql);
-
-        } catch (SQLException ex) {
-            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        try (Statement st = connection.createStatement()) {
-            String sql = "DELETE FROM public.logbook WHERE logbook_id = " + id;
+            String sql = "DELETE FROM public.logbook_entry WHERE logbook_entry_id = " + logbookEntryId;
             st.execute(sql);
 
         } catch (SQLException ex) {

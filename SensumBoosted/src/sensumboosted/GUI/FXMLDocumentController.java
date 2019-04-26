@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,6 +44,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import sensumboosted.Persistence.DatabaseController;
 import sensumboosted.Domain.Encryption;
+import sensumboosted.Domain.LogEntry;
 import sensumboosted.Persistence.Log;
 import sensumboosted.Domain.UserAccount;
 import sensumboosted.Domain.UserInformation;
@@ -162,10 +164,9 @@ public class FXMLDocumentController implements Initializable {
     ObservableList<UserAccount> obListUA = FXCollections.observableArrayList();
     ObservableList<UserInformation> obListUI = FXCollections.observableArrayList();
     ObservableList<UserAccount> obListCT = FXCollections.observableArrayList();
-
+    ObservableList<LogEntry> obListLE = FXCollections.observableArrayList();
+    
     private Connection con = dbController.connect();
-    @FXML
-    private Button chooseCitizenButton;
     @FXML
     private TableView<UserAccount> citizenTableView;
     @FXML
@@ -178,6 +179,14 @@ public class FXMLDocumentController implements Initializable {
     private TextArea logbookTextField;
     @FXML
     private Button saveLogbookButton;
+    @FXML
+    private TableView<LogEntry> logEntryTableView;
+    @FXML
+    private TableColumn<LogEntry, String> text;
+    @FXML
+    private Button DeleteLogbookBTN;
+    @FXML
+    private Button caseBackBTN;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -557,25 +566,56 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void saveLogbookButtonHandler(ActionEvent event) {
-    }
-
-    @FXML
-    private void chooseCitizenButtonHandler(ActionEvent event) {
-
+        UserAccount x = citizenTableView.getSelectionModel().getSelectedItem();
+        dbController.editLogBook(x.getUserid(), logbookTextField.getText());
     }
 
     @FXML
     private void dbClickRowHandler(MouseEvent event) {
-        citizenTableView.setRowFactory(tv -> {
-        TableRow<UserAccount> row = new TableRow<>();
-         row.setOnMouseClicked(e -> {
-        if (e.getClickCount() == 2 && (! row.isEmpty()) ) {
-            UserAccount rowData = row.getItem();
-            System.out.println(rowData);
+        if(event.getClickCount() > 1){
+            System.out.println("dbClickRowHandler");
+            logbookTextField.clear();
+            UserAccount x = citizenTableView.getSelectionModel().getSelectedItem();
+            long id = dbController.getLogBookId(dbController.getCaseId(x.getUserid()));
+            System.out.println("id : " + id);
+            logEntryTableView(id);
         }
-    });
-    return row ;
-});
-        
     }
+    
+    private void logEntryTableView(long logbookID) {
+        System.out.println("logEntryTableView id : " + logbookID);
+        obListLE.clear();
+        try {
+            ResultSet rs = con.createStatement().executeQuery("SELECT * FROM logbook_entry WHERE logbook_id = " + logbookID + "order by create_timestamp DESC");
+
+            while (rs.next()) {
+                obListLE.add(new LogEntry(rs.getString("entry_text"), rs.getLong("logbook_entry_id")));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        text.setCellValueFactory(new PropertyValueFactory<>("text"));
+
+        logEntryTableView.setItems(obListLE);
+        logEntryTableView.setEditable(true);
+
+    }
+
+    @FXML
+    private void DeleteLogbookBTN(MouseEvent event) {
+        System.out.println("DeleteLogbookBTN b");
+        LogEntry le = logEntryTableView.getSelectionModel().getSelectedItem();
+        dbController.deleteLogbookEntry(le.getLogbookId());
+        System.out.println("DeleteLogbookBTN a");
+    }
+
+    @FXML
+    private void caseBackBTN(MouseEvent event) {
+        diaryPane.setDisable(false);
+        diaryPane.setVisible(true);
+        casePane.setVisible(false);
+        casePane.setDisable(true);
+    }
+    
 }
