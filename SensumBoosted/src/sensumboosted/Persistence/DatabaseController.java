@@ -173,7 +173,7 @@ public class DatabaseController {
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if(userType == ""){
+        if(userType == "Pårørerende"){
             createCase(userID, "");
         }
     }
