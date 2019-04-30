@@ -14,7 +14,11 @@ public class UserAccount {
         this.password = password;
         this.usertype = usertype;
     }
-
+    
+  public UserAccount(int userid, String username) {
+        this.userid = userid;
+        this.username = username;
+    }
     public int getUserid() {
         return userid;
     }

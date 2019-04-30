@@ -66,3 +66,16 @@ SensumBoosted/nbproject/project.properties
 SensumBoosted/nbproject/UPDATED.TXT
 *.TXT
 *.xml
+SensumBoosted/build/classes/sensumboosted/GUI/FXMLDocument.fxml
+SensumBoosted/build/classes/sensumboosted/GUI/FXMLDocumentController.class
+SensumBoosted/dist/lib/postgresql-42.2.5.jar
+SensumBoosted/LoginLog.txt
+SensumBoosted/LoginLog.txt~origin_logbog
+SensumBoosted/nbproject/jfx-impl.xml
+SensumBoosted/nbproject/jfx-impl_backup_1.xml
+SensumBoosted/nbproject/private/configs/Run_in_Browser.properties
+SensumBoosted/nbproject/UPDATED.TXT
+*.jar
+*.xml
+*.txt
+SensumBoosted/nbproject/private/configs/Run_in_Browser.properties

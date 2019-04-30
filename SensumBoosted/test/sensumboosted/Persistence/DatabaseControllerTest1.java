@@ -17,25 +17,23 @@ import sensumboosted.Domain.DBcontroller;
  * @author andersschjonning
  */
 public class DatabaseControllerTest1 {
-    
+
     DatabaseController db;
     int userId = 111;
-    
+
     @Before
     public void setUp() throws Exception {
         db = new DatabaseController();
         db.connect();
         db.createUser(userId, "username", "password", "userType");
     }
-  
-    
+
     @Test
     public void deleteUser() {
-       int i = db.getUserIDCount();
-       db.deleteLogbook(db.getCaseId(userId));
-       Assert.assertTrue(db.getUserIDCount() == i-1);
-   }
-    
-   
-        
+        int i = db.getUserIDCount();
+        //db.deleteLogbook(db.getCaseId((userId));
+        //db.deleteLogbook(db.getCaseId(userId));
+        Assert.assertTrue(db.getUserIDCount() == i - 1);
+    }
+
 }
