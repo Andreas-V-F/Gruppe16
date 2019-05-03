@@ -60,6 +60,7 @@ public class FXMLDocumentController implements Initializable {
     private FXMLLoader loader = new FXMLLoader();
     private Encryption encrypt = new Encryption();
     private Log myLog;
+    private boolean editMode = false;
 
     private Label label; // Is this even used??
 
@@ -198,6 +199,9 @@ public class FXMLDocumentController implements Initializable {
     private Button DeleteLogbookBTN;
     @FXML
     private Button caseBackBTN;
+    @FXML
+    private Button editBTN;
+    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -592,9 +596,15 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void saveLogbookButtonHandler(ActionEvent event) {
         UserAccount x = citizenTableView.getSelectionModel().getSelectedItem();
-        dbController.editLogBook(x.getUserid(), logbookTextField.getText());
-        logEntryTableView.refresh();
-        logEntryTableView.getItems();
+        if (editMode == false){
+            dbController.saveLogBook(x.getUserid(), logbookTextField.getText());
+        } else if (editMode == true){
+            LogEntry le = logEntryTableView.getSelectionModel().getSelectedItem();
+            dbController.editLogBook(le.getLogbookId(), logbookTextField.getText());
+            editMode = false;
+        }
+       logEntryTableView.getItems().clear();
+       logEntryTableView.getItems().addAll(obListLE);
     }
 
     @FXML
@@ -648,16 +658,18 @@ public class FXMLDocumentController implements Initializable {
     
     private void setLogbookLBL(long userId){
         String[] info = dbController.getInformationStrings(userId);
-        System.out.println(info[0] + " " + info[1] + " " + info[2]);
         
         nameLogbookLBL.setText(info[0] + " " + info[1] + " " + info[2]);
-        cprLogbookLBL.setText(info[4]);
-        emailLogbookLBL.setText(info[5] + ", " + info[6] + ", " + info[7]);
-        adresseLogbookLBL.setText(info[8]);
+        cprLogbookLBL.setText(info[3]);
+        adresseLogbookLBL.setText(info[4] + ", " + info[5] + ", " + info[6]);
+        emailLogbookLBL.setText(info[7]);
     }
     
+
     @FXML
-    private void editLogbookBTN(MouseEvent event) {
-        
+    private void editLogbookBTNHandler(ActionEvent event) {
+        LogEntry le = logEntryTableView.getSelectionModel().getSelectedItem();
+        logbookTextField.setText(le.getText());
+        editMode = true;
     }
 }
