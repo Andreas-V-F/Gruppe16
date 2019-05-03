@@ -259,10 +259,10 @@ public class DatabaseController {
             Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public String[] getInformationStrings(long userId) {
         try (Statement st = connection.createStatement()) {
-            String sql = "SELECT * FROM USER_INFORMATION WHERE user_id = "+ userId;
+            String sql = "SELECT * FROM USER_INFORMATION WHERE user_id = " + userId;
 
             rs = st.executeQuery(sql);
             while (rs.next()) {
@@ -274,7 +274,7 @@ public class DatabaseController {
                 int getPostalCode = rs.getInt("postal_code");
                 String getCity = rs.getString("city");
                 String getEmail = rs.getString("email");
-                
+
                 String[] info = {getFirstname, getMiddlename, getLastname, Integer.toString(getCPR), getAddress, Integer.toString(getPostalCode), getCity, getEmail};
 
                 return info;
@@ -285,6 +285,7 @@ public class DatabaseController {
         }
         return null;
     }
+
     public int getUserId(String username) {
         int id = 0;
         try (Statement st = connection.createStatement()) {
@@ -336,6 +337,23 @@ public class DatabaseController {
         }
     }
 
+    public void editLogbookEntry(long logbookEntryID, String text) {
+        try {
+            Statement st = connection.createStatement();
+            Long entryID = System.currentTimeMillis();
+            Date date = new Date();
+            Timestamp timestamp = new Timestamp(date.getTime());
+            String sql = "UPDATE public.logbook_entry"
+                    + "    SET entry_text= '" + text + "', create_timestamp= '" + timestamp + "'"
+                    + "    WHERE logbook_entry_id = " + logbookEntryID + "; ";
+            System.out.println("slq :" + sql);
+            st.execute(sql);
+            st.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public Long getLogBookId(long sagsId) {
         Long id = null;
         try (Statement st = connection.createStatement()) {
@@ -372,11 +390,17 @@ public class DatabaseController {
         return entries;
     }
 
-    public String editLogBook(int userid, String text) {
+    public String saveLogBook(int userid, String text) {
         long caseid = getCaseId(userid);
         long logbookID = getLogBookId(caseid);
 
         createLogbookEntry(logbookID, text);
+
+        return text;
+    }
+
+    public String editLogBook(long logbookID, String text) {
+        editLogbookEntry(logbookID, text);
 
         return text;
     }
