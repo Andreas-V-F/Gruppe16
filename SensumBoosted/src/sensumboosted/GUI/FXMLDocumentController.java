@@ -615,7 +615,6 @@ public class FXMLDocumentController implements Initializable {
             logbookTextField.clear();
             UserAccount x = citizenTableView.getSelectionModel().getSelectedItem();
             long id = dbController.getLogBookId(dbController.getCaseId(x.getUserid()));
-            System.out.println("id : " + id);
             logEntryTableView(id);
             setLogbookLBL(x.getUserid());
         }
@@ -643,6 +642,7 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void DeleteLogbookBTN(MouseEvent event) {
+        UserAccount x = citizenTableView.getSelectionModel().getSelectedItem();
         System.out.println("DeleteLogbookBTN b");
         LogEntry le = logEntryTableView.getSelectionModel().getSelectedItem();
         dbController.deleteLogbookEntry(le.getLogbookId());
