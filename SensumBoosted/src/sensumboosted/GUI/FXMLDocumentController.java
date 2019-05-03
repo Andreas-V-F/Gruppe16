@@ -647,6 +647,8 @@ public class FXMLDocumentController implements Initializable {
         LogEntry le = logEntryTableView.getSelectionModel().getSelectedItem();
         dbController.deleteLogbookEntry(le.getLogbookId());
         System.out.println("DeleteLogbookBTN a");
+        long id = dbController.getLogBookId(dbController.getCaseId(x.getUserid()));
+        logEntryTableView(id);
     }
 
     @FXML
