@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -82,6 +83,14 @@ public class FXMLDocumentController implements Initializable {
     private Label createPasswordLabel;
     @FXML
     private Label createUserTypeLabel;
+    @FXML
+    private Label nameLogbookLBL;
+    @FXML
+    private Label cprLogbookLBL;
+    @FXML
+    private Label emailLogbookLBL;
+    @FXML
+    private Label adresseLogbookLBL;
     @FXML
     private Button loginBTN;
     @FXML
@@ -234,14 +243,16 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void createBtnEventHandler(ActionEvent event) {
         if (!createUsernameField.getText().isEmpty() && !createPasswordField.getText().isEmpty() && !createUserTypeChoiceBox.getItems().isEmpty()) {
-            dbController.createUser((dbController.getUserIDCount() + 1), createUsernameField.getText(), encrypt.encryptString(createPasswordField.getText()), createUserTypeChoiceBox.getValue());
+            String username = createUsernameField.getText();
+            String type = createUserTypeChoiceBox.getValue();
+            dbController.createUser(username, encrypt.encryptString(createPasswordField.getText()), type);
             insertDbLabel.setText("User created in database!");
         }
 
         if (!createFirstnameField.getText().isEmpty() && !createMiddlenameField.getText().isEmpty() && !createLastnameField.getText().isEmpty()
                 && !createCPRField.getText().isEmpty() && !createAddressField.getText().isEmpty() && !createPostalCodeField.getText().isEmpty()
                 && !createCityField.getText().isEmpty() && !createEmailField.getText().isEmpty()) {
-            dbController.createUserInformation((dbController.getUserIDCount()), createFirstnameField.getText(), createMiddlenameField.getText(),
+            dbController.createUserInformation(createFirstnameField.getText(), createMiddlenameField.getText(),
                     createLastnameField.getText(), Integer.parseInt(createCPRField.getText()), createAddressField.getText(), Integer.parseInt(createPostalCodeField.getText()), createCityField.getText(),
                     createEmailField.getText());
         }
@@ -593,6 +604,7 @@ public class FXMLDocumentController implements Initializable {
             long id = dbController.getLogBookId(dbController.getCaseId(x.getUserid()));
             System.out.println("id : " + id);
             logEntryTableView(id);
+            setLogbookLBL(x.getUserid());
         }
     }
 
@@ -631,5 +643,19 @@ public class FXMLDocumentController implements Initializable {
         casePane.setVisible(false);
         casePane.setDisable(true);
     }
-
+    
+    private void setLogbookLBL(long userId){
+        String[] info = dbController.getInformationStrings(userId);
+        System.out.println(info[0] + " " + info[1] + " " + info[2]);
+        
+        nameLogbookLBL.setText(info[0] + " " + info[1] + " " + info[2]);
+        cprLogbookLBL.setText(info[4]);
+        emailLogbookLBL.setText(info[5] + ", " + info[6] + ", " + info[7]);
+        adresseLogbookLBL.setText(info[8]);
+    }
+    
+    @FXML
+    private void editLogbookBTN(MouseEvent event) {
+        
+    }
 }
