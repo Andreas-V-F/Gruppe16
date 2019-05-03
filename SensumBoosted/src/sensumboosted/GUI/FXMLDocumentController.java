@@ -603,8 +603,9 @@ public class FXMLDocumentController implements Initializable {
             dbController.editLogBook(le.getLogbookId(), logbookTextField.getText());
             editMode = false;
         }
-       logEntryTableView.getItems().clear();
-       logEntryTableView.getItems().addAll(obListLE);
+        long id = dbController.getLogBookId(dbController.getCaseId(x.getUserid()));
+        logEntryTableView(id);
+        logbookTextField.clear();
     }
 
     @FXML
