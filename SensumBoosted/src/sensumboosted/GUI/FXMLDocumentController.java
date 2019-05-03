@@ -593,6 +593,8 @@ public class FXMLDocumentController implements Initializable {
     private void saveLogbookButtonHandler(ActionEvent event) {
         UserAccount x = citizenTableView.getSelectionModel().getSelectedItem();
         dbController.editLogBook(x.getUserid(), logbookTextField.getText());
+        logEntryTableView.refresh();
+        logEntryTableView.getItems();
     }
 
     @FXML
