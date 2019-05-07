@@ -20,13 +20,7 @@ public class SensumBoosted extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
-        /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-       Should be deleted if we dont use more windows!
-        <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<zzzzz<<<*/
-//        To test the Dairy window, without keep logging in.
-//        Parent root = FXMLLoader.load(getClass().getResource("DiaryDocument.fxml"));
-
-        Scene scene = new Scene(root, 299, 225);
+        Scene scene = new Scene(root, 310, 261);
         stage.setTitle("Login Window");
         stage.setScene(scene);
         stage.show();

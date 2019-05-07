@@ -27,6 +27,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -42,9 +43,13 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import sensumboosted.Domain.Admin;
+import sensumboosted.Domain.CaseWorker;
 import sensumboosted.Persistence.DatabaseController;
 import sensumboosted.Domain.Encryption;
 import sensumboosted.Domain.LogEntry;
+import sensumboosted.Domain.Permission;
+import sensumboosted.Domain.User;
 import sensumboosted.Persistence.Log;
 import sensumboosted.Domain.UserAccount;
 import sensumboosted.Domain.UserInformation;
@@ -54,6 +59,11 @@ import sensumboosted.Domain.UserInformation;
  * @author krute
  */
 public class FXMLDocumentController implements Initializable {
+
+    private User currentUser;
+//    private CaseWorker cw;
+//    private Admin admin;
+    private Alert alert;
 
     private DatabaseController dbController = new DatabaseController();
     private FXMLLoader loader = new FXMLLoader();
@@ -192,9 +202,6 @@ public class FXMLDocumentController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-// Måske ikke nødvendigt at connect. Kun bruges, hvis der skal kommunikeres med databasen
-// og det gør de brugte metoder i dbController allerede.
-//        dbController.connect();
         loginInfoLabel.setAlignment(Pos.CENTER);
         String[] userType = {"Adminstrator", "Sagsbehandler", "Medicinansvarlig", "Vikar", "Pædagog", "Pårørerende"};
 
@@ -216,21 +223,67 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void loginBTNHandler(ActionEvent event) {
-
+//        createUser();
         loginInfoLabel.setText("");
         Boolean j = false;
         j = TestTest();
         if (j) {
+
             setWindowSizeDiary(event);
             loadDiaryScene();
         }
     }
 
+//    private void createUser() {
+//        if (true) {
+//
+//        };
+//
+//    }
     @FXML
     private void createUserBtnEventHandler(ActionEvent event) {
-        createUserScene();
+        // Maybe make a switch with all the "roles" we got??
+        if ("admin".equals(currentUser.getRole())) { //
+            System.out.println("admin rolle");
+            if (currentUser.hasPermission(Permission.adminPermits)) {
+                createUserScene();
+            } else {
+                System.out.println("admin don't have the permit");
+            }
+            if ("medicin".equals(currentUser.getRole())) {
+                System.out.println("medicin rolle");
+                if (currentUser.hasPermission(Permission.adminPermits)) {
+                    createUserScene();
+                } else {
+                    System.out.println("medicin don't have permit");
+                }
+            }
+        }
     }
 
+    /*
+    if ("admin".equals(comboBox.getSelectionModel().getSelectedItem())) {
+            if (admin.hasPermission(abc.adminBTN)) {
+                nextWindowLabel.setAlignment(Pos.CENTER);
+                nextWindowLabel.setText("you have clicked the admin button");
+                alertCaller("You are the admin", Alert.AlertType.INFORMATION);
+                
+            } else {
+                nextWindowLabel.setAlignment(Pos.CENTER);
+                nextWindowLabel.setText("you dont have permission for this");
+            }
+        }
+        if ("case worker".equals(comboBox.getSelectionModel().getSelectedItem())) {
+            if (cw.hasPermission(abc.adminBTN)) {
+                nextWindowLabel.setAlignment(Pos.CENTER);
+                nextWindowLabel.setText("you have clicked the admin button");
+            } else {
+                nextWindowLabel.setAlignment(Pos.CENTER);
+                nextWindowLabel.setText("you dont have permission for this");
+                alertCaller("You dont have permission for this, contact your admin", Alert.AlertType.WARNING);
+            }
+        }
+     */
     @FXML
     private void createBtnEventHandler(ActionEvent event) {
         if (!createUsernameField.getText().isEmpty() && !createPasswordField.getText().isEmpty() && !createUserTypeChoiceBox.getItems().isEmpty()) {
@@ -302,6 +355,27 @@ public class FXMLDocumentController implements Initializable {
                     if ("Succesful login".equals(s)) {
                         logName = getUsernameField();
                         attempt = "har logget ind i systemet.";
+
+                        try {
+                            ResultSet rs = con.createStatement().executeQuery("SELECT * FROM users WHERE username='" + getUsernameField() + "'");
+                            while (rs.next()) {
+                                String sqlString = rs.getString("user_type");
+                                if ("Administrator".equals(sqlString)) {
+                                    currentUser = new Admin(getUsernameField(), "admin");
+                                    System.out.println(currentUser.toString());
+                                    System.out.println("ADMIN");
+                                }
+                                if ("Medicinansvarlig".equals(sqlString)) {
+                                    currentUser = new CaseWorker(getUsernameField(), "medicin");
+                                    System.out.println(currentUser.toString());
+                                    System.out.println("MEDICIN");
+                                }
+                            }
+                        } catch (SQLException ex) {
+                            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                            System.out.println("DEN BLIVER FANGET HER");
+                        }
+
                         logLoginAttempt(logName, attempt);
                         j = true;
                         System.out.println(j.toString()); // Only to see what happens in the console
@@ -368,8 +442,19 @@ public class FXMLDocumentController implements Initializable {
         createUserPane.setDisable(false);
     }
 
+    private void resetCurrentUser() {
+
+        currentUser = null;
+//        cw = null;
+//        admin = null;
+
+    }
+
     @FXML
     private void logoutBTNHandler(ActionEvent event) {
+
+        resetCurrentUser();
+
         usernameField.clear();
         passwordField.clear();
         loginInfoLabel.setText("");
@@ -454,13 +539,13 @@ public class FXMLDocumentController implements Initializable {
 
     // Dont change the window to the right size.
     private void setWindowSizeLogin(Event event) {
-        ((Node) (event.getSource())).getScene().getWindow().setWidth(299);
+        ((Node) (event.getSource())).getScene().getWindow().setWidth(310);
         ((Node) (event.getSource())).getScene().getWindow().setHeight(250);
     }
 
     private void setWindowSizeDiary(Event event) {
-        ((Node) (event.getSource())).getScene().getWindow().setWidth(1000);
-        ((Node) (event.getSource())).getScene().getWindow().setHeight(700);
+        ((Node) (event.getSource())).getScene().getWindow().setWidth(1100);
+        ((Node) (event.getSource())).getScene().getWindow().setHeight(800);
     }
 
     @FXML

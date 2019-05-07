@@ -33,7 +33,6 @@ public class UserInformation {
         this.postalCode = postalCode;
         this.city = city;
         this.email = email;
-        
     }
 
     public int getUserid() {

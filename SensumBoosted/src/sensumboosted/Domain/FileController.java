@@ -11,12 +11,12 @@ import sensumboosted.Interface.DatalayerInterface;
  *
  * @author andersschjonning
  */
-public class FileController  implements DatalayerInterface {
+public class FileController implements DatalayerInterface {
 
     @Override
     public String checkLogin(String user, String pass) {
         // hent i en fil
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }
