@@ -1,11 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SensumBoosted2.GUI.FXMLCaseController">
-    
+<AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SensumBoosted2.GUI.FXMLCaseController">
+    <children>
+            <Button layoutX="760.0" layoutY="95.0" mnemonicParsing="false" onAction="#logbookButtonHandler" prefHeight="80.0" prefWidth="159.0" text="Logbog" />
+            <Button layoutX="760.0" layoutY="180.0" mnemonicParsing="false" onAction="#handlePreCases" prefHeight="80.0" prefWidth="159.0" text="Tidligere sager" />
+            <TextArea fx:id="textArea" layoutX="70.0" layoutY="215.0" prefHeight="300.0" prefWidth="680.0" />
+            <TextArea fx:id="infoBox" editable="false" layoutX="70.0" layoutY="10.0" prefHeight="200.0" prefWidth="400.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+<!--               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>-->
+            </TextArea>
+            <Button layoutX="760.0" layoutY="265.0" mnemonicParsing="false" onAction="#handleGemActon" prefHeight="80.0" prefWidth="159.0" text="Gem" />
+            <Button layoutX="760.0" layoutY="350.0" mnemonicParsing="false" onAction="#handleCloseAction" prefHeight="80.0" prefWidth="159.0" text="Luk sag" />
+            <Button fx:id="caseBackBTN" layoutX="760.0" layoutY="435.0" mnemonicParsing="false" onMouseClicked="#caseBackBTN" prefHeight="80.0" prefWidth="159.0" text="Tilbage" />
+      <ImageView fx:id="ImgView" fitHeight="200.0" fitWidth="270.0" layoutX="480.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Pictures/1414729610168.png" />
+         </image>
+      </ImageView>
+    </children>
 </AnchorPane>

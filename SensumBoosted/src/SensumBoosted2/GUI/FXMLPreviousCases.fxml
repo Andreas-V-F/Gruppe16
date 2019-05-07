@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SensumBoosted2.GUI.FXMLPreviousCasesController">
+   <children>
+      <TableView fx:id="tableView" layoutX="10.0" layoutY="10.0" prefHeight="380.0" prefWidth="400.0">
+        <columns>
+          <TableColumn fx:id="textColumn" prefWidth="229.0" text="Tekst" />
+          <TableColumn fx:id="dateColumn" minWidth="0.0" prefWidth="67.0" text="Dato " />
+            <TableColumn fx:id="lastColumn" prefWidth="103.0" text="Sidst ændret" />
+        </columns>
+      </TableView>
+      <Button layoutX="426.0" layoutY="310.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="80.0" prefWidth="160.0" text="Tilbage" />
+   </children>
+</AnchorPane>

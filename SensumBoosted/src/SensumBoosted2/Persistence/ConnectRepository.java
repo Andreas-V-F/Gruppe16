@@ -24,7 +24,7 @@ public class ConnectRepository {
         connect();
     }
     
-    public Connection connect() {
+    private Connection connect() {
         try {
             Class.forName("org.postgresql.Driver");
         } catch (java.lang.ClassNotFoundException e) {
