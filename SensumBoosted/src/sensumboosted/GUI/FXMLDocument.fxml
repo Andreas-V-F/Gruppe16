@@ -162,9 +162,9 @@
             </Pane>
          </children>
       </Pane>
-      <Pane fx:id="createUserPane1" layoutX="60.0" layoutY="119.0" prefHeight="421.0" prefWidth="519.0" visible="false">
+      <Pane fx:id="createUserPane" layoutX="60.0" layoutY="119.0" prefHeight="421.0" prefWidth="519.0" visible="false">
          <children>
-            <Button fx:id="createBtn1" layoutX="356.0" layoutY="325.0" mnemonicParsing="false" onAction="#createBtnEventHandler" text="Opret bruger" />
+            <Button fx:id="createBtn" layoutX="356.0" layoutY="325.0" mnemonicParsing="false" onAction="#createBtnEventHandler" text="Opret bruger" />
             <Label fx:id="insertDbLabel1" layoutX="343.0" layoutY="372.0" prefHeight="17.0" prefWidth="149.0" />
             <Label layoutX="263.0" layoutY="112.0" text="By">
                <font>

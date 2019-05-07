@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/10.0.1" fx:controller="SensumBoosted2.GUI.FXMLLoginController">
+    <Pane fx:id="loginPane" prefHeight="225.0" prefWidth="299.0">
+        <children>
+            <TextField fx:id="usernameField" layoutX="57.0" layoutY="73.0" prefHeight="25.0" prefWidth="186.0" />
+            <PasswordField fx:id="passwordField" layoutX="57.0" layoutY="125.0" prefHeight="25.0" prefWidth="186.0" />
+            <Label layoutX="127.0" layoutY="21.0" text="Login">
+            </Label>
+            <Label layoutX="57.0" layoutY="56.0" text="Username:" />
+            <Label layoutX="57.0" layoutY="108.0" text="Password:" />
+            <Button fx:id="loginBTN" layoutX="57.0" layoutY="161.0" mnemonicParsing="false" text="Login" />
+            <Button fx:id="cancelBTN" layoutX="208.0" layoutY="161.0" mnemonicParsing="false" text="Exit" />
+            <Label fx:id="loginInfoLabel" layoutX="9.0" layoutY="194.0" maxWidth="1.7976931348623157E308" prefHeight="17.0" prefWidth="282.0" textAlignment="CENTER" />
+        </children>
+    </Pane>
+</AnchorPane>

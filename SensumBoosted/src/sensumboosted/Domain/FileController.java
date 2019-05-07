@@ -5,7 +5,7 @@
  */
 package sensumboosted.Domain;
 
-import sensumboosted.Interface.DatalayerInterface;
+import SensumBoosted2.Interfaces.DatalayerInterface;
 
 /**
  *

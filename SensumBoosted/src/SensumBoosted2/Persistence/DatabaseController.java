@@ -3,14 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sensumboosted.Interface;
+
+package SensumBoosted2.Persistence;
+
+import sensumboosted.Persistence.Log;
 
 /**
  *
- * @author andersschjonning
+ * @author Mikkel Hoeyberg
  */
-public interface DatalayerInterface {
+public class DatabaseController {
     
-    String checkLogin(String user, String pass);
     
+    
+    
+
 }
