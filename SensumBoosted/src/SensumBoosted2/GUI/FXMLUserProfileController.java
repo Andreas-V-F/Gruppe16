@@ -64,7 +64,7 @@ public class FXMLUserProfileController implements Initializable {
     @FXML
     private Button saveBtn;
     
-
+    
     public String firstname;
     public String middlename;
     public String lastname;
@@ -144,12 +144,6 @@ public class FXMLUserProfileController implements Initializable {
         initiateCols();
         userInformationTableView.setItems(obListUI);
         userInformationTableView.setEditable(true);
-    }
-    
-    @FXML
-    private void displaySelected(MouseEvent event) {
-        ui = userInformationTableView.getSelectionModel().getSelectedItem();
-        
     }
 
     @FXML

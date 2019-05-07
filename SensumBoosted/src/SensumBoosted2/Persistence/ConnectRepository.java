@@ -155,6 +155,7 @@ public class ConnectRepository {
         return upController.email;
     }
 
+    //HVAD ER FEJLEN HER?!
     public void getUITableView() {
         try {
             rs = connect().createStatement().executeQuery("SELECT * FROM citizen_information");
@@ -166,7 +167,7 @@ public class ConnectRepository {
                         rs.getString("email")));
             }
         } catch (SQLException ex) {
-
+            Logger.getLogger(ConnectRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
