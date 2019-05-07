@@ -93,8 +93,8 @@ public class DatabaseController {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        createLogbook(sagsId);
-        createLogbookEntry(getLogBookId(sagsId), "");
+//        createLogbook(sagsId);
+//        createLogbookEntry(getLogBookId(sagsId), "");
     }
 
     public Long getCaseId(int userId) {
@@ -212,9 +212,10 @@ public class DatabaseController {
     }
 
     public String[] getUserInformation() {
-        try (Statement st = connection.createStatement()) {
-            String sql = "SELECT * FROM USER_INFORMATION";
-
+        try  {
+            Statement st = connection.createStatement();
+            System.out.println("123");
+            String sql = "SELECT * FROM user_information";
             rs = st.executeQuery(sql);
             while (rs.next()) {
                 int userid = rs.getInt("user_id");
@@ -226,7 +227,7 @@ public class DatabaseController {
                 int getPostalCode = rs.getInt("postal_code");
                 String getCity = rs.getString("city");
                 String getEmail = rs.getString("email");
-
+                
                 String[] info = {Integer.toString(userid), getFirstname, getMiddlename, getLastname, Integer.toString(getCPR), getAddress, Integer.toString(getPostalCode), getCity, getEmail};
 
                 hasUserInformation = Integer.toString(userid) + "\t|" + getFirstname + "\t|" + getMiddlename
