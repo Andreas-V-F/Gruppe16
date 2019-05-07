@@ -25,7 +25,7 @@ public class DatabaseControllerTest1 {
     public void setUp() throws Exception {
         db = new DatabaseController();
         db.connect();
-        db.createUser(userId, "username", "password", "userType");
+        db.createUser("username", "password", "userType");
     }
 
     @Test

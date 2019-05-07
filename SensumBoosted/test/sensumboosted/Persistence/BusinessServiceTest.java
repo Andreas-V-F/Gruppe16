@@ -26,7 +26,7 @@ public class BusinessServiceTest {
         db = new DatabaseController();
         db.connect();
         db.deleteUser(userId);
-        db.createUser(userId, "username", "password", "userType");
+        db.createUser("username", "password", "userType");
         //db.deleteLogbook(userId);
     }
   
