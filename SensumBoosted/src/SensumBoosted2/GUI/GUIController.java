@@ -24,7 +24,7 @@ public class GUIController extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLMainMenu.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("FXMLUserProfile.fxml"));
         Scene scene = new Scene(root);
         stage.setTitle("Sensom Boosted");
         stage.setScene(scene);
