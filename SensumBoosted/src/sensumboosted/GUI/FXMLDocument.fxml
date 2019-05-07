@@ -69,7 +69,6 @@
          </children>
       </Pane>
       <Pane fx:id="loginPane" prefHeight="225.0" prefWidth="299.0">
-         <children>
             <TextField fx:id="usernameField" layoutX="57.0" layoutY="73.0" onKeyReleased="#usernameFieldHandler" prefHeight="25.0" prefWidth="186.0" />
             <PasswordField fx:id="passwordField" layoutX="57.0" layoutY="125.0" onKeyReleased="#passwordFieldHandler" prefHeight="25.0" prefWidth="186.0" />
             <Label layoutX="127.0" layoutY="21.0" text="Login">
@@ -82,58 +81,80 @@
             <Button fx:id="loginBTN" layoutX="57.0" layoutY="161.0" mnemonicParsing="false" onAction="#loginBTNHandler" text="Login" />
             <Button fx:id="cancelBTN" layoutX="208.0" layoutY="161.0" mnemonicParsing="false" onAction="#cancelBTNHandler" text="Exit" />
             <Label fx:id="loginInfoLabel" layoutX="9.0" layoutY="194.0" maxWidth="1.7976931348623157E308" prefHeight="17.0" prefWidth="282.0" textAlignment="CENTER" />
-         </children>
       </Pane>
-<!--      <Pane fx:id="diaryPane" disable="true" prefHeight="700.0" prefWidth="1000.0" visible="false">
+      <Pane fx:id="userSettingPane" layoutX="1.0" layoutY="1.0" prefHeight="700.0" prefWidth="1000.0">
          <children>
-            <Button fx:id="userSettingBtn" layoutX="454.0" layoutY="291.0" mnemonicParsing="false" onAction="#userSettingBtnHandler" prefHeight="46.0" prefWidth="93.0" text="Borgere">
+            <Button fx:id="createUserBtn" layoutX="814.0" layoutY="610.0" mnemonicParsing="false" onAction="#createUserBtnEventHandler" prefHeight="46.0" prefWidth="137.0" text="Registrer borger" />
+            <Button fx:id="userAccountBtn" layoutX="789.0" layoutY="350.0" mnemonicParsing="false" onAction="#userAccountBtnHandler" text="User Account" />
+            <Button fx:id="userInformationBtn" layoutX="823.0" layoutY="285.0" mnemonicParsing="false" onAction="#userInformationBtnHandler" text="User Information" />
+            <Button fx:id="updateBtn" layoutX="796.0" layoutY="414.0" mnemonicParsing="false" onAction="#updateBtnEventHandler" text="Update" />
+            <Label layoutX="62.0" layoutY="67.0" prefHeight="20.0" prefWidth="205.0" text="SØG PÅ BRUGER (Indtast CPR)">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
-            </Button>
-            <Button fx:id="logoutBTN" layoutX="474.0" layoutY="405.0" mnemonicParsing="false" onAction="#logoutBTNHandler" text="Log ud" />
-         </children>
-      </Pane>-->
-      <Pane fx:id="userSettingPane" disable="true" prefHeight="700.0" prefWidth="1000.0" visible="false">
-         <children>
-            <Button fx:id="createUserBtn" layoutX="814.0" layoutY="610.0" mnemonicParsing="false" onAction="#createUserBtnEventHandler" prefHeight="46.0" prefWidth="137.0" text="Registrer borger" />
-            <TableView fx:id="usersTableView" layoutX="40.0" layoutY="144.0" prefHeight="413.0" prefWidth="900.0">
-              <columns>
-                <TableColumn fx:id="userIDColumn" prefWidth="75.0" text="User ID" />
-                <TableColumn fx:id="usernameColumn" prefWidth="75.0" text="Username" />
-                  <TableColumn fx:id="passwordColumn" prefWidth="75.0" text="Password" />
-                  <TableColumn fx:id="userTypeColumn" prefWidth="75.0" text="User Type" />
-              </columns>
-               <columnResizePolicy>
-                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-               </columnResizePolicy>
-            </TableView>
-            <TableView fx:id="userInformationTableView" layoutX="50.0" layoutY="144.0" prefHeight="413.0" prefWidth="900.0" visible="false">
-              <columns>
-                  <TableColumn fx:id="userIDInfoColumn" prefWidth="75.0" text="User ID" />
-                <TableColumn fx:id="firstNameColumn" prefWidth="75.0" text="Fornavn" />
-                <TableColumn fx:id="middleNameColumn" prefWidth="75.0" text="Mellemnavn" />
-                  <TableColumn fx:id="lastNameColumn" prefWidth="75.0" text="Efternavn" />
-                  <TableColumn fx:id="cprColumn" prefWidth="75.0" text="CPR" />
-                  <TableColumn fx:id="addressColumn" prefWidth="75.0" text="Adresse" />
-                  <TableColumn fx:id="postalCodeColumn" prefWidth="75.0" text="Postnummer" />
-                  <TableColumn fx:id="cityColumn" prefWidth="75.0" text="By" />
-                  <TableColumn fx:id="emailColumn" prefWidth="75.0" text="Email" />
-              </columns>
-               <columnResizePolicy>
-                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-               </columnResizePolicy>
-            </TableView>
-            <Button fx:id="userAccountBtn" layoutX="289.0" layoutY="87.0" mnemonicParsing="false" onAction="#userAccountBtnHandler" text="User Account" />
-            <Button fx:id="userInformationBtn" layoutX="606.0" layoutY="87.0" mnemonicParsing="false" onAction="#userInformationBtnHandler" text="User Information" />
-            <Button fx:id="updateBtn" layoutX="473.0" layoutY="100.0" mnemonicParsing="false" onAction="#updateBtnEventHandler" text="Update" />
-            <Button fx:id="userSettingToDiaryPaneBtn" layoutX="711.0" layoutY="621.0" mnemonicParsing="false" onAction="#userSettingToDiaryPaneBtnHandler" text="Tilbage" />
+            </Label>
+            <TextField fx:id="searchUserTextField" layoutX="267.0" layoutY="65.0" />
+            <Button fx:id="searchUserBtn" layoutX="430.0" layoutY="65.0" mnemonicParsing="false" onAction="#searchUserBtnHandler" prefHeight="25.0" prefWidth="53.0" text="SØG" />
+            <Pane fx:id="editUserPane" layoutX="62.0" layoutY="198.0" prefHeight="225.0" prefWidth="519.0">
+               <children>
+                  <Label fx:id="insertDbLabel" layoutX="343.0" layoutY="372.0" prefHeight="17.0" prefWidth="149.0" />
+                  <Label layoutX="263.0" layoutY="112.0" text="By">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="263.0" layoutY="72.0" text="Postnummer">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="263.0" layoutY="36.0" text="Adresse">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="263.0" layoutY="148.0" text="E-mail">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="18.0" layoutY="148.0" text="CPR">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="18.0" layoutY="35.0" text="Fornavn">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="18.0" layoutY="111.0" text="Efternavn">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="18.0" layoutY="72.0" text="Mellemnavn">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="editFirstnameField" layoutX="101.0" layoutY="33.0" />
+                  <TextField fx:id="editMiddlenameField" layoutX="101.0" layoutY="70.0" />
+                  <TextField fx:id="editLastnameField" layoutX="101.0" layoutY="109.0" />
+                  <TextField fx:id="editCPRField" layoutX="101.0" layoutY="146.0" />
+                  <TextField fx:id="editAddressField" layoutX="356.0" layoutY="34.0" />
+                  <TextField fx:id="editPostalCodeField" layoutX="356.0" layoutY="70.0" />
+                  <TextField fx:id="editCityField" layoutX="356.0" layoutY="109.0" />
+                  <TextField fx:id="editEmailField" layoutX="356.0" layoutY="146.0" />
+                  <Button fx:id="editUserBtn" layoutX="454.0" layoutY="186.0" mnemonicParsing="false" onAction="#editUserBtnHandler" text="Ændre" />
+               </children>
+            </Pane>
          </children>
       </Pane>
-      <Pane fx:id="createUserPane" disable="true" prefHeight="421.0" prefWidth="519.0" visible="false">
+      <Pane fx:id="createUserPane1" layoutX="60.0" layoutY="119.0" prefHeight="421.0" prefWidth="519.0" visible="false">
          <children>
-            <Button fx:id="createBtn" layoutX="356.0" layoutY="325.0" mnemonicParsing="false" onAction="#createBtnEventHandler" text="Opret bruger" />
-            <Label fx:id="insertDbLabel" layoutX="343.0" layoutY="372.0" prefHeight="17.0" prefWidth="149.0" />
+            <Button fx:id="createBtn1" layoutX="356.0" layoutY="325.0" mnemonicParsing="false" onAction="#createBtnEventHandler" text="Opret bruger" />
+            <Label fx:id="insertDbLabel1" layoutX="343.0" layoutY="372.0" prefHeight="17.0" prefWidth="149.0" />
             <Label layoutX="263.0" layoutY="112.0" text="By">
                <font>
                   <Font size="14.0" />
@@ -188,19 +209,19 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="createPasswordLabel" layoutX="18.0" layoutY="288.0" text="Password">
+            <Label fx:id="createPasswordLabel1" layoutX="18.0" layoutY="288.0" text="Password">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="createUserTypeLabel" layoutX="16.0" layoutY="328.0" prefHeight="20.0" prefWidth="80.0" text="Bruger type">
+            <Label fx:id="createUserTypeLabel1" layoutX="16.0" layoutY="328.0" prefHeight="20.0" prefWidth="80.0" text="Bruger type">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="createUsernameField" layoutX="101.0" layoutY="245.0" />
-            <TextField fx:id="createPasswordField" layoutX="101.0" layoutY="285.0" />
-            <ChoiceBox fx:id="createUserTypeChoiceBox" layoutX="100.0" layoutY="325.0" prefWidth="150.0" />
+            <TextField fx:id="createUsernameField1" layoutX="101.0" layoutY="245.0" />
+            <TextField fx:id="createPasswordField1" layoutX="101.0" layoutY="285.0" />
+            <ChoiceBox fx:id="createUserTypeChoiceBox1" layoutX="100.0" layoutY="325.0" prefWidth="150.0" />
          </children>
       </Pane>
    </children>

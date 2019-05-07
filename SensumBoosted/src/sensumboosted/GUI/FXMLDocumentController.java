@@ -171,7 +171,29 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Button updateBtn;
     @FXML
-    private Button userSettingToDiaryPaneBtn;
+    private TextField searchUserTextField;
+    @FXML
+    private Button searchUserBtn;
+    @FXML
+    private Pane editUserPane;
+    @FXML
+    private TextField editFirstnameField;
+    @FXML
+    private TextField editMiddlenameField;
+    @FXML
+    private TextField editLastnameField;
+    @FXML
+    private TextField editCPRField;
+    @FXML
+    private TextField editAddressField;
+    @FXML
+    private TextField editPostalCodeField;
+    @FXML
+    private TextField editCityField;
+    @FXML
+    private TextField editEmailField;
+    @FXML
+    private Button editUserBtn;
 
     ObservableList<UserAccount> obListUA = FXCollections.observableArrayList();
     ObservableList<UserInformation> obListUI = FXCollections.observableArrayList();
@@ -200,6 +222,19 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Button caseBackBTN;
 
+    //User information
+    private String firstname;
+    private String middlename;
+    private String lastname;
+    private int cpr;
+    private String address;
+    private int postal_code;
+    private String city;
+    private String email;
+    private String username;
+    private String password;
+    private String usertype;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         loginInfoLabel.setAlignment(Pos.CENTER);
@@ -209,6 +244,7 @@ public class FXMLDocumentController implements Initializable {
         userAccountTableView();
         userInformationTableView();
         citizenTableView();
+
     }
 
     public String getUsernameField() {
@@ -335,9 +371,161 @@ public class FXMLDocumentController implements Initializable {
         }
     }
 
+
+
+    private void searchUserBtnHandler(ActionEvent event) {
+        if (!searchUserTextField.getText().isEmpty()) {
+            editUserPane.setVisible(true);
+            editUserPane.setDisable(false);
+
+            editFirstnameField.setText(getFirstname());
+            editMiddlenameField.setText(getMiddlename());
+            editLastnameField.setText(getLastname());
+            editCPRField.setText(Integer.toString(getCPR()));
+            editAddressField.setText(getAddress());
+            editPostalCodeField.setText(Integer.toString(getPostalCode()));
+            editCityField.setText(getCity());
+            editEmailField.setText(getEmail());
+
+        }
+    }
+
+    public String getFirstname() {
+        try {
+            ResultSet rs = con.createStatement().executeQuery("SELECT firstname FROM user_information WHERE cpr = " + searchUserTextField.getText());
+
+            while (rs.next()) {
+                firstname = rs.getString("firstname");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return firstname;
+    }
+
+    public String getMiddlename() {
+        try {
+            ResultSet rs = con.createStatement().executeQuery("SELECT middlename FROM user_information WHERE cpr = " + Integer.parseInt(searchUserTextField.getText()));
+
+            while (rs.next()) {
+                middlename = rs.getString("middlename");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return middlename;
+    }
+
+    public String getLastname() {
+        try {
+            ResultSet rs = con.createStatement().executeQuery("SELECT lastname FROM user_information WHERE cpr = " + Integer.parseInt(searchUserTextField.getText()));
+
+            while (rs.next()) {
+                lastname = rs.getString("lastname");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lastname;
+    }
+
+    public int getCPR() {
+        try {
+            ResultSet rs = con.createStatement().executeQuery("SELECT cpr FROM user_information WHERE cpr = " + Integer.parseInt(searchUserTextField.getText()));
+
+            while (rs.next()) {
+                cpr = rs.getInt("cpr");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return cpr;
+    }
+
+    public String getAddress() {
+        try {
+            ResultSet rs = con.createStatement().executeQuery("SELECT address FROM user_information WHERE cpr = " + Integer.parseInt(searchUserTextField.getText()));
+
+            while (rs.next()) {
+                address = rs.getString("address");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return address;
+    }
+
+    public int getPostalCode() {
+        try {
+            ResultSet rs = con.createStatement().executeQuery("SELECT postal_code FROM user_information WHERE cpr = " + Integer.parseInt(searchUserTextField.getText()));
+
+            while (rs.next()) {
+                postal_code = rs.getInt("postal_code");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return postal_code;
+    }
+
+    public String getCity() {
+        try {
+            ResultSet rs = con.createStatement().executeQuery("SELECT city FROM user_information WHERE cpr = " + Integer.parseInt(searchUserTextField.getText()));
+
+            while (rs.next()) {
+                city = rs.getString("city");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return city;
+
+    }
+
+    public String getEmail() {
+        try {
+            ResultSet rs = con.createStatement().executeQuery("SELECT email FROM user_information WHERE cpr = " + Integer.parseInt(searchUserTextField.getText()));
+
+            while (rs.next()) {
+                email = rs.getString("email");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return email;
+    }
+
     @FXML
-    private void userSettingToDiaryPaneBtnHandler(ActionEvent event) {
-        userSettingToDiaryPane();
+    private void editUserBtnHandler(ActionEvent event) {
+        if (editFirstnameField.getText() != getFirstname() || editMiddlenameField.getText() != getMiddlename()
+                || editLastnameField.getText() != getLastname() || editCPRField.getText() != Integer.toString(getCPR())
+                || editAddressField.getText() != Integer.toString(getPostalCode()) || editCityField.getText() != getCity()
+                || editEmailField.getText() != getEmail()) {
+            updateUserInformation();
+        }
+    }
+
+    private void updateUserInformation() {
+        try {
+            ResultSet rs = con.createStatement().executeQuery("UPDATE user_information "
+                    + "SET firstname = '" + editFirstnameField.getText() + "', middlename = '" + editMiddlenameField.getText() + "',"
+                    + "lastname = '" + editLastnameField.getText() + "', cpr = " + Integer.parseInt(editCPRField.getText()) + ","
+                    + "address = '" + editAddressField.getText() + "', postal_code = " + Integer.parseInt(editPostalCodeField.getText()) + ","
+                    + "city = '" + editCityField.getText() + "', email = '" + editEmailField.getText() + "'"
+                    + " WHERE cpr = " + Integer.parseInt(searchUserTextField.getText()));
+            rs.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 // Should be renamed! and dont think this method should do so much logic. should be moved
@@ -605,7 +793,7 @@ public class FXMLDocumentController implements Initializable {
         userInformationTableView.setEditable(true);
     }
 
-    @FXML
+
     public void userAccountBtnHandler(ActionEvent event) {
         usersTableView.setVisible(true);
         userInformationTableView.setVisible(false);
@@ -621,8 +809,6 @@ public class FXMLDocumentController implements Initializable {
     public void updateBtnEventHandler(ActionEvent event) {
         usersTableView.getItems().clear();
         userInformationTableView.getItems().clear();
-        userInformationTableView();
-        userAccountTableView();
     }
 
     private void citizenTableView() {
