@@ -11,6 +11,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -411,22 +412,25 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void editUserBtnHandler(ActionEvent event) {
-        if (editFirstnameField.getText() != getFirstname() || editMiddlenameField.getText() != getMiddlename()
-                || editLastnameField.getText() != getLastname() || editCPRField.getText() != Integer.toString(getCPR())
-                || editAddressField.getText() != Integer.toString(getPostalCode()) || editCityField.getText() != getCity()
-                || editEmailField.getText() != getEmail()) {
+        if (!editFirstnameField.getText().equals(getFirstname()) || !editMiddlenameField.getText().equals(getMiddlename())
+                || !editLastnameField.getText().equals(getLastname()) || !editCPRField.getText().equals(Integer.toString(getCPR()))
+                || !editAddressField.getText().equals(Integer.toString(getPostalCode())) || !editCityField.getText().equals(getCity())
+                || !editEmailField.getText().equals(getEmail())) {
             updateUserInformation();
         }
     }
 
     private void updateUserInformation() {
         try {
-            ResultSet rs = con.createStatement().executeQuery("UPDATE user_information "
+            Statement st = con.createStatement();
+            String sql = "UPDATE user_information "
                     + "SET firstname = '" + editFirstnameField.getText() + "', middlename = '" + editMiddlenameField.getText() + "',"
                     + "lastname = '" + editLastnameField.getText() + "', cpr = " + Integer.parseInt(editCPRField.getText()) + ","
                     + "address = '" + editAddressField.getText() + "', postal_code = " + Integer.parseInt(editPostalCodeField.getText()) + ","
                     + "city = '" + editCityField.getText() + "', email = '" + editEmailField.getText() + "'"
-                    + " WHERE cpr = " + Integer.parseInt(searchUserTextField.getText()));
+                    + " WHERE cpr = " + Integer.parseInt(searchUserTextField.getText());
+            int update = st.executeUpdate(sql);
+            ResultSet rs = st.getGeneratedKeys();
             rs.close();
 
         } catch (SQLException ex) {
