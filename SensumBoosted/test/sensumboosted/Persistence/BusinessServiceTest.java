@@ -16,26 +16,23 @@ import org.junit.Test;
  * @author andersschjonning
  */
 public class BusinessServiceTest {
-    
 
     DatabaseController db;
     int userId = 111;
-    
+
     @Before
     public void setUp() throws Exception {
         db = new DatabaseController();
         db.connect();
         db.deleteUser(userId);
-        db.createUser(userId, "username", "password", "userType");
         db.deleteLogbookEntry(userId);
+        db.createUser("username", "password", "userType");
     }
-  
-    
+
     @Test
     public void createLogEntry() {
-       int cnt = db.getCount("logbook");
-       //
-       Assert.assertEquals(db.getCount("logbook"), cnt );
-   }
-        
+        int cnt = db.getCount("logbook");
+        Assert.assertEquals(db.getCount("logbook"), cnt);
+    }
+
 }

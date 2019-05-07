@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -71,6 +72,7 @@ public class FXMLDocumentController implements Initializable {
     private Encryption encrypt = new Encryption();
     private Log myLog;
     private Case userCase = new Case();
+    private boolean editMode = false;
 
     private Label label; // Is this even used??
 
@@ -94,6 +96,14 @@ public class FXMLDocumentController implements Initializable {
     private Label createPasswordLabel;
     @FXML
     private Label createUserTypeLabel;
+    @FXML
+    private Label nameLogbookLBL;
+    @FXML
+    private Label cprLogbookLBL;
+    @FXML
+    private Label emailLogbookLBL;
+    @FXML
+    private Label adresseLogbookLBL;
     @FXML
     private Button loginBTN;
     @FXML
@@ -223,6 +233,9 @@ public class FXMLDocumentController implements Initializable {
     private Button DeleteLogbookBTN;
     @FXML
     private Button caseBackBTN;
+    @FXML
+    private Button editBTN;
+    
 
     //User information
     private String firstname;
@@ -325,14 +338,16 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void createBtnEventHandler(ActionEvent event) {
         if (!createUsernameField.getText().isEmpty() && !createPasswordField.getText().isEmpty() && !createUserTypeChoiceBox.getItems().isEmpty()) {
-            dbController.createUser((dbController.getUserIDCount() + 1), createUsernameField.getText(), encrypt.encryptString(createPasswordField.getText()), createUserTypeChoiceBox.getValue());
+            String username = createUsernameField.getText();
+            String type = createUserTypeChoiceBox.getValue();
+            dbController.createUser(username, encrypt.encryptString(createPasswordField.getText()), type);
             insertDbLabel.setText("User created in database!");
         }
 
         if (!createFirstnameField.getText().isEmpty() && !createMiddlenameField.getText().isEmpty() && !createLastnameField.getText().isEmpty()
                 && !createCPRField.getText().isEmpty() && !createAddressField.getText().isEmpty() && !createPostalCodeField.getText().isEmpty()
                 && !createCityField.getText().isEmpty() && !createEmailField.getText().isEmpty()) {
-            dbController.createUserInformation((dbController.getUserIDCount()), createFirstnameField.getText(), createMiddlenameField.getText(),
+            dbController.createUserInformation(createFirstnameField.getText(), createMiddlenameField.getText(),
                     createLastnameField.getText(), Integer.parseInt(createCPRField.getText()), createAddressField.getText(), Integer.parseInt(createPostalCodeField.getText()), createCityField.getText(),
                     createEmailField.getText());
         }
@@ -842,7 +857,16 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void saveLogbookButtonHandler(ActionEvent event) {
         UserAccount x = citizenTableView.getSelectionModel().getSelectedItem();
-        dbController.editLogBook(x.getUserid(), logbookTextField.getText());
+        if (editMode == false){
+            dbController.saveLogBook(x.getUserid(), logbookTextField.getText());
+        } else if (editMode == true){
+            LogEntry le = logEntryTableView.getSelectionModel().getSelectedItem();
+            dbController.editLogBook(le.getLogbookId(), logbookTextField.getText());
+            editMode = false;
+        }
+        long id = dbController.getLogBookId(dbController.getCaseId(x.getUserid()));
+        logEntryTableView(id);
+        logbookTextField.clear();
     }
 
     @FXML
@@ -852,8 +876,8 @@ public class FXMLDocumentController implements Initializable {
             logbookTextField.clear();
             UserAccount x = citizenTableView.getSelectionModel().getSelectedItem();
             long id = dbController.getLogBookId(dbController.getCaseId(x.getUserid()));
-            System.out.println("id : " + id);
             logEntryTableView(id);
+            setLogbookLBL(x.getUserid());
         }
     }
 
@@ -879,10 +903,13 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void DeleteLogbookBTN(MouseEvent event) {
+        UserAccount x = citizenTableView.getSelectionModel().getSelectedItem();
         System.out.println("DeleteLogbookBTN b");
         LogEntry le = logEntryTableView.getSelectionModel().getSelectedItem();
         dbController.deleteLogbookEntry(le.getLogbookId());
         System.out.println("DeleteLogbookBTN a");
+        long id = dbController.getLogBookId(dbController.getCaseId(x.getUserid()));
+        logEntryTableView(id);
     }
 
     @FXML
@@ -892,5 +919,21 @@ public class FXMLDocumentController implements Initializable {
         casePane.setVisible(false);
         casePane.setDisable(true);
     }
+    
+    private void setLogbookLBL(long userId){
+        String[] info = dbController.getInformationStrings(userId);
+        
+        nameLogbookLBL.setText(info[0] + " " + info[1] + " " + info[2]);
+        cprLogbookLBL.setText(info[3]);
+        adresseLogbookLBL.setText(info[4] + ", " + info[5] + ", " + info[6]);
+        emailLogbookLBL.setText(info[7]);
+    }
+    
 
+    @FXML
+    private void editLogbookBTNHandler(ActionEvent event) {
+        LogEntry le = logEntryTableView.getSelectionModel().getSelectedItem();
+        logbookTextField.setText(le.getText());
+        editMode = true;
+    }
 }

@@ -163,31 +163,28 @@ public class DatabaseController {
 
     }
 
-    public void createUser(int userID, String username, String password, String userType) {
+    public void createUser(String username, String password, String userType) {
         try {
             Statement st = connection.createStatement();
             String sql = "INSERT INTO users "
                     + "(user_id,username,password,user_type)"
                     + " VALUES "
-                    + "(" + userID + ',' + "'" + username + "'" + ',' + "'" + password + "'" + ',' + "'" + userType + "')";
+                    + "('" + username + "'" + ',' + "'" + password + "'" + ',' + "'" + userType + "')";
             st.execute(sql);
             st.close();
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (userType == "Pårørerende") {
-            createCase(userID, "");
-        }
     }
 
-    public void createUserInformation(int userID, String firstname, String middlename, String lastname,
+    public void createUserInformation(String firstname, String middlename, String lastname,
             int cpr, String address, int postalcode, String city, String email) {
         try {
             Statement st = connection.createStatement();
             String sql = "INSERT INTO user_information "
                     + "(user_id,firstname,middlename,lastname,cpr,address,"
                     + "postal_code,city,email)"
-                    + " VALUES (" + userID + ",'" + firstname + "','" + middlename
+                    + " VALUES (" + ",'" + firstname + "','" + middlename
                     + "','" + lastname + "','" + cpr + "','" + address + "'," + postalcode
                     + ",'" + city + "','" + email + "')";
             st.execute(sql);
@@ -264,6 +261,48 @@ public class DatabaseController {
         }
     }
 
+    public String[] getInformationStrings(long userId) {
+        try (Statement st = connection.createStatement()) {
+            String sql = "SELECT * FROM USER_INFORMATION WHERE user_id = " + userId;
+
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                String getFirstname = rs.getString("firstname");
+                String getMiddlename = rs.getString("middlename");
+                String getLastname = rs.getString("lastname");
+                int getCPR = rs.getInt("cpr");
+                String getAddress = rs.getString("address");
+                int getPostalCode = rs.getInt("postal_code");
+                String getCity = rs.getString("city");
+                String getEmail = rs.getString("email");
+
+                String[] info = {getFirstname, getMiddlename, getLastname, Integer.toString(getCPR), getAddress, Integer.toString(getPostalCode), getCity, getEmail};
+
+                return info;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        return null;
+    }
+
+    public int getUserId(String username) {
+        int id = 0;
+        try (Statement st = connection.createStatement()) {
+            String sql = "SELECT user_id FROM users where username = " + username;
+
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                id = rs.getInt("user_id");
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return id;
+    }
+
     public Long createLogbook(int sagsId) {
         try {
             Statement st = connection.createStatement();
@@ -291,6 +330,23 @@ public class DatabaseController {
                     + "(logbook_entry_id, logbook_id, entry_text, create_timestamp)"
                     + " VALUES "
                     + "(" + entryID + ',' + logbookID + ",'" + text + "', '" + timestamp + "')";
+            System.out.println("slq :" + sql);
+            st.execute(sql);
+            st.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void editLogbookEntry(long logbookEntryID, String text) {
+        try {
+            Statement st = connection.createStatement();
+            Long entryID = System.currentTimeMillis();
+            Date date = new Date();
+            Timestamp timestamp = new Timestamp(date.getTime());
+            String sql = "UPDATE public.logbook_entry"
+                    + "    SET entry_text= '" + text + "', create_timestamp= '" + timestamp + "'"
+                    + "    WHERE logbook_entry_id = " + logbookEntryID + "; ";
             System.out.println("slq :" + sql);
             st.execute(sql);
             st.close();
@@ -335,11 +391,17 @@ public class DatabaseController {
         return entries;
     }
 
-    public String editLogBook(int userid, String text) {
+    public String saveLogBook(int userid, String text) {
         long caseid = getCaseId(userid);
         long logbookID = getLogBookId(caseid);
 
         createLogbookEntry(logbookID, text);
+
+        return text;
+    }
+
+    public String editLogBook(long logbookID, String text) {
+        editLogbookEntry(logbookID, text);
 
         return text;
     }

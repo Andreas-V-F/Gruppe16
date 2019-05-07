@@ -31,7 +31,7 @@ public class DatabaseControllerTest {
     @Test
     public void createUser() {
        int i = db.getUserIDCount();
-       db.createUser(111, "username", "password", "userType");
+       db.createUser("username", "password", "userType");
        Assert.assertTrue(db.getUserIDCount() == i+1);
    }
     
