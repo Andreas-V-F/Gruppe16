@@ -42,6 +42,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import sensumboosted.Domain.Case;
 import sensumboosted.Persistence.DatabaseController;
 import sensumboosted.Domain.Encryption;
 import sensumboosted.Domain.LogEntry;
@@ -59,6 +60,7 @@ public class FXMLDocumentController implements Initializable {
     private FXMLLoader loader = new FXMLLoader();
     private Encryption encrypt = new Encryption();
     private Log myLog;
+    private Case userCase = new Case();
 
     private Label label; // Is this even used??
 
@@ -434,22 +436,12 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     void handleGemActon(ActionEvent event) {
-        String[] info = dbController.getUserInformation();
-        int userID = Integer.parseInt(info[0]);
-        String input = textArea.getText();
-        if (dbController.hasOpenCase(userID)) {
-            System.out.println(input);
-            dbController.saveCase(dbController.findCaseID(userID), userID, input);
-        } else {
-            dbController.createCase(userID, input);
-        }
+        userCase.saveCase(textArea.getText());
     }
 
     @FXML
     void handleCloseAction(ActionEvent event) {
-        String[] info = dbController.getUserInformation();
-        int userID = Integer.parseInt(info[0]);
-        dbController.closeAllCases(userID);
+        userCase.closeCase();
     }
 
     // Dont change the window to the right size.

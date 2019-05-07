@@ -11,12 +11,37 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sensumboosted.GUI.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sensumboosted.GUI.FXMLDocumentController">
    <children>
-      <Pane fx:id="casePane" disable="true" prefHeight="700.0" prefWidth="1000.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Pane fx:id="logbookPane" disable="true" prefHeight="700.0" prefWidth="1000.0" visible="false">
          <children>
-            <Button layoutX="660.0" layoutY="56.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="99.0" text="Logbog" />
+            <TextArea fx:id="logbookTextField" layoutX="40.0" layoutY="579.0" prefHeight="95.0" prefWidth="500.0" />
+            <Button fx:id="saveLogbookButton" layoutX="549.0" layoutY="619.0" mnemonicParsing="false" onAction="#saveLogbookButtonHandler" prefHeight="55.0" prefWidth="195.0" text="Gem logbog" />
+            <Text layoutX="175.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Borgernes logbøger" wrappingWidth="229.00001311302185">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <Button layoutX="773.0" layoutY="619.0" mnemonicParsing="false" onAction="#backToCasePaneHandler" prefHeight="55.0" prefWidth="195.0" text="Tilbage" />
+            <TableView fx:id="citizenTableView" layoutX="40.0" layoutY="84.0" onMouseClicked="#dbClickRowHandler" prefHeight="200.0" prefWidth="500.0">
+              <columns>
+                <TableColumn fx:id="citizenId" prefWidth="102.0" text="ID" />
+                <TableColumn fx:id="citizenName" prefWidth="397.0" text="Borger navn" />
+              </columns>
+            </TableView>
+            <TableView fx:id="logEntryTableView" layoutX="40.0" layoutY="303.0" prefHeight="260.0" prefWidth="500.0">
+              <columns>
+                <TableColumn fx:id="text" prefWidth="499.0" text="Logbogs noter" />
+              </columns>
+            </TableView>
+            <Button fx:id="DeleteLogbookBTN" layoutX="549.0" layoutY="508.0" mnemonicParsing="false" onMouseClicked="#DeleteLogbookBTN" prefHeight="55.0" prefWidth="195.0" text="Slet" />
+         </children>
+      </Pane>
+      <Pane fx:id="casePane" prefHeight="700.0" prefWidth="1000.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Button layoutX="660.0" layoutY="56.0" mnemonicParsing="false" onAction="#logbookButtonHandler" prefHeight="17.0" prefWidth="99.0" text="Logbog" />
             <Button layoutX="660.0" layoutY="91.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="99.0" text="Personale noter" />
             <Button layoutX="660.0" layoutY="163.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="99.0" text="Straffeattest" />
             <Button layoutX="660.0" layoutY="131.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="99.0" text="Tidligere sager" />
@@ -32,6 +57,7 @@
             <Button layoutX="684.0" layoutY="203.0" mnemonicParsing="false" onAction="#handleUpdateAction" text="Update" />
             <Button layoutX="817.0" layoutY="399.0" mnemonicParsing="false" onAction="#handleGemActon" prefHeight="63.0" prefWidth="110.0" text="Gem" />
             <Button layoutX="817.0" layoutY="476.0" mnemonicParsing="false" onAction="#handleCloseAction" prefHeight="79.0" prefWidth="110.0" text="Luk sag" />
+            <Button fx:id="caseBackBTN" layoutX="817.0" layoutY="620.0" mnemonicParsing="false" onMouseClicked="#caseBackBTN" prefHeight="55.0" prefWidth="110.0" text="Tilbage" />
          </children>
       </Pane>
       <Pane fx:id="diaryPane" disable="true" prefHeight="700.0" prefWidth="1000.0" visible="false">
@@ -42,7 +68,7 @@
             <Button layoutX="633.0" layoutY="338.0" mnemonicParsing="false" onAction="#userSettingBtnHandler" text="Borgere" />
          </children>
       </Pane>
-      <Pane fx:id="loginPane" prefHeight="225.0" prefWidth="299.0">
+      <Pane fx:id="loginPane" layoutX="370.0" layoutY="238.0" prefHeight="225.0" prefWidth="299.0">
          <children>
             <TextField fx:id="usernameField" layoutX="57.0" layoutY="73.0" onKeyReleased="#usernameFieldHandler" prefHeight="25.0" prefWidth="186.0" />
             <PasswordField fx:id="passwordField" layoutX="57.0" layoutY="125.0" onKeyReleased="#passwordFieldHandler" prefHeight="25.0" prefWidth="186.0" />
