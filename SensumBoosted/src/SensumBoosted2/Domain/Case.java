@@ -13,8 +13,8 @@ import java.util.Date;
  */
 public class Case {
 
-    private User user;
-//    private User caseWorker;
+    private User1 user;
+//    private User1 caseWorker;
 //    private Diary diary;
     private String text;
     private String service;
@@ -22,7 +22,7 @@ public class Case {
     private boolean isOpen;
     private Date lastEditDate;
 
-    public Case(User user, /*User caseWorker,*/ String text, String service, Date date, boolean isOpen/*, Diary diary*/) {
+    public Case(User1 user, /*User1 caseWorker,*/ String text, String service, Date date, boolean isOpen/*, Diary diary*/) {
         this.user = user;
 //        this.caseWorker = caseWorker;
         this.text = text;
@@ -38,11 +38,11 @@ public class Case {
         this.lastEditDate = lastEditDate;
     }
 
-    public Case(User user) {
+    public Case(User1 user) {
         this.user = user;
     }
 
-    public User getUser() {
+    public User1 getUser() {
         return user;
     }
 

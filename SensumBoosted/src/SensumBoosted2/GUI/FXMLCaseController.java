@@ -18,7 +18,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -32,18 +35,33 @@ import javafx.scene.layout.AnchorPane;
 public class FXMLCaseController implements Initializable {
 
     private CaseService caseService;
-    @FXML
-    private TextArea textArea;
+
     @FXML
     private TextArea infoBox;
-    @FXML
-    private Button caseBackBTN;
-    @FXML
-    private ImageView ImgView;
+
     @FXML
     private AnchorPane rootPane;
+   
     @FXML
-    private TextArea caseText;
+    private ScrollPane scrollPane;
+    @FXML
+    private TextArea question1;
+    @FXML
+    private ToggleGroup kinToggleGroup;
+    @FXML
+    private TextField kinTextField;
+    @FXML
+    private ToggleGroup yerOrNoToggleGroup;
+    @FXML
+    private TextArea answer1;
+    @FXML
+    private TextArea assessmentText;
+    @FXML
+    private TextArea taskPurpose;
+    @FXML
+    private TextArea taskGoal;
+    @FXML
+    private ImageView imgView;
 
     /**
      * Initializes the controller class.
@@ -52,54 +70,52 @@ public class FXMLCaseController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         caseService = new CaseService();
         infoBox.setText(caseService.printToInfo());
-        caseText.setText(caseService.printToCase());
+//        caseText.setText(caseService.printToCase());
         File file = new File("src/Pictures/123.png");
         Image image = new Image(file.toURI().toString());
-        ImgView.setImage(image);
-    }
-
-    @FXML
-    private void logbookButtonHandler(ActionEvent event) {
-    }
-
-    @FXML
-    private void handleGemActon(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Bekræft");
-        alert.setHeaderText("Bekræft");
-        alert.setContentText("Er du sikker på du vil gemme?");
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK) {
-            caseService.saveCase(textArea.getText());
-            textArea.setText("");
-            caseText.setText(caseService.printToCase());
-        }
-
+        imgView.setImage(image);
     }
 
     @FXML
     private void handleCloseAction(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Bekræft");
-        alert.setHeaderText("Bekræft");
+        alert.setHeaderText(null);
         alert.setContentText("Er du sikker på du vil lukke sagen?");
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
+            caseService.saveCase("test");
             caseService.closeCase();
-            textArea.setText("");
-            caseText.setText("");
+//            textArea.setText("");
+//            caseText.setText("");
         }
-        
+
     }
 
-    @FXML
-    private void caseBackBTN(MouseEvent event) {
-    }
-
-    @FXML
     private void handlePreCases(ActionEvent event) throws IOException {
         AnchorPane pane = FXMLLoader.load(getClass().getResource("FXMLPreviousCases.fxml"));
         rootPane.getChildren().setAll(pane);
+    }
+
+    @FXML
+    private void handleSaveAction(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Bekræft");
+        alert.setHeaderText(null);
+        alert.setContentText("Er du sikker på du vil gemme?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            caseService.saveCase("test");
+//            textArea.setText("");
+//            caseText.setText(caseService.printToCase());
+        }
+    }
+
+    @FXML
+    private void handleBackAction(ActionEvent event) throws IOException {
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("FXMLCaseMenu.fxml"));
+        rootPane.getChildren().setAll(pane);
+
     }
 
 }

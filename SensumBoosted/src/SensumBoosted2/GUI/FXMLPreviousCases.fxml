@@ -8,7 +8,7 @@
 
 <AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="520.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SensumBoosted2.GUI.FXMLPreviousCasesController">
    <children>
-      <TableView fx:id="tableView" cacheShape="false" centerShape="false" focusTraversable="false" layoutX="23.0" layoutY="5.0" onMouseClicked="#editStuiff" prefHeight="512.0" prefWidth="397.0" scaleShape="false">
+      <TableView fx:id="tableView" cacheShape="false" centerShape="false" focusTraversable="false" layoutX="23.0" layoutY="5.0" onMouseClicked="#onMouseClicked" prefHeight="512.0" prefWidth="397.0" scaleShape="false">
         <columns>
           <TableColumn fx:id="textColumn" editable="false" prefWidth="207.0" text="Tekst" />
           <TableColumn fx:id="dateColumn" editable="false" minWidth="0.0" prefWidth="95.0" text="Dato " />
@@ -17,6 +17,6 @@
       </TableView>
       <Button layoutX="760.0" layoutY="440.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="80.0" prefWidth="160.0" text="Tilbage" />
       <TextArea fx:id="textArea" editable="false" layoutX="432.0" layoutY="14.0" prefHeight="426.0" prefWidth="486.0" wrapText="true" />
-      <Button fx:id="dairyButton" disable="true" layoutX="432.0" layoutY="440.0" mnemonicParsing="false" onAction="#handleDaoryButton" prefHeight="80.0" prefWidth="160.0" text="Dagbog" />
+      <Button fx:id="diaryButton" disable="true" layoutX="432.0" layoutY="440.0" mnemonicParsing="false" onAction="#handleDiaryButton" prefHeight="80.0" prefWidth="160.0" text="Dagbog" />
    </children>
 </AnchorPane>

@@ -41,8 +41,9 @@ public class FXMLPreviousCasesController implements Initializable {
     private AnchorPane rootPane;
     @FXML
     private TextArea textArea;
+    
     @FXML
-    private Button dairyButton;
+    private Button diaryButton;
 
     /**
      * Initializes the controller class.
@@ -62,18 +63,19 @@ public class FXMLPreviousCasesController implements Initializable {
 
     @FXML
     private void handleBackButton(ActionEvent event) throws IOException {
-        AnchorPane pane = FXMLLoader.load(getClass().getResource("FXMLCase.fxml"));
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("FXMLCaseMenu.fxml"));
         rootPane.getChildren().setAll(pane);
     }
 
     @FXML
-    private void editStuiff(MouseEvent event) {
-        dairyButton.setDisable(false);
+    private void onMouseClicked(MouseEvent event) {
+        diaryButton.setDisable(false);
         textArea.setText(caseService.sendPreviousCaseText(tableView.getSelectionModel().getSelectedItem()));
     }
 
     @FXML
-    private void handleDaoryButton(ActionEvent event) {
+    private void handleDiaryButton(ActionEvent event) {
+        
     }
 
   
