@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package SensumBoosted2.Domain;
 
 import SensumBoosted2.Persistence.LoginRepository;
@@ -16,7 +15,7 @@ public class LoginService {
 
     private String loginUsername;
     private String loginPassword;
-    
+
     private LoginRepository loginRepository;
 
     public LoginService(String loginUsername, String loginPassword) {
@@ -26,16 +25,14 @@ public class LoginService {
 
     public boolean validateLogin() {
         boolean validatedLogin = false;
-     loginRepository = new LoginRepository();
-     loginRepository.validateInDatabase();
-     
-     return validatedLogin;
+        loginRepository = new LoginRepository();
+        if (loginRepository.validateInDatabase(loginUsername, loginPassword)) {
+            System.out.println("Serviceloging fejler");
+            validatedLogin = true;
+            return validatedLogin;
+        }
+        System.out.println(validatedLogin);
+        return validatedLogin;
     }
-    
-    
-    
 
-    
-    
-    
 }

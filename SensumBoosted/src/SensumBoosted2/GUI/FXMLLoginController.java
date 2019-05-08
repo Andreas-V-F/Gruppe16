@@ -86,13 +86,20 @@ public class FXMLLoginController implements Initializable {
     @FXML
     private void loginBTNHandler(ActionEvent event) {
         createLoginUser();
-        boolean b = loginService.validateLogin();
-        if (b) {
-            loadAnotherFXML();
+        if (!usernameField.getText().isEmpty() && !passwordField.getText().isEmpty()) {
+            boolean b = loginService.validateLogin();
+            System.out.println(b);
+            if (b) {
+                System.out.println("valideret!");
+                loadAnotherFXML();
+            } else {
+                System.out.println("Ikke valideret!");
+                resetFields();
+                resetLoginUser();
+                alertCaller("Din bruger blev ikke godkendt!\n" + "Udfyld felterne korrekt eller kontakt din administrator.", Alert.AlertType.ERROR);
+            }
         } else {
-            resetFields();
-            resetLoginUser();
-            alertCaller("Din bruger blev ikke godkendt!\n" + "Udfyld felterne korrekt eller kontakt din administrator.", Alert.AlertType.ERROR);
+            alertCaller("En af felterne er ikke udfyldt.\n" + "Udfyld felterne og prøv igen.", Alert.AlertType.INFORMATION);
         }
     }
 
@@ -102,6 +109,8 @@ public class FXMLLoginController implements Initializable {
             System.out.println("du har trykket enter på log ind knappen");
         }
     }
+    
+    
 
     public String getPasswordField() {
         return passwordField.getText();

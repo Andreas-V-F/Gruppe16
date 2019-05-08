@@ -29,8 +29,7 @@ public class Log {
         fH = new FileHandler(fileName, true);
         logger = Logger.getLogger("firstLogger");
         logger.addHandler(fH);
-        SimpleFormatter sF = new SimpleFormatter();
-        fH.setFormatter(sF);
+        fH.setFormatter(new SimpleFormatter());
     }
 
     public Logger getLogger() {
