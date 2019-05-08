@@ -6,7 +6,8 @@
 package SensumBoosted2.GUI;
 
 import SensumBoosted2.Domain.UserInformation2;
-import SensumBoosted2.Persistence.Command;
+import SensumBoosted2.Domain.UserProfileService;
+import SensumBoosted2.Persistence.UserProfileRepository;
 import SensumBoosted2.Persistence.ConnectRepository;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -30,8 +31,9 @@ import javafx.scene.layout.Pane;
  * @author Bruger
  */
 public class FXMLUserProfileController implements Initializable {
-    
-    private Command command;
+
+    private UserProfileRepository command;
+    private UserProfileService userProfileService;
     private UserInformation2 ui;
 
     @FXML
@@ -64,8 +66,7 @@ public class FXMLUserProfileController implements Initializable {
     public TextField editEmailField;
     @FXML
     private Button saveBtn;
-    
-    
+
     public String firstname;
     public String middlename;
     public String lastname;
@@ -74,43 +75,43 @@ public class FXMLUserProfileController implements Initializable {
     public int postalcode;
     public String city;
     public String email;
-    
+
     //Tableview FXML
 //    public ObservableList<UserInformation2> obListUI = FXCollections.observableArrayList();
     @FXML
-    private TableView<UserInformation2> userInformationTableView;
+    private TableView<?> userInformationTableView;
     @FXML
-    private TableColumn<UserInformation2, String> userIDColumn;
+    private TableColumn<?, ?> userIDColumn;
     @FXML
-    private TableColumn<UserInformation2, String> firstnameColumn;
+    private TableColumn<?, ?> firstnameColumn;
     @FXML
-    private TableColumn<UserInformation2, String> middlenameColumn;
+    private TableColumn<?, ?> middlenameColumn;
     @FXML
-    private TableColumn<UserInformation2, String> lastnameColumn;
+    private TableColumn<?, ?> lastnameColumn;
     @FXML
-    private TableColumn<UserInformation2, Integer> cprColumn;
+    private TableColumn<?, ?> cprColumn;
     @FXML
-    private TableColumn<UserInformation2, String> addressColumn;
+    private TableColumn<?, ?> addressColumn;
     @FXML
-    private TableColumn<UserInformation2, Integer> postalcodeColumn;
+    private TableColumn<?, ?> postalcodeColumn;
     @FXML
-    private TableColumn<UserInformation2, String> cityColumn;
+    private TableColumn<?, ?> cityColumn;
     @FXML
-    private TableColumn<UserInformation2, String> emailColumn;
+    private TableColumn<?, ?> emailColumn;
     @FXML
     private Button editUserBtn;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         initiateTableView();
-    }    
+    }
 
     @FXML
     private void createCitizenBtnEventHandler(ActionEvent event) {
     }
-
 
     @FXML
     private void searchUserBtnHandler(ActionEvent event) {
@@ -125,7 +126,7 @@ public class FXMLUserProfileController implements Initializable {
 //                    cr.saveUserInformation();
 //                }
     }
-    
+
     //Tableview - COLUMN
     private void initiateCols() {
         userIDColumn.setCellValueFactory(new PropertyValueFactory<>("userid"));
@@ -134,32 +135,29 @@ public class FXMLUserProfileController implements Initializable {
         lastnameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         cprColumn.setCellValueFactory(new PropertyValueFactory<>("cpr"));
         addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
-        postalcodeColumn.setCellValueFactory(new PropertyValueFactory<>("postalcode"));
+        postalcodeColumn.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
         cityColumn.setCellValueFactory(new PropertyValueFactory<>("city"));
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
     }
     
     //Tableview
     public void initiateTableView() {
-        command.getData("SELECT * FROM citizen_information");
+        
+        userProfileService = new UserProfileService();
         initiateCols();
-        userInformationTableView.setItems(command.obListUI);
-        userInformationTableView.setEditable(true);
+        userInformationTableView.setItems(userProfileService.getUI());
     }
-
     @FXML
     private void editUserBtnHandler(ActionEvent event) {
-        ui = userInformationTableView.getSelectionModel().getSelectedItem();
-        
-        editFirstnameField.setText(ui.getFirstName());
-        editMiddlenameField.setText(ui.getMiddleName());
-        editLastnameField.setText(ui.getLastName());
-        editCPRField.setText(Integer.toString(ui.getCpr()));
-        editAddressField.setText(ui.getAddress());
-        editPostalCodeField.setText(Integer.toString(ui.getPostalCode()));
-        editCityField.setText(ui.getCity());
-        editEmailField.setText(ui.getEmail());
+//        ui = userInformationTableView.getSelectionModel().getSelectedItem();
+//        
+//        editFirstnameField.setText(ui.getFirstName());
+//        editMiddlenameField.setText(ui.getMiddleName());
+//        editLastnameField.setText(ui.getLastName());
+//        editCPRField.setText(Integer.toString(ui.getCpr()));
+//        editAddressField.setText(ui.getAddress());
+//        editPostalCodeField.setText(Integer.toString(ui.getPostalCode()));
+//        editCityField.setText(ui.getCity());
+//        editEmailField.setText(ui.getEmail());
     }
-    
-    
 }
