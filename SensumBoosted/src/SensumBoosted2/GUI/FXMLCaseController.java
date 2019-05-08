@@ -82,6 +82,7 @@ public class FXMLCaseController implements Initializable {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
             caseService.closeCase();
+            textArea.setText("");
         }
         
     }
