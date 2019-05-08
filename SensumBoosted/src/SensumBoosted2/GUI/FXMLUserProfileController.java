@@ -18,6 +18,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -66,6 +67,10 @@ public class FXMLUserProfileController implements Initializable {
     public TextField editEmailField;
     @FXML
     private Button saveBtn;
+    @FXML
+    private RadioButton rbCPR;
+    @FXML
+    private RadioButton rbFirstname;
 
     public String firstname;
     public String middlename;
@@ -115,49 +120,76 @@ public class FXMLUserProfileController implements Initializable {
 
     @FXML
     private void searchUserBtnHandler(ActionEvent event) {
+        if (searchUserTextField.getText().isEmpty()) {
+            initiateTableView();
+        } else {
+            initiateSearchTableView();
+        }
+//        editFirstnameField.setText(userProfileService.getFirstname(searchUserTextField.getText()));
+//        editCPRField.setText(Integer.toString(userProfileService.getCPR(searchUserTextField.getText())));
+
     }
 
     @FXML
     private void saveBtnHandler(ActionEvent event) {
-//                if (!editFirstnameField.getText().equals(cr.getFirstnameWithCPR()) || !editMiddlenameField.getText().equals(cr.getMiddlenameWithCPR())
-//                || !editLastnameField.getText().equals(cr.getLastnameWithCPR()) || !editCPRField.getText().equals(Integer.toString(cr.getCPRWithCPR()))
-//                || !editAddressField.getText().equals(Integer.toString(cr.getPostalcodeWithCPR())) || !editCityField.getText().equals(cr.getCityWithCPR())
-//                || !editEmailField.getText().equals(cr.getEmailWithCPR())) {
-//                    cr.saveUserInformation();
-//                }
+        ui = (UserInformation2) userInformationTableView.getSelectionModel().getSelectedItem();
+        if (!editFirstnameField.getText().equals(ui.getFirstname()) || !editMiddlenameField.getText().equals(ui.getMiddlename())
+                || !editLastnameField.getText().equals(ui.getLastname()) || !editCPRField.getText().equals(Integer.toString(ui.getCpr()))
+                || !editAddressField.getText().equals(Integer.toString(ui.getPostalcode())) || !editCityField.getText().equals(ui.getCity())
+                || !editEmailField.getText().equals(ui.getEmail())) {
+            
+            userProfileService.saveUI(editFirstnameField.getText(), editMiddlenameField.getText(), editLastnameField.getText(),
+                    Integer.parseInt(editCPRField.getText()), editAddressField.getText(), Integer.parseInt(editPostalCodeField.getText()),
+                    editCityField.getText(), editEmailField.getText(), ui.getUserid());
+            saveStatusLabel.setText("Ændringer gemt");
+        }
+        initiateTableView();
+
     }
 
     //Tableview - COLUMN
     private void initiateCols() {
         userIDColumn.setCellValueFactory(new PropertyValueFactory<>("userid"));
-        firstnameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
-        middlenameColumn.setCellValueFactory(new PropertyValueFactory<>("middleName"));
-        lastnameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        firstnameColumn.setCellValueFactory(new PropertyValueFactory<>("firstname"));
+        middlenameColumn.setCellValueFactory(new PropertyValueFactory<>("middlename"));
+        lastnameColumn.setCellValueFactory(new PropertyValueFactory<>("lastname"));
         cprColumn.setCellValueFactory(new PropertyValueFactory<>("cpr"));
         addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
-        postalcodeColumn.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
+        postalcodeColumn.setCellValueFactory(new PropertyValueFactory<>("postalcode"));
         cityColumn.setCellValueFactory(new PropertyValueFactory<>("city"));
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
     }
-    
+
     //Tableview
     public void initiateTableView() {
-        
+
         userProfileService = new UserProfileService();
         initiateCols();
         userInformationTableView.setItems(userProfileService.getUI());
     }
+
+    public void initiateSearchTableView() {
+        userProfileService = new UserProfileService();
+        initiateCols();
+
+        if (rbCPR.isSelected()) {
+            userInformationTableView.setItems(userProfileService.cprSearchUI(searchUserTextField.getText()));
+        } else if (rbFirstname.isSelected()) {
+            userInformationTableView.setItems(userProfileService.firstnameSearchUI(searchUserTextField.getText()));
+        }
+    }
+
     @FXML
     private void editUserBtnHandler(ActionEvent event) {
-//        ui = userInformationTableView.getSelectionModel().getSelectedItem();
-//        
-//        editFirstnameField.setText(ui.getFirstName());
-//        editMiddlenameField.setText(ui.getMiddleName());
-//        editLastnameField.setText(ui.getLastName());
-//        editCPRField.setText(Integer.toString(ui.getCpr()));
-//        editAddressField.setText(ui.getAddress());
-//        editPostalCodeField.setText(Integer.toString(ui.getPostalCode()));
-//        editCityField.setText(ui.getCity());
-//        editEmailField.setText(ui.getEmail());
+        ui = (UserInformation2) userInformationTableView.getSelectionModel().getSelectedItem();
+
+        editFirstnameField.setText(ui.getFirstname());
+        editMiddlenameField.setText(ui.getMiddlename());
+        editLastnameField.setText(ui.getLastname());
+        editCPRField.setText(Integer.toString(ui.getCpr()));
+        editAddressField.setText(ui.getAddress());
+        editPostalCodeField.setText(Integer.toString(ui.getPostalcode()));
+        editCityField.setText(ui.getCity());
+        editEmailField.setText(ui.getEmail());
     }
 }

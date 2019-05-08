@@ -158,35 +158,4 @@ public class ConnectRepository {
         return upController.email;
     }
 
-    //HVAD ER FEJLEN HER?!
-//    public void getUITableView() {
-//        try {
-//            rs = connect().createStatement().executeQuery("SELECT * FROM citizen_information");
-//
-//            while (rs.next()) {
-//                upController.obListUI.add(new UserInformation2(rs.getInt("user_id"), rs.getString("firstname"),
-//                        rs.getString("middlename"), rs.getString("lastname"), rs.getInt("cpr"),
-//                        rs.getString("address"), rs.getInt("postal_code"), rs.getString("city"),
-//                        rs.getString("email")));
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(ConnectRepository.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
-
-    public void saveUserInformation() {
-        try {
-            rs = connect().createStatement().executeQuery("UPDATE user_information "
-                    + "SET firstname = '" + upController.editFirstnameField.getText() + "', middlename = '" + upController.editMiddlenameField.getText() + "',"
-                    + "lastname = '" + upController.editLastnameField.getText() + "', cpr = " + Integer.parseInt(upController.editCPRField.getText()) + ","
-                    + "address = '" + upController.editAddressField.getText() + "', postal_code = " + Integer.parseInt(upController.editPostalCodeField.getText()) + ","
-                    + "city = '" + upController.editCityField.getText() + "', email = '" + upController.editEmailField.getText() + "'"
-                    + " WHERE cpr = " + Integer.parseInt(upController.searchUserTextField.getText()));
-            rs.close();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(FXMLUserProfileController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
 }

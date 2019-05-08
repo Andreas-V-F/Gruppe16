@@ -9,12 +9,11 @@ import SensumBoosted2.Domain.UserInformation2;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 /**
  *
@@ -25,6 +24,8 @@ public class UserProfileRepository {
     ConnectRepository connectRepository;
     Connection connection;
     ResultSet rs;
+    String firstname;
+    int cpr;
 
     public UserProfileRepository() {
         connectRepository = new ConnectRepository();
@@ -39,7 +40,6 @@ public class UserProfileRepository {
                 uiList.add(new UserInformation2(rs.getInt("user_id"), rs.getString("firstname"), rs.getString("middlename"),
                         rs.getString("lastname"), rs.getInt("cpr"), rs.getString("address"), rs.getInt("postal_code"),
                         rs.getString("city"), rs.getString("email")));
-                
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserProfileRepository.class.getName()).log(Level.SEVERE, null, ex);
@@ -47,41 +47,52 @@ public class UserProfileRepository {
         return uiList;
     }
 
-//    public void addData(String statement) {
-//        connect();
-//        try {
-//            st = connection.createStatement();
-//            st.execute(statement);
-//            System.out.println("add data executed");
-//        } catch (SQLException ex) {
-//            Logger.getLogger(UserProfileRepository.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
-//    
-//    public ObservableList getData(String result) {
-////        connect();
-//        
-//        try {
-//            st = connection.createStatement();
-//            rs = st.executeQuery(result);
-//            
-//            while (rs.next()) {
-//                userid = rs.getInt("user_id");
-//                firstname = rs.getString("firstname");
-//                middlename = rs.getString("middlename");
-//                lastname = rs.getString("lastname");
-//                cpr = rs.getInt("cpr");
-//                address = rs.getString("address");
-//                postalcode = rs.getInt("postal_code");
-//                city = rs.getString("city");
-//                email = rs.getString("email");
-//                obListUI.add(new UserInformation2(userid, firstname, middlename, lastname, cpr, address,
-//                postalcode, city, email));
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(UserProfileRepository.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        System.out.println("Data fetched");
-//        return obListUI;
-//    }
+    public List cprSearchCitizenInformation(int cpr) {
+        List<UserInformation2> uiList = new ArrayList<>();
+        try {
+            rs = connection.createStatement().executeQuery("SELECT * FROM citizen_information WHERE cpr = " + cpr);
+            while (rs.next()) {
+                uiList.add(new UserInformation2(rs.getInt("user_id"), rs.getString("firstname"), rs.getString("middlename"),
+                        rs.getString("lastname"), rs.getInt("cpr"), rs.getString("address"), rs.getInt("postal_code"),
+                        rs.getString("city"), rs.getString("email")));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserProfileRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return uiList;
+    }
+
+    public List firstnameSearchCitizenInformation(String firstname) {
+        List<UserInformation2> uiList = new ArrayList<>();
+        try {
+            rs = connection.createStatement().executeQuery("SELECT * FROM citizen_information WHERE firstname = '" + firstname + "'");
+            while (rs.next()) {
+                uiList.add(new UserInformation2(rs.getInt("user_id"), rs.getString("firstname"), rs.getString("middlename"),
+                        rs.getString("lastname"), rs.getInt("cpr"), rs.getString("address"), rs.getInt("postal_code"),
+                        rs.getString("city"), rs.getString("email")));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserProfileRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return uiList;
+    }
+
+    public void saveUserInformation(String firstname, String middlename, String lastname, int cpr, String address,
+            int postalcode, String city, String email, int selectedUserID) {
+        try {
+            Statement st = connection.createStatement();
+            String sql = "UPDATE citizen_information "
+                    + "SET firstname = '" + firstname + "', middlename = '" + middlename + "',"
+                    + "lastname = '" + lastname + "', cpr = " + cpr + ","
+                    + "address = '" + address + "', postal_code = " + postalcode + ","
+                    + "city = '" + city + "', email = '" + city + "'"
+                    + " WHERE user_id = " + selectedUserID;
+            int update = st.executeUpdate(sql);
+            rs = st.getGeneratedKeys();
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserProfileRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }

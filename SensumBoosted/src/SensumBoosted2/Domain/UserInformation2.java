@@ -12,12 +12,12 @@ package SensumBoosted2.Domain;
 public class UserInformation2 {
     
     int userid;
-    String firstName;
-    String middleName;
-    String lastName;
+    String firstname;
+    String middlename;
+    String lastname;
     int cpr;
     String address;
-    int postalCode;
+    int postalcode;
     String city;
     String email;
     
@@ -25,12 +25,12 @@ public class UserInformation2 {
             String lastName, int cpr, String address, int postalCode, String city,
             String email) {
         this.userid = userid;
-        this.firstName = firstName;
-        this.middleName = middleName;
-        this.lastName = lastName;
+        this.firstname = firstName;
+        this.middlename = middleName;
+        this.lastname = lastName;
         this.cpr = cpr;
         this.address = address;
-        this.postalCode = postalCode;
+        this.postalcode = postalCode;
         this.city = city;
         this.email = email;
     }
@@ -43,28 +43,28 @@ public class UserInformation2 {
         this.userid = userid;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
-    public String getMiddleName() {
-        return middleName;
+    public String getMiddlename() {
+        return middlename;
     }
 
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
+    public void setMiddlename(String middlename) {
+        this.middlename = middlename;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
     public int getCpr() {
@@ -83,12 +83,12 @@ public class UserInformation2 {
         this.address = address;
     }
 
-    public int getPostalCode() {
-        return postalCode;
+    public int getPostalcode() {
+        return postalcode;
     }
 
-    public void setPostalCode(int postalCode) {
-        this.postalCode = postalCode;
+    public void setPostalcode(int postalcode) {
+        this.postalcode = postalcode;
     }
 
     public String getCity() {

@@ -16,17 +16,35 @@ import javafx.collections.ObservableList;
 public class UserProfileService {
     
     
-    private UserProfileRepository upRep;
-    private UserInformation2 ui;
+    private UserProfileRepository userProfileRepository;
     
     public UserProfileService() {
-        this.upRep = new UserProfileRepository();
+        this.userProfileRepository = new UserProfileRepository();
     }
     
     public ObservableList getUI() {
-        ObservableList<UserInformation2> ui2;
-        ui2 = FXCollections.observableArrayList(upRep.getCitizenInformation());
+        ObservableList<UserInformation2> ui;
+        ui = FXCollections.observableArrayList(userProfileRepository.getCitizenInformation());
         
-        return ui2;
+        return ui;
+    }
+    
+    public ObservableList cprSearchUI(String cpr) {
+        ObservableList<UserInformation2> ui;
+        ui = FXCollections.observableArrayList(userProfileRepository.cprSearchCitizenInformation(Integer.parseInt(cpr)));
+        
+        return ui;
+    }
+    
+    public ObservableList firstnameSearchUI(String firstname) {
+        ObservableList<UserInformation2> ui;
+        ui = FXCollections.observableArrayList(userProfileRepository.firstnameSearchCitizenInformation(firstname));
+        
+        return ui;
+    }
+    
+    public void saveUI(String firstname, String middlename, String lastname, int cpr, String address,
+                int postalcode, String city, String email, int selectedUserID) {
+        userProfileRepository.saveUserInformation(firstname, middlename, lastname, cpr, address, postalcode, city, email, selectedUserID);
     }
 }
