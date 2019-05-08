@@ -6,6 +6,7 @@
 package SensumBoosted2.GUI;
 
 import SensumBoosted2.Domain.UserInformation2;
+import SensumBoosted2.Persistence.Command;
 import SensumBoosted2.Persistence.ConnectRepository;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -30,7 +31,7 @@ import javafx.scene.layout.Pane;
  */
 public class FXMLUserProfileController implements Initializable {
     
-    private ConnectRepository cr;
+    private Command command;
     private UserInformation2 ui;
 
     @FXML
@@ -75,7 +76,7 @@ public class FXMLUserProfileController implements Initializable {
     public String email;
     
     //Tableview FXML
-    public ObservableList<UserInformation2> obListUI = FXCollections.observableArrayList();
+//    public ObservableList<UserInformation2> obListUI = FXCollections.observableArrayList();
     @FXML
     private TableView<UserInformation2> userInformationTableView;
     @FXML
@@ -117,12 +118,12 @@ public class FXMLUserProfileController implements Initializable {
 
     @FXML
     private void saveBtnHandler(ActionEvent event) {
-                if (!editFirstnameField.getText().equals(cr.getFirstnameWithCPR()) || !editMiddlenameField.getText().equals(cr.getMiddlenameWithCPR())
-                || !editLastnameField.getText().equals(cr.getLastnameWithCPR()) || !editCPRField.getText().equals(Integer.toString(cr.getCPRWithCPR()))
-                || !editAddressField.getText().equals(Integer.toString(cr.getPostalcodeWithCPR())) || !editCityField.getText().equals(cr.getCityWithCPR())
-                || !editEmailField.getText().equals(cr.getEmailWithCPR())) {
-                    cr.saveUserInformation();
-                }
+//                if (!editFirstnameField.getText().equals(cr.getFirstnameWithCPR()) || !editMiddlenameField.getText().equals(cr.getMiddlenameWithCPR())
+//                || !editLastnameField.getText().equals(cr.getLastnameWithCPR()) || !editCPRField.getText().equals(Integer.toString(cr.getCPRWithCPR()))
+//                || !editAddressField.getText().equals(Integer.toString(cr.getPostalcodeWithCPR())) || !editCityField.getText().equals(cr.getCityWithCPR())
+//                || !editEmailField.getText().equals(cr.getEmailWithCPR())) {
+//                    cr.saveUserInformation();
+//                }
     }
     
     //Tableview - COLUMN
@@ -140,9 +141,9 @@ public class FXMLUserProfileController implements Initializable {
     
     //Tableview
     public void initiateTableView() {
-        cr.getUITableView();
+        command.getData("SELECT * FROM citizen_information");
         initiateCols();
-        userInformationTableView.setItems(obListUI);
+        userInformationTableView.setItems(command.obListUI);
         userInformationTableView.setEditable(true);
     }
 

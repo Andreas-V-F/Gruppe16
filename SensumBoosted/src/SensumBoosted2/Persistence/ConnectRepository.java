@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,11 +21,13 @@ import java.util.logging.Logger;
  */
 public class ConnectRepository {
 
-    private Connection connection = null;
+    Connection connection = null;
+    ResultSet rs = null;
+    Statement st = null;
     private final String url = "jdbc:postgresql://balarama.db.elephantsql.com:5432/rsrrjzno";
     private final String userDB = "rsrrjzno";
     private final String passDB = "afVcwMqs2zGaNtod0axmHcsrAuy5u7uD";
-    private ResultSet rs;
+
     private FXMLUserProfileController upController;
 
     public ConnectRepository() {
@@ -156,20 +159,20 @@ public class ConnectRepository {
     }
 
     //HVAD ER FEJLEN HER?!
-    public void getUITableView() {
-        try {
-            rs = connect().createStatement().executeQuery("SELECT * FROM citizen_information");
-
-            while (rs.next()) {
-                upController.obListUI.add(new UserInformation2(rs.getInt("user_id"), rs.getString("firstname"),
-                        rs.getString("middlename"), rs.getString("lastname"), rs.getInt("cpr"),
-                        rs.getString("address"), rs.getInt("postal_code"), rs.getString("city"),
-                        rs.getString("email")));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ConnectRepository.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+//    public void getUITableView() {
+//        try {
+//            rs = connect().createStatement().executeQuery("SELECT * FROM citizen_information");
+//
+//            while (rs.next()) {
+//                upController.obListUI.add(new UserInformation2(rs.getInt("user_id"), rs.getString("firstname"),
+//                        rs.getString("middlename"), rs.getString("lastname"), rs.getInt("cpr"),
+//                        rs.getString("address"), rs.getInt("postal_code"), rs.getString("city"),
+//                        rs.getString("email")));
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(ConnectRepository.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
 
     public void saveUserInformation() {
         try {
