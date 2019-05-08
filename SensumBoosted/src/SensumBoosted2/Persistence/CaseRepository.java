@@ -5,11 +5,11 @@
  */
 package SensumBoosted2.Persistence;
 
+import SensumBoosted2.Domain.Case;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import SensumBoosted2.Domain.Case;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -37,7 +37,7 @@ public class CaseRepository {
         int sagsId = (int) (Math.random() * 1000);
         try {
             Statement st = connection.createStatement();
-            String sql = "INSERT INTO sager (case_id,user_id,isopen,text) VALUES ('" + sagsId + "','" + case1.getUser().getID() + "','true','" + case1.getText() + "');";
+            String sql = "INSERT INTO sager (case_id,user_id,isopen,text, edit_date) VALUES ('" + sagsId + "','" + case1.getUser().getID() + "','true','" + case1.getText() + "','" + new Date() + "');";
             rs = st.executeQuery(sql);
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
