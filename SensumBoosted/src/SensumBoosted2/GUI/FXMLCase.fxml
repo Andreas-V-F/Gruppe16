@@ -39,18 +39,18 @@
                   <TextArea fx:id="answer1" prefHeight="100.0" prefWidth="700.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <VBox layoutX="100.0" prefHeight="200.0" prefWidth="100.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <children>
-                        <RadioButton mnemonicParsing="false" text="Borger">
+                        <RadioButton fx:id="radioButtonCitizen" mnemonicParsing="false" text="Borger">
                            <toggleGroup>
                               <ToggleGroup fx:id="kinToggleGroup" />
                            </toggleGroup>
                         </RadioButton>
-                        <RadioButton mnemonicParsing="false" text="Pårørende" toggleGroup="$kinToggleGroup" />
-                        <RadioButton mnemonicParsing="false" text="Læge" toggleGroup="$kinToggleGroup" />
-                        <RadioButton mnemonicParsing="false" text="Hospital" toggleGroup="$kinToggleGroup" />
-                        <RadioButton mnemonicParsing="false" text="Anden forvaltning" toggleGroup="$kinToggleGroup" />
-                        <RadioButton mnemonicParsing="false" text="Igangværende indsats" toggleGroup="$kinToggleGroup" />
-                        <RadioButton mnemonicParsing="false" text="Anden kommune" toggleGroup="$kinToggleGroup" />
-                        <RadioButton mnemonicParsing="false" text="Andre" toggleGroup="$kinToggleGroup" />
+                        <RadioButton fx:id="radioButtonInquirer" mnemonicParsing="false" text="Pårørende" toggleGroup="$kinToggleGroup" />
+                        <RadioButton fx:id="radioButtonDoctor" mnemonicParsing="false" text="Læge" toggleGroup="$kinToggleGroup" />
+                        <RadioButton fx:id="radioButtonHospital" mnemonicParsing="false" text="Hospital" toggleGroup="$kinToggleGroup" />
+                        <RadioButton fx:id="radioButtonPublic" mnemonicParsing="false" text="Anden forvaltning" toggleGroup="$kinToggleGroup" />
+                        <RadioButton fx:id="radioButtonTreatment" mnemonicParsing="false" text="Igangværende indsats" toggleGroup="$kinToggleGroup" />
+                        <RadioButton fx:id="radioButtonMunicipality" mnemonicParsing="false" text="Anden kommune" toggleGroup="$kinToggleGroup" />
+                        <RadioButton fx:id="radioButtonOther" mnemonicParsing="false" text="Andre" toggleGroup="$kinToggleGroup" />
                         <TextField fx:id="kinTextField" promptText="Angiv kontaktoplysninger">
                            <font>
                               <Font size="14.0" />
@@ -58,12 +58,12 @@
                         </TextField>
                         <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                            <children>
-                              <RadioButton mnemonicParsing="false" text="Ja">
+                              <RadioButton fx:id="radioButtonYes" mnemonicParsing="false" text="Ja">
                                  <toggleGroup>
                                     <ToggleGroup fx:id="yerOrNoToggleGroup" />
                                  </toggleGroup>
                               </RadioButton>
-                              <RadioButton mnemonicParsing="false" text="Nej" toggleGroup="$yerOrNoToggleGroup" />
+                              <RadioButton fx:id="radioButtonNo" mnemonicParsing="false" text="Nej" toggleGroup="$yerOrNoToggleGroup" />
                            </children>
                         </HBox>
                      </children>

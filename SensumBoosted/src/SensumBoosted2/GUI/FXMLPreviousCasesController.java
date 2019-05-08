@@ -32,18 +32,23 @@ public class FXMLPreviousCasesController implements Initializable {
     @FXML
     private TableView<?> tableView;
     @FXML
-    private TableColumn<?, ?> textColumn;
-    @FXML
     private TableColumn<?, ?> dateColumn;
     @FXML
     private TableColumn<?, ?> lastColumn;
     @FXML
     private AnchorPane rootPane;
-    @FXML
-    private TextArea textArea;
+ 
     
     @FXML
     private Button diaryButton;
+    @FXML
+    private TableColumn<?, ?> inqColumn;
+    @FXML
+    private TableColumn<?, ?> assColumn;
+    @FXML
+    private TextArea inqText;
+    @FXML
+    private TextArea assText;
 
     /**
      * Initializes the controller class.
@@ -53,9 +58,11 @@ public class FXMLPreviousCasesController implements Initializable {
 
         caseService = new CaseService();
 
-        textColumn.setCellValueFactory(new PropertyValueFactory<>("text"));
-        dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
-        lastColumn.setCellValueFactory(new PropertyValueFactory<>("lastEditDate"));
+        inqColumn.setCellValueFactory(new PropertyValueFactory<>("inquiryText"));
+        dateColumn.setCellValueFactory(new PropertyValueFactory<>("addedDate"));
+        lastColumn.setCellValueFactory(new PropertyValueFactory<>("editDate"));
+        assColumn.setCellValueFactory(new PropertyValueFactory<>("assessment"));
+        
 
         tableView.setItems(caseService.sendPreviousCases());
 
@@ -70,7 +77,10 @@ public class FXMLPreviousCasesController implements Initializable {
     @FXML
     private void onMouseClicked(MouseEvent event) {
         diaryButton.setDisable(false);
-        textArea.setText(caseService.sendPreviousCaseText(tableView.getSelectionModel().getSelectedItem()));
+        
+        inqText.setText(caseService.sendPreviousInquiryText(tableView.getSelectionModel().getSelectedItem()));
+        assText.setText(caseService.sendPreviousAssessmentText(tableView.getSelectionModel().getSelectedItem()));
+        
     }
 
     @FXML

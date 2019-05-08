@@ -13,49 +13,69 @@ import java.util.Date;
  */
 public class Case {
 
-    private User1 user;
-//    private User1 caseWorker;
-//    private Diary diary;
-    private String text;
-    private String service;
-    private Date date;
-    private boolean isOpen;
-    private Date lastEditDate;
+    private Citizen citizen;
+    private String inquiryText;
+    private Date addedDate;
+    private Date editDate;
+    private String inquirer;
+    private String assessment;
+    private String taskPurpose;
+    private String takeGoal;
 
-    public Case(User1 user, /*User1 caseWorker,*/ String text, String service, Date date, boolean isOpen/*, Diary diary*/) {
-        this.user = user;
-//        this.caseWorker = caseWorker;
-        this.text = text;
-        this.service = service;
-        this.date = date;
-        this.isOpen = isOpen;
-//        this.diary = diary;
+    public Case(Citizen citizen, String inquiryText, Date addedDate, Date editDate, String inquirer, String assessment, String taskPurpose, String takeGoal) {
+        this.citizen = citizen;
+        this.inquiryText = inquiryText;
+        this.addedDate = addedDate;
+        this.editDate = editDate;
+        this.inquirer = inquirer;
+        this.assessment = assessment;
+        this.taskPurpose = taskPurpose;
+        this.takeGoal = takeGoal;
     }
 
-    public Case(String text, Date addedDate, Date lastEditDate) {
-        this.text = text;
-        this.date = addedDate;
-        this.lastEditDate = lastEditDate;
+    public Case(String inquiryText, Date addedDate, Date editDate, String assessment) {
+        this.inquiryText = inquiryText;
+        this.addedDate = addedDate;
+        this.editDate = editDate;
+        this.assessment = assessment;
     }
 
-    public Case(User1 user) {
-        this.user = user;
+    public Case(Citizen citizen) {
+        this.citizen = citizen;
     }
 
-    public User1 getUser() {
-        return user;
+    public String getInquiryText() {
+        return inquiryText;
     }
 
-    public String getText() {
-        return text;
+    public Date getAddedDate() {
+        return addedDate;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getEditDate() {
+        return editDate;
     }
 
-    public Date getLastEditDate() {
-        return lastEditDate;
+    public String getAssessment() {
+        return assessment;
     }
+
+    public Citizen getCitizen() {
+        return citizen;
+    }
+
+    public String getInquirer() {
+        return inquirer;
+    }
+
+    public String getTaskPurpose() {
+        return taskPurpose;
+    }
+
+    public String getTakeGoal() {
+        return takeGoal;
+    }
+    
+    
 
 }

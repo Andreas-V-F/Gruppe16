@@ -9,14 +9,14 @@ package SensumBoosted2.Domain;
  *
  * @author Andreas Frederiksen
  */
-public class User1 {
+public class User {
     private String name;
     private int cpr;
     private String address;
     private String service;
     private int ID;
 
-    public User1(String name, int cpr, String address, String service, int ID) {
+    public User(String name, int cpr, String address, String service, int ID) {
         this.name = name;
         this.cpr = cpr;
         this.address = address;
