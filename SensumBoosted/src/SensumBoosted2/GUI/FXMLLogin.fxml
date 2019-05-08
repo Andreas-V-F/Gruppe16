@@ -7,17 +7,17 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/10.0.1" fx:controller="SensumBoosted2.GUI.FXMLLoginController">
+<AnchorPane id="AnchorPane" fx:id="loginAnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SensumBoosted2.GUI.FXMLLoginController">
     <Pane fx:id="loginPane" prefHeight="225.0" prefWidth="299.0">
         <children>
-            <TextField fx:id="usernameField" layoutX="57.0" layoutY="73.0" prefHeight="25.0" prefWidth="186.0" />
-            <PasswordField fx:id="passwordField" layoutX="57.0" layoutY="125.0" prefHeight="25.0" prefWidth="186.0" />
-            <Label layoutX="127.0" layoutY="21.0" text="Login">
+            <TextField fx:id="usernameField" layoutX="57.0" layoutY="73.0" onKeyPressed="#usernameFieldHandler" prefHeight="25.0" prefWidth="186.0" promptText="Indtast dit brugernavn" />
+            <PasswordField fx:id="passwordField" layoutX="57.0" layoutY="125.0" onKeyPressed="#passwordFieldHandler" prefHeight="25.0" prefWidth="186.0" promptText="Indtast dit kodeord" />
+            <Label layoutX="127.0" layoutY="21.0" text="Log ind">
             </Label>
-            <Label layoutX="57.0" layoutY="56.0" text="Username:" />
-            <Label layoutX="57.0" layoutY="108.0" text="Password:" />
-            <Button fx:id="loginBTN" layoutX="57.0" layoutY="161.0" mnemonicParsing="false" text="Login" />
-            <Button fx:id="cancelBTN" layoutX="208.0" layoutY="161.0" mnemonicParsing="false" text="Exit" />
+            <Label layoutX="57.0" layoutY="56.0" text="Brugernavn:" />
+            <Label layoutX="57.0" layoutY="108.0" text="Kodeord:" />
+            <Button fx:id="loginBTN" layoutX="57.0" layoutY="161.0" mnemonicParsing="false" onAction="#loginBTNHandler" onKeyPressed="#loginBTNOnKeyPressedHandler" text="Log ind" />
+            <Button fx:id="exitBTN" layoutX="208.0" layoutY="161.0" mnemonicParsing="false" onAction="#exitBTNHandler" onKeyPressed="#exitBTNOnKeyPressedHandler" text="Exit" />
             <Label fx:id="loginInfoLabel" layoutX="9.0" layoutY="194.0" maxWidth="1.7976931348623157E308" prefHeight="17.0" prefWidth="282.0" textAlignment="CENTER" />
         </children>
     </Pane>

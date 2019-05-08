@@ -11,20 +11,20 @@ import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 /**
  *
  * @author Mikkel Hoeyberg
  */
-
 public class GUIController extends Application {
 
     private DomainController DomainController;
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLMainMenu.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("FXMLLogin.fxml"));
         Scene scene = new Scene(root);
         stage.setTitle("Sensom Boosted");
         stage.setScene(scene);
@@ -34,5 +34,6 @@ public class GUIController extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
 
 }
