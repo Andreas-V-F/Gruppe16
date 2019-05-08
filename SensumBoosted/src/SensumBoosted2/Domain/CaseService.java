@@ -64,5 +64,10 @@ public class CaseService {
 
         return cases;
     }
+    
+    public String sendPreviousCaseText(Object o){
+        Case case2 = (Case) o;
+        return case2.getText();
+    }
 
 }

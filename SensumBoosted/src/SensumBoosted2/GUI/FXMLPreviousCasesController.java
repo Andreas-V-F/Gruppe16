@@ -16,7 +16,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -37,6 +39,10 @@ public class FXMLPreviousCasesController implements Initializable {
     private TableColumn<?, ?> lastColumn;
     @FXML
     private AnchorPane rootPane;
+    @FXML
+    private TextArea textArea;
+    @FXML
+    private Button dairyButton;
 
     /**
      * Initializes the controller class.
@@ -59,5 +65,17 @@ public class FXMLPreviousCasesController implements Initializable {
         AnchorPane pane = FXMLLoader.load(getClass().getResource("FXMLCase.fxml"));
         rootPane.getChildren().setAll(pane);
     }
+
+    @FXML
+    private void editStuiff(MouseEvent event) {
+        dairyButton.setDisable(false);
+        textArea.setText(caseService.sendPreviousCaseText(tableView.getSelectionModel().getSelectedItem()));
+    }
+
+    @FXML
+    private void handleDaoryButton(ActionEvent event) {
+    }
+
+  
 
 }
