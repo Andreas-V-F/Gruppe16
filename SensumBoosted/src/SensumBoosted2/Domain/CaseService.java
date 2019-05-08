@@ -26,7 +26,16 @@ public class CaseService {
     }
 
     public void saveCase(String text) {
-        case1 = new Case(user, text, "test", new Date(), true);
+        Case case2 = new Case(user);
+        String input = "";
+        if ("".equals(caseRepository.CaseText(case2))) {
+             input = "dato: " + new Date() + "\t" + text;
+        }
+        else {
+            input = caseRepository.CaseText(case2) +  "\n" + "dato: " + new Date() + "\t" + text;
+        }
+       
+        case1 = new Case(user, input, "test", new Date(), true);
         if (caseRepository.hasOpenCase(case1)) {
             caseRepository.saveCase(case1);
         } else {

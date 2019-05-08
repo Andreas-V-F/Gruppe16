@@ -9,9 +9,9 @@
    <children>
       <TableView fx:id="tableView" layoutX="10.0" layoutY="10.0" prefHeight="380.0" prefWidth="400.0">
         <columns>
-          <TableColumn fx:id="textColumn" prefWidth="229.0" text="Tekst" />
-          <TableColumn fx:id="dateColumn" minWidth="0.0" prefWidth="67.0" text="Dato " />
-            <TableColumn fx:id="lastColumn" prefWidth="103.0" text="Sidst ændret" />
+          <TableColumn fx:id="textColumn" prefWidth="207.0" text="Tekst" />
+          <TableColumn fx:id="dateColumn" minWidth="0.0" prefWidth="95.0" text="Dato " />
+            <TableColumn fx:id="lastColumn" prefWidth="95.0" text="Sidst ændret" />
         </columns>
       </TableView>
       <Button layoutX="426.0" layoutY="310.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="80.0" prefWidth="160.0" text="Tilbage" />

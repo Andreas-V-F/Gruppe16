@@ -42,6 +42,8 @@ public class FXMLCaseController implements Initializable {
     private ImageView ImgView;
     @FXML
     private AnchorPane rootPane;
+    @FXML
+    private TextArea caseText;
 
     /**
      * Initializes the controller class.
@@ -50,7 +52,7 @@ public class FXMLCaseController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         caseService = new CaseService();
         infoBox.setText(caseService.printToInfo());
-        textArea.setText(caseService.printToCase());
+        caseText.setText(caseService.printToCase());
         File file = new File("src/Pictures/123.png");
         Image image = new Image(file.toURI().toString());
         ImgView.setImage(image);
@@ -69,6 +71,8 @@ public class FXMLCaseController implements Initializable {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
             caseService.saveCase(textArea.getText());
+            textArea.setText("");
+            caseText.setText(caseService.printToCase());
         }
 
     }
@@ -83,6 +87,7 @@ public class FXMLCaseController implements Initializable {
         if (result.get() == ButtonType.OK) {
             caseService.closeCase();
             textArea.setText("");
+            caseText.setText("");
         }
         
     }

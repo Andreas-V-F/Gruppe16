@@ -11,7 +11,6 @@
     <children>
             <Button layoutX="760.0" layoutY="95.0" mnemonicParsing="false" onAction="#logbookButtonHandler" prefHeight="80.0" prefWidth="159.0" text="Logbog" />
             <Button layoutX="760.0" layoutY="180.0" mnemonicParsing="false" onAction="#handlePreCases" prefHeight="80.0" prefWidth="159.0" text="Tidligere sager" />
-            <TextArea fx:id="textArea" layoutX="70.0" layoutY="215.0" prefHeight="300.0" prefWidth="680.0" />
             <TextArea fx:id="infoBox" editable="false" layoutX="70.0" layoutY="10.0" prefHeight="200.0" prefWidth="400.0">
                <font>
                   <Font size="18.0" />
@@ -28,5 +27,7 @@
             <Image url="@../../Pictures/1414729610168.png" />
          </image>
       </ImageView>
+      <TextArea fx:id="caseText" editable="false" layoutX="70.0" layoutY="220.0" prefHeight="150.0" prefWidth="680.0" />
+      <TextArea fx:id="textArea" layoutX="70.0" layoutY="370.0" prefHeight="150.0" prefWidth="680.0" />
     </children>
 </AnchorPane>
