@@ -93,8 +93,8 @@ public class DatabaseController {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        createLogbook(sagsId);
-        createLogbookEntry(getLogBookId(sagsId), "");
+        createDiary(sagsId);
+        createDiaryEntry(getDiaryId(sagsId), "");
     }
 
     public Long getCaseId(int userId) {
@@ -302,12 +302,12 @@ public class DatabaseController {
         return id;
     }
 
-    public Long createLogbook(int sagsId) {
+    public Long createDiary(int sagsId) {
         try {
             Statement st = connection.createStatement();
             Long id = System.currentTimeMillis();
-            String sql = "INSERT INTO logbook "
-                    + "(sags_id, logbook_id)"
+            String sql = "INSERT INTO diary "
+                    + "(sags_id, diary_id)"
                     + " VALUES "
                     + "(" + sagsId + ',' + id + ")";
             st.execute(sql);
@@ -319,16 +319,16 @@ public class DatabaseController {
         return null;
     }
 
-    public void createLogbookEntry(long logbookID, String text) {
+    public void createDiaryEntry(long diaryID, String text) {
         try {
             Statement st = connection.createStatement();
             Long entryID = System.currentTimeMillis();
             Date date = new Date();
             Timestamp timestamp = new Timestamp(date.getTime());
-            String sql = "INSERT INTO logbook_entry "
-                    + "(logbook_entry_id, logbook_id, entry_text, create_timestamp)"
+            String sql = "INSERT INTO diary_entry "
+                    + "(diary_entry_id, diary_id, entry_text, create_timestamp)"
                     + " VALUES "
-                    + "(" + entryID + ',' + logbookID + ",'" + text + "', '" + timestamp + "')";
+                    + "(" + entryID + ',' + diaryID + ",'" + text + "', '" + timestamp + "')";
             System.out.println("slq :" + sql);
             st.execute(sql);
             st.close();
@@ -337,15 +337,15 @@ public class DatabaseController {
         }
     }
 
-    public void editLogbookEntry(long logbookEntryID, String text) {
+    public void editDiaryEntry(long diaryEntryID, String text) {
         try {
             Statement st = connection.createStatement();
             Long entryID = System.currentTimeMillis();
             Date date = new Date();
             Timestamp timestamp = new Timestamp(date.getTime());
-            String sql = "UPDATE public.logbook_entry"
+            String sql = "UPDATE public.diary_entry"
                     + "    SET entry_text= '" + text + "', create_timestamp= '" + timestamp + "'"
-                    + "    WHERE logbook_entry_id = " + logbookEntryID + "; ";
+                    + "    WHERE diary_entry_id = " + diaryEntryID + "; ";
             System.out.println("slq :" + sql);
             st.execute(sql);
             st.close();
@@ -354,14 +354,14 @@ public class DatabaseController {
         }
     }
 
-    public Long getLogBookId(long sagsId) {
+    public Long getDiaryId(long sagsId) {
         Long id = null;
         try (Statement st = connection.createStatement()) {
-            String sql = "SELECT logbook_id FROM logbook where sags_id = " + sagsId;
+            String sql = "SELECT diary_id FROM diary where sags_id = " + sagsId;
 
             rs = st.executeQuery(sql);
             while (rs.next()) {
-                id = rs.getLong("logbook_id");
+                id = rs.getLong("diary_id");
 
             }
         } catch (SQLException ex) {
@@ -370,12 +370,12 @@ public class DatabaseController {
         return id;
     }
 
-    public List<String> getLogBookEntries(long logbookID) {
+    public List<String> getDiaryEntries(long diaryID) {
         List<String> entries = new ArrayList<String>();
         long timestamp = 0;
 
         try (Statement st = connection.createStatement()) {
-            String sql = "SELECT entry_text, create_timestamp FROM logbook_entry WHERE logbook_id = " + logbookID + "order by create_timestamp DESC";
+            String sql = "SELECT entry_text, create_timestamp FROM diary_entry WHERE diary_id = " + diaryID + "order by create_timestamp DESC";
 
             rs = st.executeQuery(sql);
             while (rs.next()) {
@@ -390,17 +390,17 @@ public class DatabaseController {
         return entries;
     }
 
-    public String saveLogBook(int userid, String text) {
+    public String saveDiary(int userid, String text) {
         long caseid = getCaseId(userid);
-        long logbookID = getLogBookId(caseid);
+        long diaryID = getDiaryId(caseid);
 
-        createLogbookEntry(logbookID, text);
+        createDiaryEntry(diaryID, text);
 
         return text;
     }
 
-    public String editLogBook(long logbookID, String text) {
-        editLogbookEntry(logbookID, text);
+    public String editDiary(long diaryID, String text) {
+        editDiaryEntry(diaryID, text);
 
         return text;
     }
@@ -421,12 +421,12 @@ public class DatabaseController {
         return cnt;
     }
 
-    public void deleteLogbookEntry(long logbookEntryId) {
-        //long id = getLogBookId(getCaseId(logbookEntryId));
+    public void deleteDiaryEntry(long diaryEntryId) {
+        //long id = getDiaryId(getCaseId(diaryEntryId));
         //System.out.print(id);
 
         try (Statement st = connection.createStatement()) {
-            String sql = "DELETE FROM public.logbook_entry WHERE logbook_entry_id = " + logbookEntryId;
+            String sql = "DELETE FROM public.diary_entry WHERE diary_entry_id = " + diaryEntryId;
             st.execute(sql);
 
         } catch (SQLException ex) {
