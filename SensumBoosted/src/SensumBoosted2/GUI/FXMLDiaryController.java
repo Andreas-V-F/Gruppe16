@@ -22,7 +22,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import sensumboosted.Domain.DiaryEntry;
 import sensumboosted.Domain.UserAccount;
-
+import SensumBoosted2.Domain.DiaryService;
 /**
  * FXML Controller class
  *
@@ -43,7 +43,7 @@ public class FXMLDiaryController implements Initializable {
     @FXML
     private TableColumn<UserAccount, String> citizenName;
     @FXML
-    private TableView<DiaryEntry> DiaryEntryTableView;
+    private TableView<DiaryEntry> diaryEntryTableView;
     @FXML
     private TableColumn<DiaryEntry, String> text;
     @FXML
@@ -60,11 +60,10 @@ public class FXMLDiaryController implements Initializable {
     private Label adresseDiaryLBL;
     ObservableList<UserAccount> obListCT = FXCollections.observableArrayList();
     ObservableList<DiaryEntry> obListLE = FXCollections.observableArrayList();
-//    private Connection con = dbController.connect();
+    private boolean editMode = false;
 
-    /**
-     * Initializes the controller class.
-     */
+   DiaryService ds = new DiaryService();
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
@@ -74,24 +73,20 @@ public class FXMLDiaryController implements Initializable {
     private void saveDiaryButtonHandler(ActionEvent event) {
         UserAccount x = citizenTableView.getSelectionModel().getSelectedItem();
         if (editMode == false) {
-            dbController.saveDiary(x.getUserid(), diaryTextField.getText());
+            ds.saveDiary(x.getUserid(), diaryTextField.getText());
         } else if (editMode == true) {
             DiaryEntry le = diaryEntryTableView.getSelectionModel().getSelectedItem();
-            dbController.editDiary(le.getDiaryId(), diaryTextField.getText());
+            ds.editDiary(le.getDiaryId(), diaryTextField.getText());
             editMode = false;
         }
-        long id = dbController.getDiaryId(dbController.getCaseId(x.getUserid()));
-        diaryEntryTableView(id);
+//        long id = ds.getDiaryId(ds.getCaseId(x.getUserid())); ------------------------------------------------------------------------------------------
+//        diaryEntryTableView(id);
         diaryTextField.clear();
     }
 
     @FXML
     private void backToCasePaneHandler(ActionEvent event) {
-        diaryPane.setVisible(false);
-        diaryPane.setDisable(true);
 
-        casePane.setVisible(true);
-        casePane.setDisable(false);
     }
 
     @FXML
@@ -100,9 +95,9 @@ public class FXMLDiaryController implements Initializable {
             System.out.println("dbClickRowHandler");
             diaryTextField.clear();
             UserAccount x = citizenTableView.getSelectionModel().getSelectedItem();
-            long id = dbController.getDiaryId(dbController.getCaseId(x.getUserid()));
-            diaryEntryTableView(id);
-            setDiaryLBL(x.getUserid());
+//            long id = ds.getDiaryId(ds.getCaseId(x.getUserid())); -------------------------------------------------------
+//            diaryEntryTableView(id);
+//            setDiaryLBL(x.getUserid());
         }
     }
 
@@ -111,10 +106,10 @@ public class FXMLDiaryController implements Initializable {
         UserAccount x = citizenTableView.getSelectionModel().getSelectedItem();
         System.out.println("DeleteDiaryBTN b");
         DiaryEntry le = diaryEntryTableView.getSelectionModel().getSelectedItem();
-        dbController.deleteDiaryEntry(le.getDiaryId());
+        ds.deleteDiaryEntry(le.getDiaryId());
         System.out.println("DeleteDiaryBTN a");
-        long id = dbController.getDiaryId(dbController.getCaseId(x.getUserid()));
-        diaryEntryTableView(id);
+//        long id = ds.getDiaryId(ds.getCaseId(x.getUserid())); ---------------------------------------------------------
+//        diaryEntryTableView(id);
     }
 
     @FXML
@@ -123,5 +118,13 @@ public class FXMLDiaryController implements Initializable {
         diaryTextField.setText(le.getText());
         editMode = true;
     }
+//       private void setDiaryLBL(long userId){
+////        String[] info = dbController.getInformationStrings(userId); -----------------------------------------------------------------
+//        
+//        nameDiaryLBL.setText(info[0] + " " + info[1] + " " + info[2]);
+//        cprDiaryLBL.setText(info[3]);
+//        adresseDiaryLBL.setText(info[4] + ", " + info[5] + ", " + info[6]);
+//        emailDiaryLBL.setText(info[7]);
+//    }
 
 }
