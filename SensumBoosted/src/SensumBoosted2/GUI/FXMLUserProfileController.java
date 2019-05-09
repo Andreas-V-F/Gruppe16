@@ -7,15 +7,17 @@ package SensumBoosted2.GUI;
 
 import SensumBoosted2.Domain.UserInformation2;
 import SensumBoosted2.Domain.UserProfileService;
-import SensumBoosted2.Persistence.UserProfileRepository;
-import SensumBoosted2.Persistence.ConnectRepository;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -23,8 +25,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -32,8 +35,7 @@ import javafx.scene.layout.Pane;
  * @author Bruger
  */
 public class FXMLUserProfileController implements Initializable {
-
-    private UserProfileRepository command;
+    
     private UserProfileService userProfileService;
     private UserInformation2 ui;
 
@@ -41,6 +43,8 @@ public class FXMLUserProfileController implements Initializable {
     private Pane userProfilePane;
     @FXML
     private Button createCitizenBtn;
+    @FXML
+    private Button editUserBtn;
     @FXML
     public TextField searchUserTextField;
     @FXML
@@ -82,7 +86,6 @@ public class FXMLUserProfileController implements Initializable {
     public String email;
 
     //Tableview FXML
-//    public ObservableList<UserInformation2> obListUI = FXCollections.observableArrayList();
     @FXML
     private TableView<?> userInformationTableView;
     @FXML
@@ -103,8 +106,6 @@ public class FXMLUserProfileController implements Initializable {
     private TableColumn<?, ?> cityColumn;
     @FXML
     private TableColumn<?, ?> emailColumn;
-    @FXML
-    private Button editUserBtn;
 
     /**
      * Initializes the controller class.
@@ -116,6 +117,19 @@ public class FXMLUserProfileController implements Initializable {
 
     @FXML
     private void createCitizenBtnEventHandler(ActionEvent event) {
+        Stage stage;
+        Parent root;
+        try {
+            if(event.getSource()==createCitizenBtn) {
+            stage = new Stage();
+            root = FXMLLoader.load(getClass().getResource("FXMLCreateUser.fxml"));
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLUserProfileController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
@@ -125,8 +139,6 @@ public class FXMLUserProfileController implements Initializable {
         } else {
             initiateSearchTableView();
         }
-//        editFirstnameField.setText(userProfileService.getFirstname(searchUserTextField.getText()));
-//        editCPRField.setText(Integer.toString(userProfileService.getCPR(searchUserTextField.getText())));
 
     }
 
@@ -137,8 +149,8 @@ public class FXMLUserProfileController implements Initializable {
                 || !editLastnameField.getText().equals(ui.getLastname()) || !editCPRField.getText().equals(Integer.toString(ui.getCpr()))
                 || !editAddressField.getText().equals(Integer.toString(ui.getPostalcode())) || !editCityField.getText().equals(ui.getCity())
                 || !editEmailField.getText().equals(ui.getEmail())) {
-            
-            userProfileService.saveUI(editFirstnameField.getText(), editMiddlenameField.getText(), editLastnameField.getText(),
+
+            userProfileService.saveCI(editFirstnameField.getText(), editMiddlenameField.getText(), editLastnameField.getText(),
                     Integer.parseInt(editCPRField.getText()), editAddressField.getText(), Integer.parseInt(editPostalCodeField.getText()),
                     editCityField.getText(), editEmailField.getText(), ui.getUserid());
             saveStatusLabel.setText("Ændringer gemt");
@@ -165,7 +177,7 @@ public class FXMLUserProfileController implements Initializable {
 
         userProfileService = new UserProfileService();
         initiateCols();
-        userInformationTableView.setItems(userProfileService.getUI());
+        userInformationTableView.setItems(userProfileService.getCI());
     }
 
     public void initiateSearchTableView() {
@@ -173,9 +185,9 @@ public class FXMLUserProfileController implements Initializable {
         initiateCols();
 
         if (rbCPR.isSelected()) {
-            userInformationTableView.setItems(userProfileService.cprSearchUI(searchUserTextField.getText()));
+            userInformationTableView.setItems(userProfileService.cprSearchCI(searchUserTextField.getText()));
         } else if (rbFirstname.isSelected()) {
-            userInformationTableView.setItems(userProfileService.firstnameSearchUI(searchUserTextField.getText()));
+            userInformationTableView.setItems(userProfileService.firstnameSearchCI(searchUserTextField.getText()));
         }
     }
 

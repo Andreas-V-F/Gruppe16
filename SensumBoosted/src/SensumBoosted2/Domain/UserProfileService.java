@@ -22,29 +22,35 @@ public class UserProfileService {
         this.userProfileRepository = new UserProfileRepository();
     }
     
-    public ObservableList getUI() {
+    public ObservableList getCI() {
         ObservableList<UserInformation2> ui;
         ui = FXCollections.observableArrayList(userProfileRepository.getCitizenInformation());
         
         return ui;
     }
     
-    public ObservableList cprSearchUI(String cpr) {
+    public ObservableList cprSearchCI(String cpr) {
         ObservableList<UserInformation2> ui;
         ui = FXCollections.observableArrayList(userProfileRepository.cprSearchCitizenInformation(Integer.parseInt(cpr)));
         
         return ui;
     }
     
-    public ObservableList firstnameSearchUI(String firstname) {
+    public ObservableList firstnameSearchCI(String firstname) {
         ObservableList<UserInformation2> ui;
         ui = FXCollections.observableArrayList(userProfileRepository.firstnameSearchCitizenInformation(firstname));
         
         return ui;
     }
     
-    public void saveUI(String firstname, String middlename, String lastname, int cpr, String address,
+    public void saveCI(String firstname, String middlename, String lastname, int cpr, String address,
                 int postalcode, String city, String email, int selectedUserID) {
-        userProfileRepository.saveUserInformation(firstname, middlename, lastname, cpr, address, postalcode, city, email, selectedUserID);
+        userProfileRepository.saveCitizenInformation(firstname, middlename, lastname, cpr, address, postalcode, city, email, selectedUserID);
+    }
+    
+    public void createCI(String firstname, String middlename, String lastname,
+            int cpr, String address, int postalcode, String city, String email, int phonenumber,
+            String department) {
+        userProfileRepository.createCitizenInformation(firstname, middlename, lastname, cpr, address, postalcode, city, email, phonenumber, department);
     }
 }

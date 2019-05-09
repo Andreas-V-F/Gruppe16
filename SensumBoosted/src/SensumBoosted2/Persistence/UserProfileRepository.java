@@ -77,7 +77,7 @@ public class UserProfileRepository {
         return uiList;
     }
 
-    public void saveUserInformation(String firstname, String middlename, String lastname, int cpr, String address,
+    public void saveCitizenInformation(String firstname, String middlename, String lastname, int cpr, String address,
             int postalcode, String city, String email, int selectedUserID) {
         try {
             Statement st = connection.createStatement();
@@ -90,6 +90,26 @@ public class UserProfileRepository {
             int update = st.executeUpdate(sql);
             rs = st.getGeneratedKeys();
             rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserProfileRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
+    //VIRKER IKKE... FIND UD AF PROBLEM
+    public void createCitizenInformation(String firstname, String middlename, String lastname,
+            int cpr, String address, int postalcode, String city, String email, int phonenumber,
+            String department) {
+        try {
+            Statement st = connection.createStatement();
+            String sql = "INSERT INTO citizen_information "
+                    + "(user_id, firstname, middlename, lastname, cpr, address, "
+                    + "postal_code, city, email, phonenumber, department)"
+                    + " VALUES (" + ",'" + firstname + "','" + middlename
+                    + "','" + lastname + "'," + cpr + ",'" + address + "'," + postalcode
+                    + ",'" + city + "','" + email + "'," + phonenumber + ",'" + department + "')";
+            st.execute(sql);
+            st.close();
         } catch (SQLException ex) {
             Logger.getLogger(UserProfileRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
