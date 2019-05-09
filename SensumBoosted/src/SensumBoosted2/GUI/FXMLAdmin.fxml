@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SensumBoosted2.GUI.FXMLAdminController">
+   <children>
+      <Pane prefHeight="700.0" prefWidth="1000.0">
+         <children>
+            <Button layoutX="10.0" layoutY="158.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="180.0" text="Opret medarbejder" />
+            <Button layoutX="10.0" layoutY="227.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="180.0" text="Se ansatte" />
+            <Button layoutX="10.0" layoutY="365.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="180.0" text="Se borgere" />
+            <Button layoutX="10.0" layoutY="296.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="180.0" text="Ændre ansatte" />
+            <Button fx:id="seeLogLoginBTN" accessibleRole="TOGGLE_BUTTON" layoutX="10.0" layoutY="561.0" mnemonicParsing="false" onAction="#seeLogLoginBTNHandler" prefHeight="60.0" prefWidth="180.0" text="Se log for Log ind" />
+            <Button layoutX="10.0" layoutY="630.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="180.0" text="Hallo?" />
+            <TextArea fx:id="logTextArea" layoutX="200.0" layoutY="158.0" prefHeight="532.0" prefWidth="773.0" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

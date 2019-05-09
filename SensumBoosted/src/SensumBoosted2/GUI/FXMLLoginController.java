@@ -12,9 +12,11 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -28,10 +30,11 @@ import javafx.scene.layout.Pane;
 /**
  * FXML Controller class
  *
- * @author Bruger
+ * @author Mikkel Høyberg
  */
 public class FXMLLoginController implements Initializable {
 
+    private FXMLMainMenuController mainMenuController;
     private LoginService loginService;
     private Alert alert;
 
@@ -58,10 +61,14 @@ public class FXMLLoginController implements Initializable {
         // TODO
     }
 
-    // Skal nok tjekke om man er admin/superbruger også gå videre til mainmenu eller skal den loade "UserProfile"
-    private void loadAnotherFXML() {
+//    
+//    private void setMainMenuTopLabels(String userType, String nameOfUser, String department) {
+//        mainMenuController.setTopLabels(userType, nameOfUser, department);
+//    }
+    private void loadAnotherFXML(Event event) {
         try {
             AnchorPane pane = FXMLLoader.load(getClass().getResource("FXMLMainMenu.fxml"));
+            setMainMenuWindowSize(event);
             loginAnchorPane.getChildren().setAll(pane);
         } catch (IOException ex) {
             System.out.println("Fejl med at indlæse MainMenu FXML");
@@ -69,48 +76,55 @@ public class FXMLLoginController implements Initializable {
         }
     }
 
+    private void setMainMenuWindowSize(Event event) {
+        ((Node) (event.getSource())).getScene().getWindow().setWidth(1180);
+        ((Node) (event.getSource())).getScene().getWindow().setHeight(738);
+    }
+
     @FXML
     private void passwordFieldHandler(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
-            System.out.println("du har trykket enter på kodeord feltet");
+            loginChecker(event);
         }
     }
 
     @FXML
     private void usernameFieldHandler(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
-            System.out.println("du har trykket enter på brugernavn feltet");
+            loginChecker(event);
         }
     }
 
     @FXML
     private void loginBTNHandler(ActionEvent event) {
-        createLoginUser();
+        loginChecker(event);
+    }
+
+    @FXML
+    private void loginBTNOnKeyPressedHandler(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            loginChecker(event);
+        }
+    }
+
+    private void loginChecker(Event event) {
+//        loadAnotherFXML(event); // Bruges når der ikke er net eller nødvendigt at tjekke databasen for login
+
         if (!usernameField.getText().isEmpty() && !passwordField.getText().isEmpty()) {
+            createLoginUser();
             boolean b = loginService.validateLogin();
             System.out.println(b);
             if (b) {
-                System.out.println("valideret!");
-                loadAnotherFXML();
+                loadAnotherFXML(event);
             } else {
-                System.out.println("Ikke valideret!");
                 resetFields();
-                resetLoginUser();
+//                resetLoginUser();
                 alertCaller("Din bruger blev ikke godkendt!\n" + "Udfyld felterne korrekt eller kontakt din administrator.", Alert.AlertType.ERROR);
             }
         } else {
             alertCaller("En af felterne er ikke udfyldt.\n" + "Udfyld felterne og prøv igen.", Alert.AlertType.INFORMATION);
         }
     }
-
-    @FXML
-    private void loginBTNOnKeyPressedHandler(KeyEvent event) {
-        if (event.getCode() == KeyCode.ENTER) {
-            System.out.println("du har trykket enter på log ind knappen");
-        }
-    }
-    
-    
 
     public String getPasswordField() {
         return passwordField.getText();
@@ -124,10 +138,9 @@ public class FXMLLoginController implements Initializable {
         loginService = new LoginService(getUsernameField(), getPasswordField());
     }
 
-    private void resetLoginUser() {
-        loginService = null;
-    }
-
+//    private void resetLoginUser() {
+//        loginService = null;
+//    }
     private void alertCaller(String s, Alert.AlertType type) {
         alert = new Alert(type);
         alert.setHeaderText(null);

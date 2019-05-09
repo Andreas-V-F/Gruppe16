@@ -66,7 +66,8 @@ public class LoginRepository {
 
     private void logLoginAttempt(String username, String attempt) {
         try {
-            logRepository = new LogRepository("LoginLog.txt");
+            logRepository = new LogRepository();
+            logRepository.createLog("LoginLog.txt");
             logRepository.getLogger().setLevel(Level.ALL);
             logRepository.getLogger().info("Bruger: \"" + username + "\" " + attempt);
         } catch (SecurityException ex) {

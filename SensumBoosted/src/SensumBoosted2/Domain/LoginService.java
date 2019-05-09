@@ -27,11 +27,9 @@ public class LoginService {
         boolean validatedLogin = false;
         loginRepository = new LoginRepository();
         if (loginRepository.validateInDatabase(loginUsername, loginPassword)) {
-            System.out.println("Serviceloging fejler");
             validatedLogin = true;
             return validatedLogin;
         }
-        System.out.println(validatedLogin);
         return validatedLogin;
     }
 

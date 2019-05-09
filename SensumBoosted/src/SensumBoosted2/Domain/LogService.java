@@ -3,8 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package SensumBoosted2.Domain;
+
+import SensumBoosted2.Persistence.LogRepository;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Scanner;
 
 /**
  *
@@ -12,11 +17,21 @@ package SensumBoosted2.Domain;
  */
 public class LogService {
 
-    public LogService() {
+    private LogRepository logRepository;
+    private static LogService instance;
+
+    private LogService() {
     }
 
-    
-    
-    
-    
+    public static LogService getInstance() {
+        if (instance == null) {
+            instance = new LogService();
+        }
+        return instance;
+    }
+
+    public String getLogFile() {
+        logRepository = new LogRepository();
+        return logRepository.getLogFile("LoginLog.txt");
+    }
 }

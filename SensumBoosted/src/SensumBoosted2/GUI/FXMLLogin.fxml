@@ -7,8 +7,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane id="AnchorPane" fx:id="loginAnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SensumBoosted2.GUI.FXMLLoginController">
-    <Pane fx:id="loginPane" prefHeight="225.0" prefWidth="299.0">
+<AnchorPane id="AnchorPane" fx:id="loginAnchorPane" prefHeight="157.0" prefWidth="259.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SensumBoosted2.GUI.FXMLLoginController">
+    <Pane fx:id="loginPane" prefHeight="226.0" prefWidth="299.0">
         <children>
             <TextField fx:id="usernameField" layoutX="57.0" layoutY="73.0" onKeyPressed="#usernameFieldHandler" prefHeight="25.0" prefWidth="186.0" promptText="Indtast dit brugernavn" />
             <PasswordField fx:id="passwordField" layoutX="57.0" layoutY="125.0" onKeyPressed="#passwordFieldHandler" prefHeight="25.0" prefWidth="186.0" promptText="Indtast dit kodeord" />

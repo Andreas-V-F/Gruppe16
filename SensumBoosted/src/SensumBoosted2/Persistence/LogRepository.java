@@ -7,6 +7,9 @@ package SensumBoosted2.Persistence;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,23 +24,27 @@ import sensumboosted.Persistence.Log;
 public class LogRepository {
 
     private Logger logger;
+    private Log myLog;
     private FileHandler fH;
 
-    public LogRepository(String fileName) throws SecurityException, IOException {
+    public LogRepository() {
+    }
+
+    public void createLog(String fileName) throws SecurityException, IOException {
 
         File f = new File(fileName);
         if (!f.exists()) {
             f.createNewFile();
         }
         fH = new FileHandler(fileName, true);
-        logger = Logger.getLogger("firstLogger");
+        logger = Logger.getLogger(fileName);
         logger.addHandler(fH);
         fH.setFormatter(new SimpleFormatter());
     }
 
     public void logLoginAttempt(String username, String attempt) {
         try {
-            Log myLog = new Log("LoginLog.txt");
+            myLog = new Log("LoginLog.txt");
             myLog.getLogger().setLevel(Level.ALL);
             myLog.getLogger().info("Bruger: \"" + username + "\" " + attempt);
         } catch (SecurityException ex) {
@@ -49,6 +56,16 @@ public class LogRepository {
 
     public Logger getLogger() {
         return logger;
+    }
+
+    public String getLogFile(String path) {
+        StringBuilder sb = new StringBuilder();
+        try {
+            Files.lines(Paths.get(path), StandardCharsets.UTF_8).forEach((s) -> sb.append(s).append("\n"));
+        } catch (IOException ex) {
+            Logger.getLogger(LogRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return sb.toString();
     }
 
 }
