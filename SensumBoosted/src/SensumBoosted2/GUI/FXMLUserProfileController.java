@@ -122,7 +122,7 @@ public class FXMLUserProfileController implements Initializable {
         try {
             if(event.getSource()==createCitizenBtn) {
             stage = new Stage();
-            root = FXMLLoader.load(getClass().getResource("FXMLCreateUser.fxml"));
+            root = FXMLLoader.load(getClass().getResource("FXMLCreateCitizen.fxml"));
             stage.setScene(new Scene(root));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();

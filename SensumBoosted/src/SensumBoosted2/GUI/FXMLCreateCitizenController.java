@@ -5,6 +5,7 @@
  */
 package SensumBoosted2.GUI;
 
+import SensumBoosted2.Domain.CreateCitizenService;
 import SensumBoosted2.Domain.UserProfileService;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -22,9 +23,9 @@ import javafx.stage.Stage;
  *
  * @author Bruger
  */
-public class FXMLCreateUserController implements Initializable {
+public class FXMLCreateCitizenController implements Initializable {
 
-    private UserProfileService userProfileService;
+    private CreateCitizenService createCitizenService;
 
     @FXML
     private AnchorPane createCitizenPane;
@@ -70,7 +71,7 @@ public class FXMLCreateUserController implements Initializable {
                 && !phonenumberTextField.getText().isEmpty() && !cityTextField.getText().isEmpty()
                 && !emailTextField.getText().isEmpty() && !cprTextField.getText().isEmpty()) {
 
-            userProfileService.createCI(firstnameTextField.getText(), middlenameTextField.getText(),
+            createCitizenService.createCI(firstnameTextField.getText(), middlenameTextField.getText(),
                     lastnameTextField.getText(), Integer.parseInt(cprTextField.getText()),
                     addressTextField.getText(), Integer.parseInt(postalcodeTextField.getText()),
                     cityTextField.getText(), emailTextField.getText(),

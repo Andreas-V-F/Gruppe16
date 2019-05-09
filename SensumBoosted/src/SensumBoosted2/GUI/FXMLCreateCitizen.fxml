@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane id="AnchorPane" fx:id="createCitizenPane" prefHeight="500.0" prefWidth="400.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/10.0.1" fx:controller="SensumBoosted2.GUI.FXMLCreateUserController">
+<AnchorPane id="AnchorPane" fx:id="createCitizenPane" prefHeight="500.0" prefWidth="400.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/10.0.1" fx:controller="SensumBoosted2.GUI.FXMLCreateCitizenController">
    <children>
       <TabPane layoutY="58.0" prefHeight="500.0" prefWidth="400.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>

@@ -48,9 +48,4 @@ public class UserProfileService {
         userProfileRepository.saveCitizenInformation(firstname, middlename, lastname, cpr, address, postalcode, city, email, selectedUserID);
     }
     
-    public void createCI(String firstname, String middlename, String lastname,
-            int cpr, String address, int postalcode, String city, String email, int phonenumber,
-            String department) {
-        userProfileRepository.createCitizenInformation(firstname, middlename, lastname, cpr, address, postalcode, city, email, phonenumber, department);
-    }
 }
