@@ -37,8 +37,6 @@ public class FXMLPreviousCasesController implements Initializable {
     private TableColumn<?, ?> lastColumn;
     @FXML
     private AnchorPane rootPane;
- 
-    
     @FXML
     private Button diaryButton;
     @FXML
@@ -49,6 +47,8 @@ public class FXMLPreviousCasesController implements Initializable {
     private TextArea inqText;
     @FXML
     private TextArea assText;
+    @FXML
+    private Button lookAtCaseButton;
 
     /**
      * Initializes the controller class.
@@ -57,12 +57,11 @@ public class FXMLPreviousCasesController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         caseService = new CaseService();
-
+        caseService.preCase(null);
         inqColumn.setCellValueFactory(new PropertyValueFactory<>("inquiryText"));
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("addedDate"));
         lastColumn.setCellValueFactory(new PropertyValueFactory<>("editDate"));
         assColumn.setCellValueFactory(new PropertyValueFactory<>("assessment"));
-        
 
         tableView.setItems(caseService.sendPreviousCases());
 
@@ -77,17 +76,25 @@ public class FXMLPreviousCasesController implements Initializable {
     @FXML
     private void onMouseClicked(MouseEvent event) {
         diaryButton.setDisable(false);
-        
+        lookAtCaseButton.setDisable(false);
+
         inqText.setText(caseService.sendPreviousInquiryText(tableView.getSelectionModel().getSelectedItem()));
         assText.setText(caseService.sendPreviousAssessmentText(tableView.getSelectionModel().getSelectedItem()));
-        
+
     }
 
     @FXML
     private void handleDiaryButton(ActionEvent event) {
-        
+
     }
 
-  
+    @FXML
+    private void handleLookAtCaseButton(ActionEvent event) throws IOException {
+        FXMLCaseController.boo = false;
+        caseService.preCase(tableView.getSelectionModel().getSelectedItem());
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("FXMLCase.fxml"));
+        rootPane.getChildren().setAll(pane);
+
+    }
 
 }

@@ -38,7 +38,8 @@ import javafx.scene.layout.AnchorPane;
 public class FXMLCaseController implements Initializable {
 
     private CaseService caseService;
-
+    public static boolean boo;
+    private boolean saved;
     @FXML
     private TextArea infoBox;
 
@@ -83,6 +84,10 @@ public class FXMLCaseController implements Initializable {
     private RadioButton radioButtonYes;
     @FXML
     private RadioButton radioButtonNo;
+    @FXML
+    private Button saveButton;
+    @FXML
+    private Button closeButton;
 
     /**
      * Initializes the controller class.
@@ -90,7 +95,8 @@ public class FXMLCaseController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         caseService = new CaseService();
-        update();
+        clear();
+        update(boo);
         File file = new File("src/Pictures/123.png");
         Image image = new Image(file.toURI().toString());
         imgView.setImage(image);
@@ -104,10 +110,13 @@ public class FXMLCaseController implements Initializable {
         alert.setContentText("Er du sikker på du vil lukke sagen?");
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
-            handleSaveAction(event);
+            if (!saved) {
+                handleSaveAction(event);
+            }
+
             caseService.closeCase();
-//            textArea.setText("");
-//            caseText.setText("");
+            clear();
+
         }
 
     }
@@ -119,6 +128,7 @@ public class FXMLCaseController implements Initializable {
 
     @FXML
     private void handleSaveAction(ActionEvent event) {
+        saved = true;
         RadioButton selectedKinRadioButton = (RadioButton) kinToggleGroup.getSelectedToggle();
         String toogleGroupKinValue = selectedKinRadioButton.getText();
         RadioButton selectedYesOrNoRadioButton = (RadioButton) yerOrNoToggleGroup.getSelectedToggle();
@@ -137,18 +147,50 @@ public class FXMLCaseController implements Initializable {
 
     @FXML
     private void handleBackAction(ActionEvent event) throws IOException {
-        handleSaveAction(event);
+        if (boo && !saved) {
+            handleSaveAction(event);
+        }
+
         AnchorPane pane = FXMLLoader.load(getClass().getResource("FXMLCaseMenu.fxml"));
         rootPane.getChildren().setAll(pane);
 
     }
 
-    public void update() {
+    public void update(boolean b) {
+
         infoBox.setText(caseService.printToInfo());
 
-        String[] cases = caseService.printToCase();
+        if (b == true) {
+            String[] cases = caseService.printToCase();
+            casePrinter(cases);
+            saveButton.setDisable(false);
+            closeButton.setDisable(false);
+        } else {
+            String[] cases = caseService.casePrintStrings();
+            casePrinter(cases);
+            saveButton.setDisable(true);
+            closeButton.setDisable(true);
+            answer1.setEditable(false);
+            kinTextField.setEditable(false);
+            assessmentText.setEditable(false);
+            taskPurpose.setEditable(false);
+            taskGoal.setEditable(false);
+            radioButtonCitizen.setDisable(true);
+            radioButtonDoctor.setDisable(true);
+            radioButtonHospital.setDisable(true);
+            radioButtonInquirer.setDisable(true);
+            radioButtonMunicipality.setDisable(true);
+            radioButtonNo.setDisable(true);
+            radioButtonOther.setDisable(true);
+            radioButtonPublic.setDisable(true);
+            radioButtonTreatment.setDisable(true);
+            radioButtonYes.setDisable(true);
+        }
+    }
+
+    public void casePrinter(String[] cases) {
         if (cases != null) {
-            
+
             ArrayList<RadioButton> radioInquirer = new ArrayList<>();
             radioInquirer.add(radioButtonCitizen);
             radioInquirer.add(radioButtonDoctor);
@@ -158,7 +200,7 @@ public class FXMLCaseController implements Initializable {
             radioInquirer.add(radioButtonOther);
             radioInquirer.add(radioButtonPublic);
             radioInquirer.add(radioButtonTreatment);
-            
+
             answer1.setText(cases[0]);
             for (RadioButton r : radioInquirer) {
                 if (r.getText().equals(cases[1])) {
@@ -175,7 +217,17 @@ public class FXMLCaseController implements Initializable {
             assessmentText.setText(cases[4]);
             taskPurpose.setText(cases[5]);
             taskGoal.setText(cases[6]);
-        }
 
+        }
+    }
+
+    public void clear() {
+        answer1.setText("");
+        kinTextField.setText("");
+        assessmentText.setText("");
+        taskPurpose.setText("");
+        taskGoal.setText("");
+        radioButtonCitizen.setSelected(true);
+        radioButtonYes.setSelected(true);
     }
 }

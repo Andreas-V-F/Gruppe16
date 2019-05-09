@@ -6,6 +6,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 
 <AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="520.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SensumBoosted2.GUI.FXMLPreviousCasesController">
    <children>
@@ -17,11 +18,16 @@
             <TableColumn fx:id="lastColumn" editable="false" prefWidth="92.0" text="Sidst ændret" />
         </columns>
       </TableView>
-      <Button layoutX="760.0" layoutY="440.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="80.0" prefWidth="160.0" text="Tilbage" />
-      <Button fx:id="diaryButton" disable="true" layoutX="432.0" layoutY="440.0" mnemonicParsing="false" onAction="#handleDiaryButton" prefHeight="80.0" prefWidth="160.0" text="Dagbog" />
       <TextArea fx:id="inqText" editable="false" layoutX="432.0" layoutY="37.0" prefHeight="393.0" prefWidth="232.0" wrapText="true" />
       <TextArea fx:id="assText" editable="false" layoutX="695.0" layoutY="37.0" prefHeight="393.0" prefWidth="224.0" wrapText="true" />
       <Label layoutX="432.0" layoutY="14.0" text="Henvendelsesbegrundelse" />
       <Label layoutX="695.0" layoutY="14.0" text="Samlet vurdering" />
+      <HBox layoutX="432.0" layoutY="437.0" prefHeight="80.0" prefWidth="483.0" spacing="5.0">
+         <children>
+            <Button fx:id="diaryButton" disable="true" mnemonicParsing="false" onAction="#handleDiaryButton" prefHeight="80.0" prefWidth="160.0" text="Dagbog" />
+            <Button fx:id="lookAtCaseButton" disable="true" mnemonicParsing="false" onAction="#handleLookAtCaseButton" prefHeight="80.0" prefWidth="160.0" text="Se sag" />
+            <Button mnemonicParsing="false" onAction="#handleBackButton" prefHeight="80.0" prefWidth="160.0" text="Tilbage" />
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

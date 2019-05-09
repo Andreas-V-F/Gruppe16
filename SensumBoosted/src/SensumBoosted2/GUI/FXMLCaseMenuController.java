@@ -34,8 +34,10 @@ public class FXMLCaseMenuController implements Initializable {
 
     @FXML
     private void handleNewCaseButton(ActionEvent event) throws IOException {
+        FXMLCaseController.boo = true;
         AnchorPane pane = FXMLLoader.load(getClass().getResource("FXMLCase.fxml"));
         rootPane.getChildren().setAll(pane);
+        
     }
 
     @FXML

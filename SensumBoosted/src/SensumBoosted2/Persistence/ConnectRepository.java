@@ -15,7 +15,7 @@ import java.sql.SQLException;
  */
 public class ConnectRepository {
 
-    private Connection connection = null;
+    private static Connection connection = null;
     private final String url = "jdbc:postgresql://balarama.db.elephantsql.com:5432/rsrrjzno";
     private final String userDB = "rsrrjzno";
     private final String passDB = "afVcwMqs2zGaNtod0axmHcsrAuy5u7uD";

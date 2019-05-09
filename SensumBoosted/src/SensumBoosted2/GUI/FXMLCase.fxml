@@ -39,7 +39,7 @@
                   <TextArea fx:id="answer1" prefHeight="100.0" prefWidth="700.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <VBox layoutX="100.0" prefHeight="200.0" prefWidth="100.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <children>
-                        <RadioButton fx:id="radioButtonCitizen" mnemonicParsing="false" text="Borger">
+                        <RadioButton fx:id="radioButtonCitizen" mnemonicParsing="false" selected="true" text="Borger">
                            <toggleGroup>
                               <ToggleGroup fx:id="kinToggleGroup" />
                            </toggleGroup>
@@ -58,7 +58,7 @@
                         </TextField>
                         <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                            <children>
-                              <RadioButton fx:id="radioButtonYes" mnemonicParsing="false" text="Ja">
+                              <RadioButton fx:id="radioButtonYes" mnemonicParsing="false" selected="true" text="Ja">
                                  <toggleGroup>
                                     <ToggleGroup fx:id="yerOrNoToggleGroup" />
                                  </toggleGroup>
@@ -118,8 +118,8 @@
                   <ImageView fx:id="imgView" fitHeight="145.0" fitWidth="214.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                   <HBox prefHeight="100.0" prefWidth="200.0" spacing="2.0" GridPane.rowIndex="6">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#handleSaveAction" prefHeight="85.0" prefWidth="141.0" text="Gem" />
-                        <Button mnemonicParsing="false" onAction="#handleCloseAction" prefHeight="85.0" prefWidth="141.0" text="Luk" />
+                        <Button fx:id="saveButton" mnemonicParsing="false" onAction="#handleSaveAction" prefHeight="85.0" prefWidth="141.0" text="Gem" />
+                        <Button fx:id="closeButton" mnemonicParsing="false" onAction="#handleCloseAction" prefHeight="85.0" prefWidth="141.0" text="Luk" />
                      </children>
                   </HBox>
                   <Button mnemonicParsing="false" onAction="#handleBackAction" prefHeight="85.0" prefWidth="141.0" text="Tilbage" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />

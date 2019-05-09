@@ -37,7 +37,7 @@ public class CaseRepository {
         int sagsId = (int) (Math.random() * 1000);
         try {
             Statement st = connection.createStatement();
-            String sql = "INSERT INTO sager (case_id,user_id,isopen,inquiry_text,edit_date,inquirer,assessment,taskpurpose,taskgoal) VALUES ('" + sagsId + "','" + case1.getCitizen().getID() + "','true','" + case1.getInquiryText() + "','" + new Date() + "','" + case1.getInquirer()+ "','" +case1.getAssessment()+ "','" +case1.getTaskPurpose()+ "','" +case1.getTakeGoal() + "');";
+            String sql = "INSERT INTO sager (case_id,user_id,isopen,inquiry_text,edit_date,inquirer,assessment,taskpurpose,taskgoal) VALUES ('" + sagsId + "','" + case1.getCitizen().getID() + "','true','" + case1.getInquiryText() + "','" + new Date() + "','" + case1.getInquirer() + "','" + case1.getAssessment() + "','" + case1.getTaskPurpose() + "','" + case1.getTakeGoal() + "');";
             rs = st.executeQuery(sql);
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -105,7 +105,7 @@ public class CaseRepository {
                 rs = st.executeQuery(sql);
                 while (rs.next()) {
                     case2 = new Case(case1.getCitizen(), rs.getString("inquiry_text"), rs.getDate("added_date"), rs.getDate("edit_date"), rs.getString("inquirer"), rs.getString("assessment"), rs.getString("taskpurpose"), rs.getString("taskgoal"));
-            }
+                }
                 return case2;
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
@@ -126,5 +126,20 @@ public class CaseRepository {
         }
 
         return cases;
+    }
+
+    public Case selectPreviousCase(Case case1) {
+        Case case2 = null;
+        try {
+            Statement st = connection.createStatement();
+            String sql = "SELECT * FROM sager WHERE inquiry_text='" + case1.getInquiryText() + "' AND added_date='" + case1.getAddedDate() + "';";
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                case2 = new Case(case1.getCitizen(), rs.getString("inquiry_text"), rs.getDate("added_date"), rs.getDate("edit_date"), rs.getString("inquirer"), rs.getString("assessment"), rs.getString("taskpurpose"), rs.getString("taskgoal"));
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return case2;
     }
 }

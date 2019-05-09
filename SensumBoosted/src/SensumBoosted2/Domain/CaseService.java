@@ -19,6 +19,7 @@ public class CaseService {
     private Citizen user = new Citizen("Andreas Ibsen Cor", 1212125577, "Univej 1, 5230 Odense M", "Pik", 1);
     private CaseRepository caseRepository;
     private Case case1;
+    private static Case preCase;
 
     public CaseService() {
         case1 = new Case(user);
@@ -78,6 +79,23 @@ public class CaseService {
     public String sendPreviousAssessmentText(Object o) {
         Case case2 = (Case) o;
         return case2.getAssessment();
+    }
+    
+    public String[] casePrintStrings() {
+        Case case2;
+        case2 = caseRepository.selectPreviousCase(preCase);
+        String[] cases = new String[7];
+        cases[0] = case2.getInquiryText();
+        cases[1] = case2.getInquirer().split("/")[0];
+        cases[2] = case2.getInquirer().split("/")[1];
+        cases[3] = case2.getInquirer().split("/")[2];
+        cases[4] = case2.getAssessment();
+        cases[5] = case2.getTaskPurpose();
+        cases[6] = case2.getTaskPurpose();
+        return cases;
+    }
+    public void preCase(Object o) {
+        preCase = (Case) o;
     }
 
 }
