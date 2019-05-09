@@ -49,9 +49,13 @@ import sensumboosted.Domain.CaseWorker;
 import sensumboosted.Domain.Case;
 import sensumboosted.Persistence.DatabaseController;
 import sensumboosted.Domain.Encryption;
-import sensumboosted.Domain.LogEntry;
+
+//import sensumboosted.Domain.LogEntry;
 import sensumboosted.Domain.Permission;
 import sensumboosted.Domain.User;
+
+import sensumboosted.Domain.DiaryEntry;
+
 import sensumboosted.Persistence.Log;
 import sensumboosted.Domain.UserAccount;
 import sensumboosted.Domain.UserInformation;
@@ -97,13 +101,13 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Label createUserTypeLabel;
     @FXML
-    private Label nameLogbookLBL;
+    private Label nameDiaryLBL;
     @FXML
-    private Label cprLogbookLBL;
+    private Label cprDiaryLBL;
     @FXML
-    private Label emailLogbookLBL;
+    private Label emailDiaryLBL;
     @FXML
-    private Label adresseLogbookLBL;
+    private Label adresseDiaryLBL;
     @FXML
     private Button loginBTN;
     @FXML
@@ -210,7 +214,7 @@ public class FXMLDocumentController implements Initializable {
     ObservableList<UserAccount> obListUA = FXCollections.observableArrayList();
     ObservableList<UserInformation> obListUI = FXCollections.observableArrayList();
     ObservableList<UserAccount> obListCT = FXCollections.observableArrayList();
-    ObservableList<LogEntry> obListLE = FXCollections.observableArrayList();
+    ObservableList<DiaryEntry> obListLE = FXCollections.observableArrayList();
 
     private Connection con = dbController.connect();
     @FXML
@@ -219,18 +223,18 @@ public class FXMLDocumentController implements Initializable {
     private TableColumn<UserAccount, String> citizenName;
     @FXML
     private TableColumn<UserAccount, Integer> citizenId;
+    //@FXML
+    //private Pane diaryPane;
     @FXML
-    private Pane logbookPane;
+    private TextArea diaryTextField;
     @FXML
-    private TextArea logbookTextField;
+    private Button saveDiaryButton;
     @FXML
-    private Button saveLogbookButton;
+    private TableView<DiaryEntry> diaryEntryTableView;
     @FXML
-    private TableView<LogEntry> logEntryTableView;
+    private TableColumn<DiaryEntry, String> text;
     @FXML
-    private TableColumn<LogEntry, String> text;
-    @FXML
-    private Button DeleteLogbookBTN;
+    private Button DeleteDiaryBTN;
     @FXML
     private Button caseBackBTN;
     @FXML
@@ -837,58 +841,58 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-    private void logbookButtonHandler(ActionEvent event) {
+    private void diaryButtonHandler(ActionEvent event) {
         casePane.setVisible(false);
         casePane.setDisable(true);
 
-        logbookPane.setVisible(true);
-        logbookPane.setDisable(false);
+        diaryPane.setVisible(true);
+        diaryPane.setDisable(false);
     }
 
     @FXML
     private void backToCasePaneHandler(ActionEvent event) {
-        logbookPane.setVisible(false);
-        logbookPane.setDisable(true);
+        diaryPane.setVisible(false);
+        diaryPane.setDisable(true);
 
         casePane.setVisible(true);
         casePane.setDisable(false);
     }
 
     @FXML
-    private void saveLogbookButtonHandler(ActionEvent event) {
+    private void saveDiaryButtonHandler(ActionEvent event) {
         UserAccount x = citizenTableView.getSelectionModel().getSelectedItem();
         if (editMode == false){
-            dbController.saveLogBook(x.getUserid(), logbookTextField.getText());
+            dbController.saveDiary(x.getUserid(), diaryTextField.getText());
         } else if (editMode == true){
-            LogEntry le = logEntryTableView.getSelectionModel().getSelectedItem();
-            dbController.editLogBook(le.getLogbookId(), logbookTextField.getText());
+            DiaryEntry le = diaryEntryTableView.getSelectionModel().getSelectedItem();
+            dbController.editDiary(le.getDiaryId(), diaryTextField.getText());
             editMode = false;
         }
-        long id = dbController.getLogBookId(dbController.getCaseId(x.getUserid()));
-        logEntryTableView(id);
-        logbookTextField.clear();
+        long id = dbController.getDiaryId(dbController.getCaseId(x.getUserid()));
+        diaryEntryTableView(id);
+        diaryTextField.clear();
     }
 
     @FXML
     private void dbClickRowHandler(MouseEvent event) {
         if (event.getClickCount() > 1) {
             System.out.println("dbClickRowHandler");
-            logbookTextField.clear();
+            diaryTextField.clear();
             UserAccount x = citizenTableView.getSelectionModel().getSelectedItem();
-            long id = dbController.getLogBookId(dbController.getCaseId(x.getUserid()));
-            logEntryTableView(id);
-            setLogbookLBL(x.getUserid());
+            long id = dbController.getDiaryId(dbController.getCaseId(x.getUserid()));
+            diaryEntryTableView(id);
+            setDiaryLBL(x.getUserid());
         }
     }
 
-    private void logEntryTableView(long logbookID) {
-        System.out.println("logEntryTableView id : " + logbookID);
+    private void diaryEntryTableView(long diaryID) {
+        System.out.println("diaryEntryTableView id : " + diaryID);
         obListLE.clear();
         try {
-            ResultSet rs = con.createStatement().executeQuery("SELECT * FROM logbook_entry WHERE logbook_id = " + logbookID + "order by create_timestamp DESC");
+            ResultSet rs = con.createStatement().executeQuery("SELECT * FROM diary_entry WHERE diary_id = " + diaryID + "order by create_timestamp DESC");
 
             while (rs.next()) {
-                obListLE.add(new LogEntry(rs.getString("entry_text"), rs.getLong("logbook_entry_id")));
+                obListLE.add(new DiaryEntry(rs.getString("entry_text"), rs.getLong("diary_entry_id")));
             }
         } catch (SQLException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
@@ -896,20 +900,20 @@ public class FXMLDocumentController implements Initializable {
 
         text.setCellValueFactory(new PropertyValueFactory<>("text"));
 
-        logEntryTableView.setItems(obListLE);
-        logEntryTableView.setEditable(true);
+        diaryEntryTableView.setItems(obListLE);
+        diaryEntryTableView.setEditable(true);
 
     }
 
     @FXML
-    private void DeleteLogbookBTN(MouseEvent event) {
+    private void DeleteDiaryBTN(MouseEvent event) {
         UserAccount x = citizenTableView.getSelectionModel().getSelectedItem();
-        System.out.println("DeleteLogbookBTN b");
-        LogEntry le = logEntryTableView.getSelectionModel().getSelectedItem();
-        dbController.deleteLogbookEntry(le.getLogbookId());
-        System.out.println("DeleteLogbookBTN a");
-        long id = dbController.getLogBookId(dbController.getCaseId(x.getUserid()));
-        logEntryTableView(id);
+        System.out.println("DeleteDiaryBTN b");
+        DiaryEntry le = diaryEntryTableView.getSelectionModel().getSelectedItem();
+        dbController.deleteDiaryEntry(le.getDiaryId());
+        System.out.println("DeleteDiaryBTN a");
+        long id = dbController.getDiaryId(dbController.getCaseId(x.getUserid()));
+        diaryEntryTableView(id);
     }
 
     @FXML
@@ -920,20 +924,20 @@ public class FXMLDocumentController implements Initializable {
         casePane.setDisable(true);
     }
     
-    private void setLogbookLBL(long userId){
+    private void setDiaryLBL(long userId){
         String[] info = dbController.getInformationStrings(userId);
         
-        nameLogbookLBL.setText(info[0] + " " + info[1] + " " + info[2]);
-        cprLogbookLBL.setText(info[3]);
-        adresseLogbookLBL.setText(info[4] + ", " + info[5] + ", " + info[6]);
-        emailLogbookLBL.setText(info[7]);
+        nameDiaryLBL.setText(info[0] + " " + info[1] + " " + info[2]);
+        cprDiaryLBL.setText(info[3]);
+        adresseDiaryLBL.setText(info[4] + ", " + info[5] + ", " + info[6]);
+        emailDiaryLBL.setText(info[7]);
     }
     
 
     @FXML
-    private void editLogbookBTNHandler(ActionEvent event) {
-        LogEntry le = logEntryTableView.getSelectionModel().getSelectedItem();
-        logbookTextField.setText(le.getText());
+    private void editDiaryBTNHandler(ActionEvent event) {
+        DiaryEntry le = diaryEntryTableView.getSelectionModel().getSelectedItem();
+        diaryTextField.setText(le.getText());
         editMode = true;
     }
 }

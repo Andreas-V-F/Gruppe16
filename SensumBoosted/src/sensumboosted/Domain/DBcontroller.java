@@ -109,8 +109,8 @@ public class DBcontroller {
         } catch (SQLException ex) {
             Logger.getLogger(DBcontroller.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //createLogbook(userID);
-        //createLogbookEntry(userID, "Personen hedder " + username);
+        //createDiary(userID);
+        //createDiaryEntry(userID, "Personen hedder " + username);
     }
 
     public void createUserInformation(int userID, String firstname, String middlename, String lastname,
@@ -145,12 +145,12 @@ public class DBcontroller {
         return count;
     }
     
-    public Long createLogbook(int userID) {
+    public Long createDiary(int userID) {
         try {
             Statement st = connection.createStatement();
             Long id = System.currentTimeMillis();
-            String sql = "INSERT INTO logbook "
-                    + "(sags_id, logbook_id)"
+            String sql = "INSERT INTO diary "
+                    + "(sags_id, diary_id)"
                     + " VALUES "
                     + "(" + userID + ',' + id + ")";
             st.execute(sql);
@@ -162,16 +162,16 @@ public class DBcontroller {
         return null;
     }
 
-        public void createLogbookEntry(long logbookID, String text) {
+        public void createDiaryEntry(long diaryID, String text) {
         try {
             Statement st = connection.createStatement();
             Long entryID = System.currentTimeMillis();
             Date date = new Date();
             Timestamp timestamp = new Timestamp(date.getTime());
-            String sql = "INSERT INTO logbook_entry "
-                    + "(logbook_entry_id, logbook_id, entry_text, create_timestamp)"
+            String sql = "INSERT INTO diary_entry "
+                    + "(diary_entry_id, diary_id, entry_text, create_timestamp)"
                     + " VALUES "
-                    + "(" + entryID + ',' + logbookID + ",'" + text + "', '" + timestamp + "')";
+                    + "(" + entryID + ',' + diaryID + ",'" + text + "', '" + timestamp + "')";
             System.out.println("slq :" + sql);
             st.execute(sql);
             st.close();
@@ -183,11 +183,11 @@ public class DBcontroller {
     Long getLogBook(int userId) {
         Long id = null;
         try (Statement st = connection.createStatement()) {
-            String sql = "SELECT logbook_id FROM logbook where sags_id = " + userId;
+            String sql = "SELECT diary_id FROM diary where sags_id = " + userId;
             
             rs = st.executeQuery(sql);
             while (rs.next()) {
-                id = rs.getLong("logbook_id");
+                id = rs.getLong("diary_id");
                 
             }
         } catch (SQLException ex) {
@@ -211,12 +211,12 @@ public class DBcontroller {
         }
         return cnt;
     }
-     public void deleteLogbook(int userID) {
+     public void deleteDiary(int userID) {
         Long id = getLogBook(userID);
         System.out.print(id);
         
         try (Statement st = connection.createStatement()) {
-            String sql = "DELETE FROM public.logbook_entry WHERE logbook_id = " + id;
+            String sql = "DELETE FROM public.diary_entry WHERE diary_id = " + id;
             st.execute(sql);
           
         } catch (SQLException ex) {
@@ -224,7 +224,7 @@ public class DBcontroller {
         }
         
         try (Statement st = connection.createStatement()) {
-            String sql = "DELETE FROM public.logbook WHERE logbook_id = " + id;
+            String sql = "DELETE FROM public.diary WHERE diary_id = " + id;
             st.execute(sql);
             
         } catch (SQLException ex) {
