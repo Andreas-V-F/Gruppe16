@@ -14,6 +14,7 @@ import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
+import java.util.stream.Stream;
 import sensumboosted.GUI.FXMLDocumentController;
 import sensumboosted.Persistence.Log;
 
@@ -58,10 +59,10 @@ public class LogRepository {
         return logger;
     }
 
-    public String getLogFile(String path) {
+    public String getLogFile(String filePath) {
         StringBuilder sb = new StringBuilder();
-        try {
-            Files.lines(Paths.get(path), StandardCharsets.UTF_8).forEach((s) -> sb.append(s).append("\n"));
+        try (Stream<String> stream = Files.lines(Paths.get(filePath), StandardCharsets.UTF_8)) {
+            stream.forEach((s) -> sb.append(s).append("\n"));
         } catch (IOException ex) {
             Logger.getLogger(LogRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
