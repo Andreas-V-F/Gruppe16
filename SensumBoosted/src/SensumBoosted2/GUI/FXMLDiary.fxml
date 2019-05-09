@@ -1,11 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SensumBoosted2.GUI.FXMLDiaryController">
-    
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/10.0.1" fx:controller="SensumBoosted2.GUI.FXMLDiaryController">
+   <children>
+      <Pane fx:id="diaryPane" layoutX="10.0" layoutY="10.0" prefHeight="700.0" prefWidth="1000.0">
+         <children>
+            <TextArea fx:id="diaryTextField" layoutX="40.0" layoutY="579.0" prefHeight="95.0" prefWidth="500.0" />
+            <Button fx:id="saveDiaryButton" layoutX="549.0" layoutY="619.0" mnemonicParsing="false" onAction="#saveDiaryButtonHandler" prefHeight="55.0" prefWidth="195.0" text="Gem logbog" />
+            <Text layoutX="175.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Borgernes logbøger" wrappingWidth="229.00001311302185">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <Button layoutX="773.0" layoutY="619.0" mnemonicParsing="false" onAction="#backToCasePaneHandler" prefHeight="55.0" prefWidth="195.0" text="Tilbage" />
+            <TableView fx:id="citizenTableView" layoutX="40.0" layoutY="84.0" onMouseClicked="#dbClickRowHandler" prefHeight="200.0" prefWidth="500.0">
+               <columns>
+                  <TableColumn fx:id="citizenId" prefWidth="102.0" text="ID" />
+                  <TableColumn fx:id="citizenName" prefWidth="397.0" text="Borger navn" />
+               </columns>
+            </TableView>
+            <TableView fx:id="DiaryEntryTableView" layoutX="40.0" layoutY="303.0" prefHeight="260.0" prefWidth="500.0">
+               <columns>
+                  <TableColumn fx:id="text" prefWidth="499.0" text="Logbogs noter" />
+               </columns>
+            </TableView>
+            <Button fx:id="DeleteDiaryBTN" layoutX="549.0" layoutY="508.0" mnemonicParsing="false" onMouseClicked="#DeleteDiaryBTN" prefHeight="55.0" prefWidth="195.0" text="Slet" />
+            <Button fx:id="editBTN" layoutX="549.0" layoutY="433.0" mnemonicParsing="false" onAction="#editDiaryBTNHandler" prefHeight="55.0" prefWidth="195.0" text="Rediger" />
+            <Label fx:id="nameDiaryLBL" layoutX="640.0" layoutY="84.0" prefHeight="17.0" prefWidth="240.0" text=" " />
+            <Label layoutX="600.0" layoutY="84.0" prefHeight="17.0" prefWidth="40.0" text="Navn:" />
+            <Label layoutX="600.0" layoutY="107.0" prefHeight="17.0" prefWidth="40.0" text="CPR:" />
+            <Label fx:id="cprDiaryLBL" layoutX="640.0" layoutY="107.0" prefHeight="17.0" prefWidth="150.0" text=" " />
+            <Label layoutX="600.0" layoutY="131.0" prefHeight="17.0" prefWidth="40.0" text="Email:" />
+            <Label fx:id="emailDiaryLBL" layoutX="640.0" layoutY="131.0" prefHeight="17.0" prefWidth="240.0" text=" " />
+            <Label layoutX="600.0" layoutY="156.0" text="Adresse:" />
+            <Label fx:id="adresseDiaryLBL" layoutX="660.0" layoutY="156.0" prefHeight="17.0" prefWidth="240.0" text=" " />
+         </children>
+      </Pane>
+   </children>
 </AnchorPane>

@@ -49,13 +49,12 @@
          </children>
       </Pane>
       <Pane fx:id="casePane" disable="true" prefHeight="700.0" prefWidth="1000.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-<<<<<<< HEAD
-          <children>
-            <Button layoutX="660.0" layoutY="56.0" mnemonicParsing="false" onAction="#logbookButtonHandler" prefHeight="17.0" prefWidth="99.0" text="Logbog" />
-=======
+
+          
+
          <children>
             <Button layoutX="660.0" layoutY="56.0" mnemonicParsing="false" onAction="#diaryButtonHandler" prefHeight="17.0" prefWidth="99.0" text="Logbog" />
->>>>>>> logbog
+
             <Button layoutX="660.0" layoutY="91.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="99.0" text="Personale noter" />
             <Button layoutX="660.0" layoutY="163.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="99.0" text="Straffeattest" />
             <Button layoutX="660.0" layoutY="131.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="99.0" text="Tidligere sager" />
@@ -72,14 +71,6 @@
             <Button layoutX="817.0" layoutY="399.0" mnemonicParsing="false" onAction="#handleGemActon" prefHeight="63.0" prefWidth="110.0" text="Gem" />
             <Button layoutX="817.0" layoutY="476.0" mnemonicParsing="false" onAction="#handleCloseAction" prefHeight="79.0" prefWidth="110.0" text="Luk sag" />
             <Button fx:id="caseBackBTN" layoutX="817.0" layoutY="620.0" mnemonicParsing="false" onMouseClicked="#caseBackBTN" prefHeight="55.0" prefWidth="110.0" text="Tilbage" />
-         </children>
-      </Pane>
-      <Pane fx:id="diaryPane" disable="true" prefHeight="700.0" prefWidth="1000.0" visible="false">
-         <children>
-            <Button layoutX="432.0" layoutY="327.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="137.0" text="Registrer bruger" />
-            <Button fx:id="logoutBTN" layoutX="474.0" layoutY="405.0" mnemonicParsing="false" onAction="#logoutBTNHandler" text="Log ud" />
-            <Button layoutX="432.0" layoutY="276.0" mnemonicParsing="false" onAction="#openCaseHandler" prefHeight="25.0" prefWidth="137.0" text="Sag" />
-            <Button layoutX="633.0" layoutY="338.0" mnemonicParsing="false" onAction="#userSettingBtnHandler" text="Borgere" />
          </children>
       </Pane>
       <Pane fx:id="loginPane" disable="true" prefHeight="225.0" prefWidth="299.0" visible="false">
