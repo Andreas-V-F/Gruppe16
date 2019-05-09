@@ -24,9 +24,9 @@ import javafx.stage.Stage;
  * @author Bruger
  */
 public class FXMLCreateCitizenController implements Initializable {
-
+    
     private CreateCitizenService createCitizenService;
-
+    
     @FXML
     private AnchorPane createCitizenPane;
     @FXML
@@ -53,6 +53,12 @@ public class FXMLCreateCitizenController implements Initializable {
     private TextField postalcodeTextField;
     @FXML
     private ChoiceBox<String> departmentChoiceBox;
+    @FXML
+    private TextField usernameTextField;
+    @FXML
+    private TextField passwordTextField;
+    @FXML
+    private TextField repeatPWTextField;
 
     /**
      * Initializes the controller class.
@@ -63,29 +69,33 @@ public class FXMLCreateCitizenController implements Initializable {
         String[] departments = {"Misbrug", "Handicap"};
         departmentChoiceBox.getItems().addAll(departments);
     }
-
+    
     @FXML
     private void okBtnHandler(ActionEvent event) {
         if (!firstnameTextField.getText().isEmpty() && !lastnameTextField.getText().isEmpty()
                 && !addressTextField.getText().isEmpty() && !postalcodeTextField.getText().isEmpty()
                 && !phonenumberTextField.getText().isEmpty() && !cityTextField.getText().isEmpty()
                 && !emailTextField.getText().isEmpty() && !cprTextField.getText().isEmpty()) {
-
+            
+            if (passwordTextField.getText().equals(repeatPWTextField.getText())) {
+                
             createCitizenService.createCI(firstnameTextField.getText(), middlenameTextField.getText(),
                     lastnameTextField.getText(), Integer.parseInt(cprTextField.getText()),
                     addressTextField.getText(), Integer.parseInt(postalcodeTextField.getText()),
                     cityTextField.getText(), emailTextField.getText(),
                     Integer.parseInt(phonenumberTextField.getText()), departmentChoiceBox.getValue());
-
+            createCitizenService.createCA(usernameTextField.getText(), passwordTextField.getText(), "Borger");
+            
+            }
         }
         Stage stage = (Stage) okBtn.getScene().getWindow();
         stage.close();
     }
-
+    
     @FXML
     private void cancelBtnHandler(ActionEvent event) {
         Stage stage = (Stage) cancelBtn.getScene().getWindow();
         stage.close();
     }
-
+    
 }

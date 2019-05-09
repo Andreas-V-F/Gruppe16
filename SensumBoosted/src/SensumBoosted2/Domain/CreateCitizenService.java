@@ -21,4 +21,8 @@ public class CreateCitizenService {
             String department) {
         createCitizenRepository.createCitizenInformation(firstname, middlename, lastname, cpr, address, postalcode, city, email, phonenumber, department);
     }
+    
+    public void createCA(String username, String password, String usertype) {
+        createCitizenRepository.createCitizenAccount(username, password, usertype);
+    }
 }
