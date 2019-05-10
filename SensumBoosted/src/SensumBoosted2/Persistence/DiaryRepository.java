@@ -1,4 +1,3 @@
-
 package SensumBoosted2.Persistence;
 
 import java.sql.ResultSet;
@@ -11,15 +10,14 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
-
 public class DiaryRepository {
+
     ConnectRepository connection = new ConnectRepository();
     private ResultSet rs = null;
-    
+
     public Long createDiary(int sagsId) {
         try {
-            Statement st = connection.connect().createStatement();
+            Statement st = connection.getConnection().createStatement();
             Long id = System.currentTimeMillis();
             String sql = "INSERT INTO diary "
                     + "(sags_id, diary_id)"
@@ -36,7 +34,7 @@ public class DiaryRepository {
 
     public void createDiaryEntry(long diaryID, String text) {
         try {
-            Statement st = connection.connect().createStatement();
+            Statement st = connection.getConnection().createStatement();
             Long entryID = System.currentTimeMillis();
             Date date = new Date();
             Timestamp timestamp = new Timestamp(date.getTime());
@@ -54,7 +52,7 @@ public class DiaryRepository {
 
     public void editDiaryEntry(long diaryEntryID, String text) {
         try {
-            Statement st = connection.connect().createStatement();
+            Statement st = connection.getConnection().createStatement();
             Long entryID = System.currentTimeMillis();
             Date date = new Date();
             Timestamp timestamp = new Timestamp(date.getTime());
@@ -71,7 +69,7 @@ public class DiaryRepository {
 
     public Long getDiaryId(long sagsId) {
         Long id = null;
-        try (Statement st = connection.connect().createStatement()) {
+        try (Statement st = connection.getConnection().createStatement()) {
             String sql = "SELECT diary_id FROM diary where sags_id = " + sagsId;
 
             rs = st.executeQuery(sql);
@@ -89,7 +87,7 @@ public class DiaryRepository {
         List<String> entries = new ArrayList<String>();
         long timestamp = 0;
 
-        try (Statement st = connection.connect().createStatement()) {
+        try (Statement st = connection.getConnection().createStatement()) {
             String sql = "SELECT entry_text, create_timestamp FROM diary_entry WHERE diary_id = " + diaryID + "order by create_timestamp DESC";
 
             rs = st.executeQuery(sql);
@@ -107,7 +105,7 @@ public class DiaryRepository {
 
     public int getCount(String tableName) {
         int cnt = 0;
-        try (Statement st = connection.connect().createStatement()) {
+        try (Statement st = connection.getConnection().createStatement()) {
             String sql = "SELECT COUNT(*) AS cnt FROM " + tableName;
 
             rs = st.executeQuery(sql);
@@ -125,7 +123,7 @@ public class DiaryRepository {
         //long id = getDiaryId(getCaseId(diaryEntryId));
         //System.out.print(id);
 
-        try (Statement st = connection.connect().createStatement()) {
+        try (Statement st = connection.getConnection().createStatement()) {
             String sql = "DELETE FROM public.diary_entry WHERE diary_entry_id = " + diaryEntryId;
             st.execute(sql);
 

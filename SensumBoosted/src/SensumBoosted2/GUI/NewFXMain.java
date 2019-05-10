@@ -42,7 +42,7 @@ public class NewFXMain extends Application {
 //        primaryStage.setTitle("Hello World!");
 //        primaryStage.setScene(scene);
 //        primaryStage.show();
-Parent root = FXMLLoader.load(getClass().getResource("FXMLMainMenu.fxml"));
+Parent root = FXMLLoader.load(getClass().getResource("FXMLUserProfile.fxml"));
         Scene scene = new Scene(root);
         stage.setTitle("Sensom Boosted");
         stage.setScene(scene);

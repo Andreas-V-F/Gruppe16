@@ -13,7 +13,7 @@ import sensumboosted.GUI.FXMLDocumentController;
 
 /**
  *
- * @author Mikkel Hoeyberg
+ * @author Alex
  */
 public class Encryption {
 

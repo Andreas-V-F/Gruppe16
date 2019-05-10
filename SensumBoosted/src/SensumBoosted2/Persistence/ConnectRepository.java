@@ -5,6 +5,7 @@
  */
 package SensumBoosted2.Persistence;
 
+import SensumBoosted2.GUI.FXMLUserProfileController;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -20,10 +21,12 @@ public class ConnectRepository {
     private final String userDB = "rsrrjzno";
     private final String passDB = "afVcwMqs2zGaNtod0axmHcsrAuy5u7uD";
 
+    private FXMLUserProfileController upController;
+
     public ConnectRepository() {
         connect();
     }
-    
+
     private Connection connect() {
         try {
             Class.forName("org.postgresql.Driver");
@@ -33,7 +36,6 @@ public class ConnectRepository {
         try {
             connection = DriverManager.getConnection(url, userDB, passDB);
             System.out.println("Connected to the PostgreSQL server successfully.");
-
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -43,6 +45,4 @@ public class ConnectRepository {
     public Connection getConnection() {
         return connection;
     }
-
-    
 }
