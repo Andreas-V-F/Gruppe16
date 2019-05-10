@@ -31,17 +31,17 @@
             </font>
          </Button>
          <Pane fx:id="switchingPane" layoutX="180.0" layoutY="-2.0" prefHeight="700.0" prefWidth="1000.0" />
-         <Label layoutX="14.0" layoutY="14.0" text="Logget ind som : " />
-         <Label layoutX="14.0" layoutY="31.0" text="Navn : " />
-         <Label layoutX="14.0" layoutY="48.0" text="Afdeling : " />
+         <Label layoutX="10.0" layoutY="14.0" text="Logget ind som : " />
+         <Label layoutX="10.0" layoutY="31.0" text="Navn : " />
+         <Label layoutX="10.0" layoutY="48.0" text="Afdeling : " />
          <Button fx:id="adminBTN" layoutX="10.0" layoutY="520.0" mnemonicParsing="false" onAction="#adminBTNHandler" prefHeight="80.0" prefWidth="160.0" text="Admin">
             <font>
                <Font size="18.0" />
             </font>
          </Button>
-         <Label fx:id="loggedInAs" layoutX="106.0" layoutY="14.0" text="Label" />
-         <Label fx:id="nameOnUser" layoutX="54.0" layoutY="31.0" text="Label" />
-         <Label fx:id="department" layoutX="68.0" layoutY="48.0" text="Label" />
+         <Label fx:id="loggedInAs" layoutX="102.0" layoutY="14.0" text="Label" />
+         <Label fx:id="nameOnUser" layoutX="50.0" layoutY="31.0" text="Label" />
+         <Label fx:id="department" layoutX="64.0" layoutY="48.0" text="Label" />
          <Line endY="619.0" layoutX="180.0" layoutY="81.0" startY="-82.99998474121094" />
       </children>
    </Pane>
