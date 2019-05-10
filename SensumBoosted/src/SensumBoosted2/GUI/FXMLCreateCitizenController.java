@@ -25,7 +25,7 @@ import javafx.stage.Stage;
  */
 public class FXMLCreateCitizenController implements Initializable {
     
-    private CreateCitizenService createCitizenService;
+    private CreateCitizenService createCitizenService = new CreateCitizenService();
     
     @FXML
     private AnchorPane createCitizenPane;

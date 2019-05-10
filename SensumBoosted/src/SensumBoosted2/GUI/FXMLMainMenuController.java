@@ -125,7 +125,7 @@ public class FXMLMainMenuController implements Initializable {
     private void caseBTNHandler(ActionEvent event) {
         nullButtonEffect();
         caseBTN.setEffect(getEffect());
-        loadAnotherFXML("FXMLCase.fxml");
+        loadAnotherFXML("FXMLCaseMenu.fxml");
     }
 
     @FXML

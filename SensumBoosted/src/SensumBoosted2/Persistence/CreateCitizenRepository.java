@@ -23,6 +23,12 @@ public class CreateCitizenRepository {
     ResultSet rs;
     Encryption encrypt;
 
+    public CreateCitizenRepository() {
+        connectRepository = new ConnectRepository();
+        connection = connectRepository.getConnection();
+        encrypt = new Encryption();
+    }
+
     // VIRKER IKKE... FIND UD AF PROBLEMET
     public void createCitizenInformation(String firstname, String middlename, String lastname,
             int cpr, String address, int postalcode, String city, String email, int phonenumber,
@@ -35,25 +41,20 @@ public class CreateCitizenRepository {
                     + " VALUES ('" + firstname + "','" + middlename
                     + "','" + lastname + "'," + cpr + ",'" + address + "'," + postalcode
                     + ",'" + city + "','" + email + "'," + phonenumber + ",'" + department + "')";
-
             st.executeUpdate(sql);
-            rs = st.getGeneratedKeys();
-            rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(UserProfileRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void createCitizenAccount(String username, String password, String usertype) {
         try {
             Statement st = connection.createStatement();
             String sql = "INSERT INTO users "
-                    + "(username, password, usertype)"
-                    + " VALUES ('" + username + "','" + encrypt.encryptString(password) + "','" 
+                    + "(username, password, user_type)"
+                    + " VALUES ('" + username + "','" + encrypt.encryptString(password) + "','"
                     + usertype + "')";
             st.executeUpdate(sql);
-            rs = st.getGeneratedKeys();
-            rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(UserProfileRepository.class.getName()).log(Level.SEVERE, null, ex);
         }

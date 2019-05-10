@@ -12,9 +12,9 @@ import SensumBoosted2.Persistence.CreateCitizenRepository;
  * @author Alex
  */
 public class CreateCitizenService {
-
-    CreateCitizenRepository createCitizenRepository;
     
+    CreateCitizenRepository createCitizenRepository = new CreateCitizenRepository();
+
     //METODE VIRKER IKKE... FIX!
     public void createCI(String firstname, String middlename, String lastname,
             int cpr, String address, int postalcode, String city, String email, int phonenumber,
