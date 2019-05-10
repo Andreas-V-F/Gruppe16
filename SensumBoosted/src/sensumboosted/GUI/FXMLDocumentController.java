@@ -53,7 +53,7 @@ import sensumboosted.Domain.LogEntry;
 import sensumboosted.Domain.Permission;
 import sensumboosted.Domain.User;
 import sensumboosted.Persistence.Log;
-import sensumboosted.Domain.UserAccount;
+import SensumBoosted2.Domain.UserAccount;
 import sensumboosted.Domain.UserInformation;
 
 /**

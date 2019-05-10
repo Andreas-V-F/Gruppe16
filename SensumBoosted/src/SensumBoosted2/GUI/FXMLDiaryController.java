@@ -5,8 +5,8 @@
  */
 package SensumBoosted2.GUI;
 
+import SensumBoosted2.Domain.DiaryEntry;
 import java.net.URL;
-import java.sql.Connection;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,8 +20,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import sensumboosted.Domain.DiaryEntry;
-import sensumboosted.Domain.UserAccount;
+import SensumBoosted2.Domain.UserAccount;
 import SensumBoosted2.Domain.DiaryService;
 /**
  * FXML Controller class
