@@ -1,11 +1,146 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SensumBoosted2.GUI.FXMLCaseController">
-    
+<AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="520.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SensumBoosted2.GUI.FXMLCaseController">
+   <children>
+      <ScrollPane fx:id="scrollPane" hmax="0.0" layoutX="14.0" layoutY="14.0" prefHeight="498.0" prefWidth="897.0">
+         <content>
+            <GridPane hgap="5.0" prefHeight="1430.0" prefWidth="893.0" vgap="10.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="350.0" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" percentHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="280.0" minHeight="280.0" prefHeight="0.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="300.0" minHeight="200.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" percentHeight="5.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <TextArea fx:id="answer1" prefHeight="100.0" prefWidth="700.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <VBox layoutX="100.0" prefHeight="200.0" prefWidth="100.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <children>
+                        <RadioButton fx:id="radioButtonCitizen" mnemonicParsing="false" selected="true" text="Borger">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="kinToggleGroup" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="radioButtonInquirer" mnemonicParsing="false" text="Pårørende" toggleGroup="$kinToggleGroup" />
+                        <RadioButton fx:id="radioButtonDoctor" mnemonicParsing="false" text="Læge" toggleGroup="$kinToggleGroup" />
+                        <RadioButton fx:id="radioButtonHospital" mnemonicParsing="false" text="Hospital" toggleGroup="$kinToggleGroup" />
+                        <RadioButton fx:id="radioButtonPublic" mnemonicParsing="false" text="Anden forvaltning" toggleGroup="$kinToggleGroup" />
+                        <RadioButton fx:id="radioButtonTreatment" mnemonicParsing="false" text="Igangværende indsats" toggleGroup="$kinToggleGroup" />
+                        <RadioButton fx:id="radioButtonMunicipality" mnemonicParsing="false" text="Anden kommune" toggleGroup="$kinToggleGroup" />
+                        <RadioButton fx:id="radioButtonOther" mnemonicParsing="false" text="Andre" toggleGroup="$kinToggleGroup" />
+                        <TextField fx:id="kinTextField" promptText="Angiv kontaktoplysninger">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </TextField>
+                        <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                           <children>
+                              <RadioButton fx:id="radioButtonYes" mnemonicParsing="false" selected="true" text="Ja">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="yerOrNoToggleGroup" />
+                                 </toggleGroup>
+                              </RadioButton>
+                              <RadioButton fx:id="radioButtonNo" mnemonicParsing="false" text="Nej" toggleGroup="$yerOrNoToggleGroup" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="150.0" prefWidth="856.0" GridPane.columnSpan="2" GridPane.rowIndex="3">
+                     <children>
+                        <Label text="Samlet vurdering(sagsbehandler)" textAlignment="CENTER">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="260.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TextArea fx:id="assessmentText" prefHeight="721.0" prefWidth="893.0" />
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="150.0" prefWidth="856.0" GridPane.columnSpan="2" GridPane.rowIndex="4">
+                     <children>
+                        <Label text="Indsatsformål" textAlignment="CENTER">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="350.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TextArea fx:id="taskPurpose" prefHeight="409.0" prefWidth="893.0" />
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="174.0" prefWidth="893.0" GridPane.columnSpan="2" GridPane.rowIndex="5">
+                     <children>
+                        <Label text="Indsatsmål" textAlignment="CENTER">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="365.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TextArea fx:id="taskGoal" prefHeight="277.0" prefWidth="893.0" />
+                     </children>
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </VBox>
+                  <TextArea fx:id="infoBox" editable="false" prefHeight="200.0" prefWidth="200.0" wrapText="true">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </TextArea>
+                  <ImageView fx:id="imgView" fitHeight="145.0" fitWidth="214.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="2.0" GridPane.rowIndex="6">
+                     <children>
+                        <Button fx:id="saveButton" mnemonicParsing="false" onAction="#handleSaveAction" prefHeight="85.0" prefWidth="141.0" text="Gem" />
+                        <Button fx:id="closeButton" mnemonicParsing="false" onAction="#handleCloseAction" prefHeight="85.0" prefWidth="141.0" text="Luk" />
+                     </children>
+                  </HBox>
+                  <Button mnemonicParsing="false" onAction="#handleBackAction" prefHeight="85.0" prefWidth="141.0" text="Tilbage" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
+                  <Label text="Hvad drejer henvendelsen sig om? " GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label text="Hvor kommer henvendelsen fra?" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label text="Er borgeren indforstået med henvendelsen? " GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </GridPane>
+         </content>
+      </ScrollPane>
+   </children>
 </AnchorPane>
