@@ -16,7 +16,7 @@ import javafx.collections.ObservableList;
  */
 public class CaseService {
 
-    private Citizen user = new Citizen("Andreas Ibsen Cor", 1212125577, "Univej 1, 5230 Odense M", "Pik", 1);
+    private Citizen user = new Citizen("Andreas Ibsen Cor", 1212125577, "Univej 1, 5230 Odense M", "Pik", 2);
     private CaseRepository caseRepository;
     private Case case1;
     private static Case preCase;

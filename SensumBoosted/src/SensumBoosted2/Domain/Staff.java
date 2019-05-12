@@ -9,27 +9,31 @@ package SensumBoosted2.Domain;
  *
  * @author Andreas Frederiksen
  */
-public abstract class Staff {
-    private String name;
-    private String roleName;
+public class Staff {
     private String username;
+    private String usertype;
+    private String userID;
+    private String department;
 
-    public Staff(String name, String roleName, String username) {
-        this.name = name;
-        this.roleName = roleName;
+   
+
+    public Staff(String username, String usertype, String userID, String department) {
         this.username = username;
+        this.usertype = usertype;
+        this.userID = userID;
+        this.department = department;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getRoleName() {
-        return roleName;
+    public String getUsertype() {
+        return usertype;
     }
 
     public String getUsername() {
         return username;
+    }
+
+    public String getDepartment() {
+        return department;
     }
     
     

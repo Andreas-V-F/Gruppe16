@@ -6,6 +6,7 @@
 package SensumBoosted2.GUI;
 
 
+import java.io.File;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
@@ -27,7 +28,8 @@ public class GUIController extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("FXMLLogin.fxml"));
         Scene scene = new Scene(root);
         stage.setTitle("Sensom Boosted");
-        stage.getIcons().add(new Image("EGpicture.jpg"));
+        File file = new File("src/Pictures/EGpicture.jpg");
+        stage.getIcons().add(new Image(file.toURI().toString()));
         stage.setScene(scene);
         
         stage.centerOnScreen();

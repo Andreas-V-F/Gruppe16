@@ -5,6 +5,7 @@
  */
 package SensumBoosted2.GUI;
 
+import SensumBoosted2.Domain.StaffService;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -34,6 +35,7 @@ import javafx.scene.paint.Color;
 public class FXMLMainMenuController implements Initializable {
 
     private FXMLLoginController loginController;
+    private StaffService staffService;
 
     @FXML
     private Button logoutBTN;
@@ -57,6 +59,8 @@ public class FXMLMainMenuController implements Initializable {
     private Label nameOnUser;
     @FXML
     private Label department;
+    @FXML
+    private Button medicineBTN;
 
     /**
      * Initializes the controller class.
@@ -66,6 +70,7 @@ public class FXMLMainMenuController implements Initializable {
         try {
             Pane pane = FXMLLoader.load(getClass().getResource("FXMLUserProfile.fxml"));
             switchingPane.getChildren().setAll(pane);
+            staff();
         } catch (IOException ex) {
             Logger.getLogger(FXMLMainMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -129,6 +134,13 @@ public class FXMLMainMenuController implements Initializable {
     }
 
     @FXML
+    private void medicineBTNhandler(ActionEvent event) {
+        nullButtonEffect();
+        medicineBTN.setEffect(getEffect());
+        loadAnotherFXML("FXMLMedicine.fxml");
+    }
+
+    @FXML
     private void adminBTNHandler(ActionEvent event) {
         nullButtonEffect();
         adminBTN.setEffect(getEffect());
@@ -137,6 +149,8 @@ public class FXMLMainMenuController implements Initializable {
 
     @FXML
     private void logoutBTNHandler(ActionEvent event) {
+        staffService = new StaffService();
+        staffService.clear();
         loadLoginFXML("FXMLLogin.fxml", event);
     }
 
@@ -151,5 +165,52 @@ public class FXMLMainMenuController implements Initializable {
         diaryBTN.setEffect(null);
         caseBTN.setEffect(null);
         adminBTN.setEffect(null);
+        medicineBTN.setEffect(null);
     }
+
+    private void staff() {
+        staffService = new StaffService();
+        loggedInAs.setText(staffService.getStaffType());
+        nameOnUser.setText(staffService.getStaffName());
+        department.setText(staffService.getStaffDepartment());
+
+        switch (staffService.getStaffType()) {
+            case "Administrator":
+                citizenBTN.setDisable(false);
+                citizenBTN.setVisible(true);
+                diaryBTN.setDisable(false);
+                diaryBTN.setVisible(true);
+                caseBTN.setDisable(false);
+                caseBTN.setVisible(true);
+                medicineBTN.setDisable(false);
+                medicineBTN.setVisible(true);
+                adminBTN.setDisable(false);
+                adminBTN.setVisible(true);
+                break;
+            case "Medicinansvarlig":
+                citizenBTN.setDisable(false);
+                citizenBTN.setVisible(true);
+                diaryBTN.setDisable(false);
+                diaryBTN.setVisible(true);
+                caseBTN.setDisable(true);
+                caseBTN.setVisible(false);
+                medicineBTN.setDisable(false);
+                medicineBTN.setVisible(true);
+                adminBTN.setDisable(true);
+                adminBTN.setVisible(false);
+                break;
+            case "Case worker":
+                citizenBTN.setDisable(false);
+                citizenBTN.setVisible(true);
+                diaryBTN.setDisable(false);
+                diaryBTN.setVisible(true);
+                caseBTN.setDisable(false);
+                caseBTN.setVisible(true);
+                medicineBTN.setDisable(true);
+                medicineBTN.setVisible(false);
+                adminBTN.setDisable(true);
+                adminBTN.setVisible(false);
+        }
+    }
+
 }

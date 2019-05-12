@@ -8,6 +8,8 @@ package SensumBoosted2.Persistence;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import sensumboosted.Domain.Admin;
@@ -75,6 +77,24 @@ public class LoginRepository {
         } catch (IOException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public String[] returnStaffInformation(String loginUsername) {
+        String[] staffinfo = new String[3];
+        try {
+            Statement st = connectRepository.getConnection().createStatement();
+            String sql = "SELECT user_type,user_cpr,department FROM users WHERE username='" + loginUsername + "';";
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                staffinfo[0] = rs.getString("user_type");
+                staffinfo[1] = rs.getString("user_cpr");
+                staffinfo[2] = rs.getString("department");
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        return staffinfo;
     }
 
 }
