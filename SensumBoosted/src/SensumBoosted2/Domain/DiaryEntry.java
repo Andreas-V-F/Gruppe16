@@ -1,5 +1,5 @@
 
-package sensumboosted.Domain;
+package SensumBoosted2.Domain;
 
 public class DiaryEntry {
     String text;
