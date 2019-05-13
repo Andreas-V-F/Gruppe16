@@ -13,13 +13,13 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="createCitizenPane" prefHeight="560.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SensumBoosted2.GUI.FXMLCreateCitizenController">
+<AnchorPane id="AnchorPane" fx:id="createCitizenPane" prefHeight="750.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SensumBoosted2.GUI.FXMLCreateCitizenController">
    <children>
-      <TabPane layoutY="58.0" prefHeight="455.0" prefWidth="400.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutY="58.0" prefHeight="592.0" prefWidth="400.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Generale oplysninger">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="484.0" prefWidth="400.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="625.0" prefWidth="400.0">
                      <children>
                         <Separator layoutX="10.0" layoutY="41.0" prefHeight="1.0" prefWidth="380.0" />
                         <Label layoutX="10.0" layoutY="7.0" prefHeight="27.0" prefWidth="182.0" text="Kontakt oplysninger">
@@ -43,7 +43,7 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label text="Fornavn:">
+                              <Label fx:id="firstnameLabel" text="Fornavn:*">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
@@ -53,32 +53,32 @@
                                     <Font size="13.0" />
                                  </font>
                               </Label>
-                              <Label text="Efternavn:" GridPane.rowIndex="2">
+                              <Label fx:id="lastnameLabel" text="Efternavn:*" GridPane.rowIndex="2">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
                               </Label>
-                              <Label text="Adresse:" GridPane.rowIndex="3">
+                              <Label fx:id="addressLabel" text="Adresse:*" GridPane.rowIndex="3">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
                               </Label>
-                              <Label text="Postnummer:" GridPane.rowIndex="4">
+                              <Label fx:id="postalcodeLabel" text="Postnummer:*" GridPane.rowIndex="4">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
                               </Label>
-                              <Label text="By:" GridPane.rowIndex="5">
+                              <Label fx:id="cityLabel" text="By:*" GridPane.rowIndex="5">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
                               </Label>
-                              <Label text="E-mail:" GridPane.rowIndex="6">
+                              <Label fx:id="emailLabel" text="E-mail:*" GridPane.rowIndex="6">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
                               </Label>
-                              <Label text="Telefonnummer:" GridPane.rowIndex="7">
+                              <Label fx:id="phonenumberLabel" text="Telefonnummer:*" GridPane.rowIndex="7">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
@@ -100,7 +100,7 @@
                            </font>
                         </Label>
                         <Separator layoutX="11.0" layoutY="330.0" prefWidth="380.0" />
-                        <GridPane layoutX="10.0" layoutY="338.0" prefHeight="78.0" prefWidth="258.0">
+                        <GridPane layoutX="12.0" layoutY="338.0" prefHeight="78.0" prefWidth="258.0">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="184.0" minWidth="10.0" prefWidth="105.0" />
                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="342.0" minWidth="10.0" prefWidth="153.0" />
@@ -110,12 +110,12 @@
                             <RowConstraints fillHeight="false" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label text="CPR:">
+                              <Label fx:id="cprLabel" text="CPR:*">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
                               </Label>
-                              <Label text="Afdeling:" GridPane.rowIndex="1">
+                              <Label fx:id="departmentLabel" text="Afdeling:*" GridPane.rowIndex="1">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
@@ -124,37 +124,23 @@
                               <ChoiceBox fx:id="departmentChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                            </children>
                         </GridPane>
-                     </children>
-                  </AnchorPane>
-            </content>
-          </Tab>
-            <Tab text="Bruger oplsyninger">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Label layoutX="10.0" layoutY="7.0" text="Brugernavn og Password">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <Separator layoutX="10.0" layoutY="41.0" prefHeight="1.0" prefWidth="380.0" />
-                        <GridPane layoutX="68.0" layoutY="131.0" prefHeight="82.0" prefWidth="280.0">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="141.0" minWidth="10.0" prefWidth="99.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="214.0" minWidth="10.0" prefWidth="156.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <GridPane layoutX="12.0" layoutY="475.0" prefHeight="82.0" prefWidth="280.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="141.0" minWidth="10.0" prefWidth="99.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="214.0" minWidth="10.0" prefWidth="156.0" />
+                           </columnConstraints>
+                           <rowConstraints>
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
                            <children>
-                              <Label text="Brugernavn:">
+                              <Label fx:id="usernameLabel" text="Brugernavn:*">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
                               </Label>
-                              <Label text="Password:" GridPane.rowIndex="1">
+                              <Label fx:id="passwordLabel" text="Password:*" GridPane.rowIndex="1">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
@@ -162,17 +148,24 @@
                               <TextField fx:id="usernameTextField" GridPane.columnIndex="1" />
                               <TextField fx:id="passwordTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <TextField fx:id="repeatPWTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <Label text="Gentag Password:" GridPane.rowIndex="2">
+                              <Label fx:id="repeatPasswordLabel" text="Gentag Password:*" GridPane.rowIndex="2">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
                               </Label>
                            </children>
                         </GridPane>
+                        <Separator layoutX="10.0" layoutY="423.0" prefWidth="380.0" />
+                        <Label layoutX="14.0" layoutY="430.0" text="Bruger oplysninger">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Separator layoutX="10.0" layoutY="464.0" prefWidth="380.0" />
                      </children>
                   </AnchorPane>
-              </content>
-            </Tab>
+            </content>
+          </Tab>
         </tabs>
       </TabPane>
       <Label layoutX="109.0" prefHeight="59.0" prefWidth="182.0" text="OPRET BORGER">
@@ -180,7 +173,12 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Button fx:id="okBtn" layoutX="132.0" layoutY="515.0" mnemonicParsing="false" onAction="#okBtnHandler" prefHeight="25.0" prefWidth="61.0" text="OK" />
-      <Button fx:id="cancelBtn" layoutX="209.0" layoutY="515.0" mnemonicParsing="false" onAction="#cancelBtnHandler" text="Annuller" />
+      <Button fx:id="okBtn" layoutX="132.0" layoutY="690.0" mnemonicParsing="false" onAction="#okBtnHandler" prefHeight="25.0" prefWidth="61.0" text="OK" />
+      <Button fx:id="cancelBtn" layoutX="209.0" layoutY="690.0" mnemonicParsing="false" onAction="#cancelBtnHandler" text="Annuller" />
+      <Label fx:id="checkLabel" layoutX="81.0" layoutY="664.0" text="Udfyld venligst felter markerede med *" textFill="RED" visible="false">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

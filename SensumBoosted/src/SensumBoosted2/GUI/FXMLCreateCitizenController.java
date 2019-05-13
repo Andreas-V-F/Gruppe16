@@ -14,8 +14,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 /**
@@ -24,9 +26,9 @@ import javafx.stage.Stage;
  * @author Bruger
  */
 public class FXMLCreateCitizenController implements Initializable {
-    
+
     private CreateCitizenService createCitizenService = new CreateCitizenService();
-    
+
     @FXML
     private AnchorPane createCitizenPane;
     @FXML
@@ -59,6 +61,32 @@ public class FXMLCreateCitizenController implements Initializable {
     private TextField passwordTextField;
     @FXML
     private TextField repeatPWTextField;
+    @FXML
+    private Label checkLabel;
+    @FXML
+    private Label firstnameLabel;
+    @FXML
+    private Label lastnameLabel;
+    @FXML
+    private Label addressLabel;
+    @FXML
+    private Label postalcodeLabel;
+    @FXML
+    private Label cityLabel;
+    @FXML
+    private Label emailLabel;
+    @FXML
+    private Label phonenumberLabel;
+    @FXML
+    private Label cprLabel;
+    @FXML
+    private Label departmentLabel;
+    @FXML
+    private Label usernameLabel;
+    @FXML
+    private Label passwordLabel;
+    @FXML
+    private Label repeatPasswordLabel;
 
     /**
      * Initializes the controller class.
@@ -69,33 +97,57 @@ public class FXMLCreateCitizenController implements Initializable {
         String[] departments = {"Misbrug", "Handicap"};
         departmentChoiceBox.getItems().addAll(departments);
     }
-    
+
     @FXML
     private void okBtnHandler(ActionEvent event) {
-        if (!firstnameTextField.getText().isEmpty() && !lastnameTextField.getText().isEmpty()
-                && !addressTextField.getText().isEmpty() && !postalcodeTextField.getText().isEmpty()
-                && !phonenumberTextField.getText().isEmpty() && !cityTextField.getText().isEmpty()
-                && !emailTextField.getText().isEmpty() && !cprTextField.getText().isEmpty()) {
-            
-            if (passwordTextField.getText().equals(repeatPWTextField.getText())) {
-                
-            createCitizenService.createCI(firstnameTextField.getText(), middlenameTextField.getText(),
-                    lastnameTextField.getText(), Integer.parseInt(cprTextField.getText()),
-                    addressTextField.getText(), Integer.parseInt(postalcodeTextField.getText()),
-                    cityTextField.getText(), emailTextField.getText(),
-                    Integer.parseInt(phonenumberTextField.getText()), departmentChoiceBox.getValue());
-            createCitizenService.createCA(usernameTextField.getText(), passwordTextField.getText(), "Borger");
-            
+//        if (!firstnameTextField.getText().isEmpty() && !lastnameTextField.getText().isEmpty()
+//                && !addressTextField.getText().isEmpty() && !postalcodeTextField.getText().isEmpty()
+//                && !phonenumberTextField.getText().isEmpty() && !cityTextField.getText().isEmpty()
+//                && !emailTextField.getText().isEmpty() && !cprTextField.getText().isEmpty()) {
+//            
+//            if (passwordTextField.getText().equals(repeatPWTextField.getText())) {
+//                
+//            createCitizenService.createCI(firstnameTextField.getText(), middlenameTextField.getText(),
+//                    lastnameTextField.getText(), Integer.parseInt(cprTextField.getText()),
+//                    addressTextField.getText(), Integer.parseInt(postalcodeTextField.getText()),
+//                    cityTextField.getText(), emailTextField.getText(),
+//                    Integer.parseInt(phonenumberTextField.getText()), departmentChoiceBox.getValue());
+//            createCitizenService.createCA(usernameTextField.getText(), passwordTextField.getText(), "Borger");
+//            
+//            }
+//        }
+
+        // Alt for langt metode og for mange if statements xD?
+        if (firstnameTextField.getText().isEmpty() || lastnameTextField.getText().isEmpty()
+                || addressTextField.getText().isEmpty() || postalcodeTextField.getText().isEmpty()
+                || cityTextField.getText().isEmpty() || emailTextField.getText().isEmpty()
+                || phonenumberTextField.getText().isEmpty() || cprTextField.getText().isEmpty()
+                || departmentChoiceBox.getValue().isEmpty() || usernameTextField.getText().isEmpty()
+                || passwordTextField.getText().isEmpty() || repeatPWTextField.getText().isEmpty()) {
+            checkLabel.setVisible(true);
+
+            if (passwordTextField.getText().equals(repeatPWTextField.getText())
+                    && !passwordTextField.getText().isEmpty() && !repeatPWTextField.getText().isEmpty()) {
+                createCitizenService.createCI(firstnameTextField.getText(), middlenameTextField.getText(),
+                        lastnameTextField.getText(), Integer.parseInt(cprTextField.getText()),
+                        addressTextField.getText(), Integer.parseInt(postalcodeTextField.getText()),
+                        cityTextField.getText(), emailTextField.getText(),
+                        Integer.parseInt(phonenumberTextField.getText()), departmentChoiceBox.getValue());
+                createCitizenService.createCA(usernameTextField.getText(), passwordTextField.getText(), "Borger");
+                Stage stage = (Stage) okBtn.getScene().getWindow();
+                stage.close();
             }
+
         }
-        Stage stage = (Stage) okBtn.getScene().getWindow();
-        stage.close();
     }
-    
-    @FXML
-    private void cancelBtnHandler(ActionEvent event) {
+
+        @FXML
+        private void cancelBtnHandler
+        (ActionEvent event
+        
+            ) {
         Stage stage = (Stage) cancelBtn.getScene().getWindow();
-        stage.close();
+            stage.close();
+        }
+
     }
-    
-}
