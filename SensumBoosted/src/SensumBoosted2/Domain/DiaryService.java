@@ -63,7 +63,7 @@ public class DiaryService {
 
     }
     
-    private Object[] createDiaryEntryTableView(long logbookID) {
+    public Object[] createDiaryEntryTableView(long logbookID) {
         Object[] info = createDiaryEntryTableView(logbookID);
         return info;
     }
