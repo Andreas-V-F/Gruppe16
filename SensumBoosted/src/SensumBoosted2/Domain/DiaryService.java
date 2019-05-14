@@ -28,6 +28,11 @@ public class DiaryService {
 
     }
 
+    public Long getCaseId(long userCpr) {
+        long id = dr.getDiaryId(userCpr);
+        return id;
+    }
+    
     public Long getDiaryId(long sagsId) {
         long id = dr.getDiaryId(sagsId);
         return id;
@@ -57,4 +62,11 @@ public class DiaryService {
         dr.deleteDiaryEntry(diaryEntryId);
 
     }
+    
+    private Object[] createDiaryEntryTableView(long logbookID) {
+        Object[] info = createDiaryEntryTableView(logbookID);
+        return info;
+    }
+    
+    
 }

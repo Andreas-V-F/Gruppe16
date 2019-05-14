@@ -1,5 +1,6 @@
 package SensumBoosted2.Persistence;
 
+import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -66,6 +67,22 @@ public class DiaryRepository {
             Logger.getLogger(sensumboosted.Persistence.DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    public Long getCaseId(long userCpr) {
+        Long id = null;
+        try (Statement st = connection.getConnection().createStatement()) {
+            String sql = "SELECT case_id " +
+"	FROM public.sager; where user_cpr" + userCpr;
+
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                id = rs.getLong("case_id");
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(sensumboosted.Persistence.DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return id;
+    }
 
     public Long getDiaryId(long sagsId) {
         Long id = null;
@@ -130,5 +147,23 @@ public class DiaryRepository {
         } catch (SQLException ex) {
             Logger.getLogger(sensumboosted.Persistence.DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    private Object[] createDiaryEntryTableView(long logbookID) {
+        try {
+            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM diary_entry WHERE diary_id = " + logbookID + "order by create_timestamp DESC");
+
+            while (rs.next()) {
+                String text = rs.getString("entry_text");
+                Long diaryId = rs.getLong("diary_entry_id");
+
+                Object[] info = {text, diaryId};
+
+                return info;
+                
+            }
+        } catch (SQLException ex) {
+        }
+
     }
 }
