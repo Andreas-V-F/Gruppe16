@@ -23,8 +23,8 @@ public class DiaryService {
 
     }
 
-    public Long getCaseId(long userCpr) {
-        long id = dr.getDiaryId(userCpr);
+    public Long getCaseId(int userID) {
+        long id = dr.getDiaryId(userID);
         return id;
     }
     

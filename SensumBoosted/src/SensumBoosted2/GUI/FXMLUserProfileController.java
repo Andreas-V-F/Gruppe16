@@ -5,6 +5,7 @@
  */
 package SensumBoosted2.GUI;
 
+import SensumBoosted2.Domain.StaffService;
 import SensumBoosted2.Domain.UserInformation2;
 import SensumBoosted2.Domain.UserProfileService;
 import SensumBoosted2.GUI.FXMLUserProfileController;
@@ -25,7 +26,9 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -36,12 +39,10 @@ import javafx.stage.Stage;
  * @author Bruger
  */
 public class FXMLUserProfileController implements Initializable {
-    
+
     private UserProfileService userProfileService;
     private UserInformation2 ui;
 
-    @FXML
-    private Pane userProfilePane;
     @FXML
     private Button createCitizenBtn;
     @FXML
@@ -107,6 +108,11 @@ public class FXMLUserProfileController implements Initializable {
     private TableColumn<?, ?> cityColumn;
     @FXML
     private TableColumn<?, ?> emailColumn;
+    @FXML
+    private Pane userSettingPane;
+    @FXML
+    private ToggleGroup search;
+    private StaffService staffService = new StaffService();
 
     /**
      * Initializes the controller class.
@@ -121,12 +127,12 @@ public class FXMLUserProfileController implements Initializable {
         Stage stage;
         Parent root;
         try {
-            if(event.getSource()==createCitizenBtn) {
-            stage = new Stage();
-            root = FXMLLoader.load(getClass().getResource("FXMLCreateCitizen.fxml"));
-            stage.setScene(new Scene(root));
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.show();
+            if (event.getSource() == createCitizenBtn) {
+                stage = new Stage();
+                root = FXMLLoader.load(getClass().getResource("FXMLCreateCitizen.fxml"));
+                stage.setScene(new Scene(root));
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.show();
             }
         } catch (IOException ex) {
             Logger.getLogger(FXMLUserProfileController.class.getName()).log(Level.SEVERE, null, ex);
@@ -205,6 +211,9 @@ public class FXMLUserProfileController implements Initializable {
         editCityField.setText(ui.getCity());
         editEmailField.setText(ui.getEmail());
     }
-    
-    public Object 
+
+    @FXML
+    private void mouseClick(MouseEvent event) {
+        staffService.setUserInfo(userInformationTableView.getSelectionModel().getSelectedItem());
+    }
 }

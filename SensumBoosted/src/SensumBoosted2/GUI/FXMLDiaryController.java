@@ -7,6 +7,7 @@ package SensumBoosted2.GUI;
 
 import SensumBoosted2.Domain.DiaryEntry;
 import SensumBoosted2.Domain.DiaryService;
+import SensumBoosted2.Domain.StaffService;
 import SensumBoosted2.Domain.UserAccount;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -18,6 +19,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
@@ -60,10 +62,12 @@ public class FXMLDiaryController implements Initializable {
     private boolean editMode = false;
 
     DiaryService ds = new DiaryService();
+    
+    StaffService StaffService = new StaffService();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        diaryEntryTableView();
+        diaryEntryTableView(ds.getDiaryId(ds.getCaseId(StaffService.getUserID())));
     }
 
     private void diaryEntryTableView(long logbookID) {
@@ -103,7 +107,6 @@ public class FXMLDiaryController implements Initializable {
             UserAccount x = citizenTableView.getSelectionModel().getSelectedItem();
             long id = ds.getDiaryId(ds.getCaseId(x.getUserid()));
             diaryEntryTableView(id);
-            setDiaryLBL(x.getUserid());
         }
     }
 
@@ -115,7 +118,6 @@ public class FXMLDiaryController implements Initializable {
         ds.deleteDiaryEntry(le.getDiaryId());
         System.out.println("DeleteDiaryBTN a");
         long id = ds.getDiaryId(ds.getCaseId(x.getUserid()));
-        diaryEntryTableView.setItems(obListLE);
     }
 
     @FXML

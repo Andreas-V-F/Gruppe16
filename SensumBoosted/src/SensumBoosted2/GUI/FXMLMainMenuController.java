@@ -150,7 +150,7 @@ public class FXMLMainMenuController implements Initializable {
     @FXML
     private void logoutBTNHandler(ActionEvent event) {
         staffService = new StaffService();
-        staffService.clear();
+        staffService.clearStaff();
         loadLoginFXML("FXMLLogin.fxml", event);
     }
 

@@ -36,7 +36,7 @@ public class UserProfileRepository {
             rs = connection.createStatement().executeQuery("SELECT * FROM citizen_information");
             while (rs.next()) {
                 uiList.add(new UserInformation2(rs.getInt("user_id"), rs.getString("firstname"), rs.getString("middlename"),
-                        rs.getString("lastname"), rs.getInt("cpr"), rs.getString("address"), rs.getInt("postal_code"),
+                        rs.getString("lastname"), rs.getInt("user_cpr"), rs.getString("address"), rs.getInt("postal_code"),
                         rs.getString("city"), rs.getString("email")));
             }
         } catch (SQLException ex) {
@@ -51,7 +51,7 @@ public class UserProfileRepository {
             rs = connection.createStatement().executeQuery("SELECT * FROM citizen_information WHERE cpr = " + cpr);
             while (rs.next()) {
                 uiList.add(new UserInformation2(rs.getInt("user_id"), rs.getString("firstname"), rs.getString("middlename"),
-                        rs.getString("lastname"), rs.getInt("cpr"), rs.getString("address"), rs.getInt("postal_code"),
+                        rs.getString("lastname"), rs.getInt("user_cpr"), rs.getString("address"), rs.getInt("postal_code"),
                         rs.getString("city"), rs.getString("email")));
             }
         } catch (SQLException ex) {
@@ -66,7 +66,7 @@ public class UserProfileRepository {
             rs = connection.createStatement().executeQuery("SELECT * FROM citizen_information WHERE firstname = '" + firstname + "'");
             while (rs.next()) {
                 uiList.add(new UserInformation2(rs.getInt("user_id"), rs.getString("firstname"), rs.getString("middlename"),
-                        rs.getString("lastname"), rs.getInt("cpr"), rs.getString("address"), rs.getInt("postal_code"),
+                        rs.getString("lastname"), rs.getInt("user_cpr"), rs.getString("address"), rs.getInt("postal_code"),
                         rs.getString("city"), rs.getString("email")));
             }
         } catch (SQLException ex) {
@@ -81,7 +81,7 @@ public class UserProfileRepository {
             Statement st = connection.createStatement();
             String sql = "UPDATE citizen_information "
                     + "SET firstname = '" + firstname + "', middlename = '" + middlename + "',"
-                    + "lastname = '" + lastname + "', cpr = " + cpr + ","
+                    + "lastname = '" + lastname + "', user_cpr = " + cpr + ","
                     + "address = '" + address + "', postal_code = " + postalcode + ","
                     + "city = '" + city + "', email = '" + city + "'"
                     + " WHERE user_id = " + selectedUserID;
