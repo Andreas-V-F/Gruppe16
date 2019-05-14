@@ -91,7 +91,8 @@ public class FXMLDiaryController implements Initializable {
     
     private void diaryEntryTableView(long logbookID) {
         obListLE.clear();
-        ds.cre
+        Object[] info = ds.createDiaryEntryTableView(logbookID);
+        
         obListLE.add(new DiaryEntry(info[0], info[1]));
 
         text.setCellValueFactory(new PropertyValueFactory<>("text"));
