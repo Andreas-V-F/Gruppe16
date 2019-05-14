@@ -15,6 +15,7 @@ public class LoginService {
 
     private String loginUsername;
     private String loginPassword;
+    private Staff staff;
 
     private LoginRepository loginRepository;
 
@@ -24,13 +25,18 @@ public class LoginService {
     }
 
     public boolean validateLogin() {
+        
         boolean validatedLogin = false;
         loginRepository = new LoginRepository();
         if (loginRepository.validateInDatabase(loginUsername, loginPassword)) {
+            String[] staffinfo = loginRepository.returnStaffInformation(loginUsername);
+            Staff staff = new Staff(loginUsername, staffinfo[0], staffinfo[1], staffinfo[2]);
+            StaffService staffService = new StaffService();
+            staffService.setStaff(staff);
             validatedLogin = true;
             return validatedLogin;
         }
         return validatedLogin;
     }
-
+    
 }

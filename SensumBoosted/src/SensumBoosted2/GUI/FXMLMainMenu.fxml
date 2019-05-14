@@ -43,6 +43,11 @@
          <Label fx:id="nameOnUser" layoutX="50.0" layoutY="31.0" text="Label" />
          <Label fx:id="department" layoutX="64.0" layoutY="48.0" text="Label" />
          <Line endY="619.0" layoutX="180.0" layoutY="81.0" startY="-82.99998474121094" />
+         <Button fx:id="medicineBTN" layoutX="12.0" layoutY="348.0" mnemonicParsing="false" onAction="#medicineBTNhandler" prefHeight="80.0" prefWidth="160.0" text="Medicin">
+            <font>
+               <Font size="18.0" />
+            </font>
+         </Button>
       </children>
    </Pane>
 </AnchorPane>
