@@ -67,11 +67,12 @@ public class DiaryRepository {
             Logger.getLogger(sensumboosted.Persistence.DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     public Long getCaseId(long userCpr) {
         Long id = null;
         try (Statement st = connection.getConnection().createStatement()) {
-            String sql = "SELECT case_id " +
-"	FROM public.sager; where user_cpr" + userCpr;
+            String sql = "SELECT case_id "
+                    + "	FROM public.sager; where user_cpr" + userCpr;
 
             rs = st.executeQuery(sql);
             while (rs.next()) {
@@ -148,10 +149,10 @@ public class DiaryRepository {
             Logger.getLogger(sensumboosted.Persistence.DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     private Object[] createDiaryEntryTableView(long logbookID) {
         try {
-            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM diary_entry WHERE diary_id = " + logbookID + "order by create_timestamp DESC");
+            ResultSet rs = connection.getConnection().createStatement().executeQuery("SELECT * FROM diary_entry WHERE diary_id = " + logbookID + "order by create_timestamp DESC");
 
             while (rs.next()) {
                 String text = rs.getString("entry_text");
@@ -160,10 +161,11 @@ public class DiaryRepository {
                 Object[] info = {text, diaryId};
 
                 return info;
-                
             }
         } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
         }
-
+        return null;
     }
+
 }
