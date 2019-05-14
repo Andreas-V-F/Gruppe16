@@ -23,7 +23,7 @@ public class DiaryEntry {
         this.text = text;
     }
     
-        public long getDiaryId() {
+    public long getDiaryId() {
         return diaryEntryId;
     }
 

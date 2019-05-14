@@ -22,6 +22,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import SensumBoosted2.Domain.UserAccount;
 import SensumBoosted2.Domain.DiaryService;
+import java.sql.ResultSet;
 /**
  * FXML Controller class
  *
@@ -61,11 +62,43 @@ public class FXMLDiaryController implements Initializable {
     ObservableList<DiaryEntry> obListLE = FXCollections.observableArrayList();
     private boolean editMode = false;
 
-   DiaryService ds = new DiaryService();
+    DiaryService ds = new DiaryService();
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+    }
+    
+    private void citizenTableView() {
+
+        try {
+            ResultSet rs = con.createStatement().executeQuery("SELECT * FROM users");
+
+            while (rs.next()) {
+                obListCT.add(new UserAccount(rs.getInt("user_id"), rs.getString("username")));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        citizenName.setCellValueFactory(new PropertyValueFactory<>("username"));
+        citizenId.setCellValueFactory(new PropertyValueFactory<>("userid"));
+
+        citizenTableView.setItems(obListCT);
+        usersTableView.setEditable(true);
+
+    }
+    
+    private void diaryEntryTableView(long logbookID) {
+        obListLE.clear();
+        ds.cre
+        obListLE.add(new DiaryEntry(info[0], info[1]));
+
+        text.setCellValueFactory(new PropertyValueFactory<>("text"));
+
+        diaryEntryTableView.setItems(obListLE);
+        diaryEntryTableView.setEditable(true);
+
     }
 
     @FXML
@@ -74,12 +107,12 @@ public class FXMLDiaryController implements Initializable {
         if (editMode == false) {
             ds.saveDiary(x.getUserid(), diaryTextField.getText());
         } else if (editMode == true) {
-//            DiaryEntry le = diaryEntryTableView.getSelectionModel().getSelectedItem();
-//            ds.editDiary(le.getDiaryId(), diaryTextField.getText());
+            DiaryEntry le = diaryEntryTableView.getSelectionModel().getSelectedItem();
+            ds.editDiary(le.getDiaryId(), diaryTextField.getText());
             editMode = false;
         }
-//        long id = ds.getDiaryId(ds.getCaseId(x.getUserid())); ------------------------------------------------------------------------------------------
-//        diaryEntryTableView(id);
+        long id = ds.getDiaryId(ds.getCaseId(x.getUserid())); 
+        diaryEntryTableView(id);
         diaryTextField.clear();
     }
 
@@ -94,9 +127,9 @@ public class FXMLDiaryController implements Initializable {
             System.out.println("dbClickRowHandler");
             diaryTextField.clear();
             UserAccount x = citizenTableView.getSelectionModel().getSelectedItem();
-//            long id = ds.getDiaryId(ds.getCaseId(x.getUserid())); -------------------------------------------------------
-//            diaryEntryTableView(id);
-//            setDiaryLBL(x.getUserid());
+            long id = ds.getDiaryId(ds.getCaseId(x.getUserid())); 
+            diaryEntryTableView(id);
+            setDiaryLBL(x.getUserid());
         }
     }
 
@@ -104,26 +137,26 @@ public class FXMLDiaryController implements Initializable {
     private void DeleteDiaryBTN(MouseEvent event) {
         UserAccount x = citizenTableView.getSelectionModel().getSelectedItem();
         System.out.println("DeleteDiaryBTN b");
-//        DiaryEntry le = diaryEntryTableView.getSelectionModel().getSelectedItem();
-//        ds.deleteDiaryEntry(le.getDiaryId());
+        DiaryEntry le = diaryEntryTableView.getSelectionModel().getSelectedItem();
+        ds.deleteDiaryEntry(le.getDiaryId());
         System.out.println("DeleteDiaryBTN a");
-//        long id = ds.getDiaryId(ds.getCaseId(x.getUserid())); ---------------------------------------------------------
-//        diaryEntryTableView(id);
+        long id = ds.getDiaryId(ds.getCaseId(x.getUserid())); 
+        diaryEntryTableView.setItems(obListLE);
     }
 
     @FXML
     private void editDiaryBTNHandler(ActionEvent event) {
-//        DiaryEntry le = diaryEntryTableView.getSelectionModel().getSelectedItem();
-//        diaryTextField.setText(le.getText());
+        DiaryEntry le = diaryEntryTableView.getSelectionModel().getSelectedItem();
+        diaryTextField.setText(le.getText());
         editMode = true;
     }
-//       private void setDiaryLBL(long userId){
-////        String[] info = dbController.getInformationStrings(userId); -----------------------------------------------------------------
-//        
-//        nameDiaryLBL.setText(info[0] + " " + info[1] + " " + info[2]);
-//        cprDiaryLBL.setText(info[3]);
-//        adresseDiaryLBL.setText(info[4] + ", " + info[5] + ", " + info[6]);
-//        emailDiaryLBL.setText(info[7]);
-//    }
+       private void setDiaryLBL(long userId){
+        String[] info = dbController.getInformationStrings(userId); -----------------------------------------------------------------
+        
+        nameDiaryLBL.setText(info[0] + " " + info[1] + " " + info[2]);
+        cprDiaryLBL.setText(info[3]);
+        adresseDiaryLBL.setText(info[4] + ", " + info[5] + ", " + info[6]);
+        emailDiaryLBL.setText(info[7]);
+    }
 
 }
