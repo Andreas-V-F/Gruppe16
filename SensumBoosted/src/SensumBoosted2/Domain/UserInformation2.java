@@ -106,5 +106,10 @@ public class UserInformation2 {
     public void setEmail(String email) {
         this.email = email;
     }
+    
+    @Override
+    public String toString() {
+        return "Navn: " + firstname + " " + middlename + " " + lastname + "\nCPR: " + cpr + "\nAdresse: " + address;
+    }
 }
 

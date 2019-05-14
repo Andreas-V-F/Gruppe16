@@ -55,5 +55,8 @@ public class StaffService {
         StaffService.userInfo = null;
     }
     
+    public UserInformation2 getUserInfo(){
+        return userInfo;
+    }
 
 }

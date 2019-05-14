@@ -19,7 +19,7 @@ public class DiaryRepository {
     public Long createDiary(int sagsId) {
         try {
             Statement st = connection.getConnection().createStatement();
-            Long id = System.currentTimeMillis();
+            long id = System.currentTimeMillis();
             String sql = "INSERT INTO diary "
                     + "(sags_id, diary_id)"
                     + " VALUES "
@@ -33,10 +33,10 @@ public class DiaryRepository {
         return null;
     }
 
-    public void createDiaryEntry(long diaryID, String text) {
+    public void createDiaryEntry(int diaryID, String text) {
         try {
             Statement st = connection.getConnection().createStatement();
-            Long entryID = System.currentTimeMillis();
+            long entryID = System.currentTimeMillis();
             Date date = new Date();
             Timestamp timestamp = new Timestamp(date.getTime());
             String sql = "INSERT INTO diary_entry "
@@ -51,10 +51,10 @@ public class DiaryRepository {
         }
     }
 
-    public void editDiaryEntry(long diaryEntryID, String text) {
+    public void editDiaryEntry(int diaryEntryID, String text) {
         try {
             Statement st = connection.getConnection().createStatement();
-            Long entryID = System.currentTimeMillis();
+            long entryID = System.currentTimeMillis();
             Date date = new Date();
             Timestamp timestamp = new Timestamp(date.getTime());
             String sql = "UPDATE public.diary_entry"
@@ -68,15 +68,29 @@ public class DiaryRepository {
         }
     }
 
-    public Long getCaseId(long userCpr) {
-        Long id = null;
+    public int getCaseId(int userID) {
+        int id = 0;
+
         try (Statement st = connection.getConnection().createStatement()) {
-            String sql = "SELECT case_id "
-                    + "	FROM public.sager; where user_cpr" + userCpr;
+            String sql = "SELECT case_id FROM sager where user_id = " + userID;
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                id = rs.getInt("case_id");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(sensumboosted.Persistence.DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return id;
+    }
+
+    public int getDiaryId(int sagsId) {
+        int id = 0;
+        try (Statement st = connection.getConnection().createStatement()) {
+            String sql = "SELECT diary_id FROM diary where case_id = " + sagsId;
 
             rs = st.executeQuery(sql);
             while (rs.next()) {
-                id = rs.getLong("case_id");
+                id = rs.getInt("diary_id");
 
             }
         } catch (SQLException ex) {
@@ -85,25 +99,9 @@ public class DiaryRepository {
         return id;
     }
 
-    public Long getDiaryId(long sagsId) {
-        Long id = null;
-        try (Statement st = connection.getConnection().createStatement()) {
-            String sql = "SELECT diary_id FROM diary where sags_id = " + sagsId;
-
-            rs = st.executeQuery(sql);
-            while (rs.next()) {
-                id = rs.getLong("diary_id");
-
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(sensumboosted.Persistence.DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return id;
-    }
-
-    public List<String> getDiaryEntries(long diaryID) {
+    public List<String> getDiaryEntries(int diaryID) {
         List<String> entries = new ArrayList<>();
-        long timestamp = 0;
+        int timestamp = 0;
 
         try (Statement st = connection.getConnection().createStatement()) {
             String sql = "SELECT entry_text, create_timestamp FROM diary_entry WHERE diary_id = " + diaryID + "order by create_timestamp DESC";
@@ -112,7 +110,7 @@ public class DiaryRepository {
             while (rs.next()) {
                 System.out.println("");
                 entries.add(rs.getString("entry_text"));
-                //timestamp = rs.getLong("create_timestamp");
+                //timestamp = rs.getint("create_timestamp");
 
             }
         } catch (SQLException ex) {
@@ -137,8 +135,8 @@ public class DiaryRepository {
         return cnt;
     }
 
-    public void deleteDiaryEntry(long diaryEntryId) {
-        //long id = getDiaryId(getCaseId(diaryEntryId));
+    public void deleteDiaryEntry(int diaryEntryId) {
+        //int id = getDiaryId(getCaseId(diaryEntryId));
         //System.out.print(id);
 
         try (Statement st = connection.getConnection().createStatement()) {
@@ -150,14 +148,14 @@ public class DiaryRepository {
         }
     }
 
-    public List createDiaryEntryTableView(long logbookID) {
+    public List createDiaryEntryTableView(int logbookID) {
         List<DiaryEntry> diaries = new ArrayList<>();
         try {
             ResultSet rs = connection.getConnection().createStatement().executeQuery("SELECT * FROM diary_entry WHERE diary_id = " + logbookID + "order by create_timestamp DESC");
 
             while (rs.next()) {
                 String text = rs.getString("entry_text");
-                Long diaryId = rs.getLong("diary_entry_id");
+                int diaryId = rs.getInt("diary_entry_id");
 
                 diaries.add(new DiaryEntry(text, diaryId));
 

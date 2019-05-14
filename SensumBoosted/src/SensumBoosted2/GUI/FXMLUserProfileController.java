@@ -113,6 +113,12 @@ public class FXMLUserProfileController implements Initializable {
     @FXML
     private ToggleGroup search;
     private StaffService staffService = new StaffService();
+    @FXML
+    private Button caseBtn;
+    @FXML
+    private Button caseButton1;
+    @FXML
+    private Button caseButton2;
 
     /**
      * Initializes the controller class.
@@ -215,5 +221,9 @@ public class FXMLUserProfileController implements Initializable {
     @FXML
     private void mouseClick(MouseEvent event) {
         staffService.setUserInfo(userInformationTableView.getSelectionModel().getSelectedItem());
+    }
+
+    @FXML
+    private void openCasePane(ActionEvent event) {
     }
 }

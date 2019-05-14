@@ -13,27 +13,29 @@ public class DiaryService {
         dr.createDiary(sagsId);
     }
 
-    public void createDiaryEntry(long diaryID, String text) {
+    public void createDiaryEntry(int diaryID, String text) {
         dr.createDiaryEntry(diaryID, text);
 
     }
 
-    public void editDiaryEntry(long diaryEntryID, String text) {
+    public void editDiaryEntry(int diaryEntryID, String text) {
         dr.editDiaryEntry(diaryEntryID, text);
 
     }
 
-    public Long getCaseId(int userID) {
-        long id = dr.getDiaryId(userID);
+    public int getCaseId(int userID) {
+        System.out.println("test");
+        int id = dr.getCaseId(userID);
+        System.out.println("test");
         return id;
     }
     
-    public Long getDiaryId(long sagsId) {
-        long id = dr.getDiaryId(sagsId);
+    public int getDiaryId(int sagsId) {
+        int id = dr.getDiaryId(sagsId);
         return id;
     }
 
-    public List<String> getDiaryEntries(long diaryID) {
+    public List<String> getDiaryEntries(int diaryID) {
         List<String> entries = dr.getDiaryEntries(diaryID);
         return entries;
 
@@ -47,18 +49,18 @@ public class DiaryService {
 
     }
 
-    public void editDiary(long diaryID, String text) {
+    public void editDiary(int diaryID, String text) {
         editDiaryEntry(diaryID, text);
 
 
     }
 
-    public void deleteDiaryEntry(long diaryEntryId) {
+    public void deleteDiaryEntry(int diaryEntryId) {
         dr.deleteDiaryEntry(diaryEntryId);
 
     }
     
-    public ObservableList createDiaryEntryTableView(long logbookID) {
+    public ObservableList createDiaryEntryTableView(int logbookID) {
         ObservableList<DiaryEntry> diaries;
         diaries = FXCollections.observableArrayList(dr.createDiaryEntryTableView(logbookID));
         return diaries;

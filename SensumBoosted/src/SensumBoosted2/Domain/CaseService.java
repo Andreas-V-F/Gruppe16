@@ -15,14 +15,15 @@ import javafx.collections.ObservableList;
  * @author Andreas Frederiksen
  */
 public class CaseService {
-
-    private Citizen user = new Citizen("Andreas Ibsen Cor", 1212125577, "Univej 1, 5230 Odense M", "Pik", 2);
+    
     private CaseRepository caseRepository;
+    private StaffService staffService;
     private Case case1;
     private static Case preCase;
 
     public CaseService() {
-        case1 = new Case(user);
+        staffService = new StaffService();
+        case1 = new Case(staffService.getUserInfo());
         this.caseRepository = new CaseRepository();
     }
 
@@ -30,7 +31,7 @@ public class CaseService {
         
         
        
-        Case case2 = new Case(user, inquiryText, null,  new Date(), inquirer, assessmentText, taskPurpose, taskGoal);
+        Case case2 = new Case(staffService.getUserInfo(), inquiryText, null,  new Date(), inquirer, assessmentText, taskPurpose, taskGoal);
         if (caseRepository.hasOpenCase(case2)) {
             caseRepository.saveCase(case2);
         } else {
@@ -44,7 +45,7 @@ public class CaseService {
     }
 
     public String printToInfo() {
-        return user.toString();
+        return staffService.getUserInfo().toString();
     }
 
     public String[] printToCase() {

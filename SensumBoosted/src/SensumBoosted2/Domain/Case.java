@@ -13,7 +13,7 @@ import java.util.Date;
  */
 public class Case {
 
-    private Citizen citizen;
+    private UserInformation2 userInfo;
     private String inquiryText;
     private Date addedDate;
     private Date editDate;
@@ -22,8 +22,8 @@ public class Case {
     private String taskPurpose;
     private String takeGoal;
 
-    public Case(Citizen citizen, String inquiryText, Date addedDate, Date editDate, String inquirer, String assessment, String taskPurpose, String takeGoal) {
-        this.citizen = citizen;
+    public Case(UserInformation2 userInfo, String inquiryText, Date addedDate, Date editDate, String inquirer, String assessment, String taskPurpose, String takeGoal) {
+        this.userInfo = userInfo;
         this.inquiryText = inquiryText;
         this.addedDate = addedDate;
         this.editDate = editDate;
@@ -40,8 +40,8 @@ public class Case {
         this.assessment = assessment;
     }
 
-    public Case(Citizen citizen) {
-        this.citizen = citizen;
+    public Case(UserInformation2 userInfo) {
+        this.userInfo = userInfo;
     }
 
     public String getInquiryText() {
@@ -60,8 +60,8 @@ public class Case {
         return assessment;
     }
 
-    public Citizen getCitizen() {
-        return citizen;
+    public UserInformation2 getUserInfo() {
+        return userInfo;
     }
 
     public String getInquirer() {
