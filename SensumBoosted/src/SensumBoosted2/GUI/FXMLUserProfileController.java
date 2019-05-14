@@ -7,6 +7,7 @@ package SensumBoosted2.GUI;
 
 import SensumBoosted2.Domain.UserInformation2;
 import SensumBoosted2.Domain.UserProfileService;
+import SensumBoosted2.GUI.FXMLUserProfileController;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -204,4 +205,6 @@ public class FXMLUserProfileController implements Initializable {
         editCityField.setText(ui.getCity());
         editEmailField.setText(ui.getEmail());
     }
+    
+    public Object 
 }

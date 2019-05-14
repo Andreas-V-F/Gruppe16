@@ -1,6 +1,6 @@
 package SensumBoosted2.Persistence;
 
-import java.sql.Array;
+import SensumBoosted2.Domain.DiaryEntry;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -102,7 +102,7 @@ public class DiaryRepository {
     }
 
     public List<String> getDiaryEntries(long diaryID) {
-        List<String> entries = new ArrayList<String>();
+        List<String> entries = new ArrayList<>();
         long timestamp = 0;
 
         try (Statement st = connection.getConnection().createStatement()) {
@@ -150,7 +150,8 @@ public class DiaryRepository {
         }
     }
 
-    private Object[] createDiaryEntryTableView(long logbookID) {
+    public List createDiaryEntryTableView(long logbookID) {
+        List<DiaryEntry> diaries = new ArrayList<>();
         try {
             ResultSet rs = connection.getConnection().createStatement().executeQuery("SELECT * FROM diary_entry WHERE diary_id = " + logbookID + "order by create_timestamp DESC");
 
@@ -158,9 +159,9 @@ public class DiaryRepository {
                 String text = rs.getString("entry_text");
                 Long diaryId = rs.getLong("diary_entry_id");
 
-                Object[] info = {text, diaryId};
+                diaries.add(new DiaryEntry(text, diaryId));
 
-                return info;
+                return diaries;
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

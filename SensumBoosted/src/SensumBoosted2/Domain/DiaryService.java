@@ -1,14 +1,9 @@
 package SensumBoosted2.Domain;
 
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import SensumBoosted2.Persistence.DiaryRepository;
+import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class DiaryService {
 
@@ -63,9 +58,10 @@ public class DiaryService {
 
     }
     
-    public Object[] createDiaryEntryTableView(long logbookID) {
-        Object[] info = createDiaryEntryTableView(logbookID);
-        return info;
+    public ObservableList createDiaryEntryTableView(long logbookID) {
+        ObservableList<DiaryEntry> diaries;
+        diaries = FXCollections.observableArrayList(dr.createDiaryEntryTableView(logbookID));
+        return diaries;
     }
     
     
