@@ -250,46 +250,42 @@ public class FXMLUserProfileController implements Initializable {
     }
 
     private void permissions(boolean b) {
+        Button[] buttons = {caseBtn, diaryBtn, medicineBtn, editUserBtn, createCitizenBtn};
         if (!b) {
+            for (Button button : buttons) {
+                button.setDisable(true);
+            }
             switch (staffService.getStaffType()) {
                 case "Administrator":
-                    caseBtn.setDisable(true);
                     caseBtn.setVisible(true);
-                    diaryBtn.setDisable(true);
                     diaryBtn.setVisible(true);
-                    medicineBtn.setDisable(true);
                     medicineBtn.setVisible(true);
-                    editUserBtn.setDisable(true);
                     editUserBtn.setVisible(true);
                     createCitizenBtn.setDisable(false);
                     createCitizenBtn.setVisible(true);
                     break;
                 case "Medicinansvarlig":
-                    caseBtn.setDisable(true);
                     caseBtn.setVisible(false);
-                    diaryBtn.setDisable(true);
                     diaryBtn.setVisible(true);
-                    medicineBtn.setDisable(true);
                     medicineBtn.setVisible(true);
-                    editUserBtn.setDisable(true);
                     editUserBtn.setVisible(false);
-                    createCitizenBtn.setDisable(true);
                     createCitizenBtn.setVisible(false);
                     break;
                 case "Caseworker":
-                    caseBtn.setDisable(true);
                     caseBtn.setVisible(true);
-                    diaryBtn.setDisable(true);
                     diaryBtn.setVisible(false);
-                    medicineBtn.setDisable(true);
                     medicineBtn.setVisible(false);
-                    editUserBtn.setDisable(true);
                     editUserBtn.setVisible(true);
                     createCitizenBtn.setDisable(false);
                     createCitizenBtn.setVisible(true);
+                default:
+                    caseBtn.setVisible(false);
+                    diaryBtn.setVisible(false);
+                    medicineBtn.setVisible(false);
+                    editUserBtn.setVisible(false);
+                    createCitizenBtn.setVisible(false);
             }
         } else {
-            Button[] buttons = {caseBtn, diaryBtn, medicineBtn, editUserBtn, createCitizenBtn};
             for (Button button : buttons) {
                 if (button.isVisible()) {
                     button.setDisable(false);

@@ -33,8 +33,6 @@ import javafx.scene.paint.Color;
  * @author Mikkel Høyberg
  */
 public class FXMLMainMenuController implements Initializable {
-
-    private FXMLLoginController loginController;
     private StaffService staffService;
 
     @FXML
@@ -73,13 +71,7 @@ public class FXMLMainMenuController implements Initializable {
 
     public FXMLMainMenuController() {
     }
-
-    public void setTopLabels(String loggedInAs, String nameOnUser, String department) {
-        this.loggedInAs.setText(loggedInAs);
-        this.nameOnUser.setText(nameOnUser);
-        this.department.setText(department);
-    }
-
+    
     private void setLoginWindowSize(Event event) {
         ((Node) (event.getSource())).getScene().getWindow().setWidth(310);
         ((Node) (event.getSource())).getScene().getWindow().setHeight(265);
@@ -113,7 +105,7 @@ public class FXMLMainMenuController implements Initializable {
         staffService.clearUserInfo();
         loadAnotherFXML("FXMLUserProfile.fxml");
     }
-    
+
     @FXML
     private void adminBTNHandler(ActionEvent event) {
         nullButtonEffect();
@@ -163,6 +155,11 @@ public class FXMLMainMenuController implements Initializable {
             case "Caseworker":
                 citizenBTN.setDisable(false);
                 citizenBTN.setVisible(true);
+                adminBTN.setDisable(true);
+                adminBTN.setVisible(false);
+            default:
+                citizenBTN.setDisable(true);
+                citizenBTN.setVisible(false);
                 adminBTN.setDisable(true);
                 adminBTN.setVisible(false);
         }

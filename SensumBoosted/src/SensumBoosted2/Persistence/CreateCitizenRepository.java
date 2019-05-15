@@ -54,9 +54,9 @@ public class CreateCitizenRepository {
         try {
             Statement st = connection.createStatement();
             String sql = "INSERT INTO users "
-                    + "(username, password, user_type)"
+                    + "(username, password, user_type, department)"
                     + " VALUES ('" + username + "','" + encrypt.encryptString(password) + "','"
-                    + usertype + "')";
+                    + usertype + "','" + department + "')";
             st.executeUpdate(sql);
             sql = "SELECT user_id FROM users WHERE username='" + username + "';";
             ResultSet rs = st.executeQuery(sql);
