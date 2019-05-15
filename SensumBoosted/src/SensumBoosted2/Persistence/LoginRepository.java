@@ -96,5 +96,21 @@ public class LoginRepository {
 
         return staffinfo;
     }
+    
+//    public int getIdFromUsername(String loginUsername){
+//        int userId = 0;
+//        try {
+//            Statement st = connectRepository.getConnection().createStatement();
+//            String sql = "SELECT user_id FROM users WHERE username='" + loginUsername + "';";
+//            ResultSet rs = st.executeQuery(sql);
+//            while (rs.next()) {
+//                userId = rs.getInt("user_id");
+//            }
+//        } catch (SQLException ex) {
+//            System.out.println(ex.getMessage());
+//        }
+//        return userId;
+//        
+//    }
 
 }

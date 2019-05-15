@@ -96,58 +96,81 @@ public class FXMLCreateCitizenController implements Initializable {
         // TODO
         String[] departments = {"Misbrug", "Handicap"};
         departmentChoiceBox.getItems().addAll(departments);
+
     }
 
     @FXML
     private void okBtnHandler(ActionEvent event) {
+        TextField[] textFields = {firstnameTextField, middlenameTextField, lastnameTextField, addressTextField,
+            phonenumberTextField, cityTextField, emailTextField, cprTextField, postalcodeTextField,
+            usernameTextField, passwordTextField, repeatPWTextField};
+
+        for (TextField text : textFields) {
+            System.out.println(text.getText());
+            if (text.getText().isEmpty() && text != middlenameTextField) {
+                checkLabel.setText("Udfyld venligst felter markerede med *");
+                checkLabel.setDisable(false);
+                checkLabel.setVisible(true);
+                return;
+            }
+        }
+
+        if (!passwordTextField.getText().equals(repeatPWTextField.getText())) {
+            checkLabel.setText("Passwords matcher ikke overens");
+            checkLabel.setDisable(false);
+            checkLabel.setVisible(true);
+            return;
+        }
+
+        createCitizenService.createCA(firstnameTextField.getText(), middlenameTextField.getText(), lastnameTextField.getText(), Integer.parseInt(cprTextField.getText()), addressTextField.getText(),
+                Integer.parseInt(postalcodeTextField.getText()), cityTextField.getText(), emailTextField.getText(), Integer.parseInt(phonenumberTextField.getText()), departmentChoiceBox.getValue(), usernameTextField.getText(), passwordTextField.getText(), "Borger");
+
 //        if (!firstnameTextField.getText().isEmpty() && !lastnameTextField.getText().isEmpty()
-//                && !addressTextField.getText().isEmpty() && !postalcodeTextField.getText().isEmpty()
-//                && !phonenumberTextField.getText().isEmpty() && !cityTextField.getText().isEmpty()
-//                && !emailTextField.getText().isEmpty() && !cprTextField.getText().isEmpty()) {
-//            
-//            if (passwordTextField.getText().equals(repeatPWTextField.getText())) {
-//                
-//            createCitizenService.createCI(firstnameTextField.getText(), middlenameTextField.getText(),
-//                    lastnameTextField.getText(), Integer.parseInt(cprTextField.getText()),
-//                    addressTextField.getText(), Integer.parseInt(postalcodeTextField.getText()),
-//                    cityTextField.getText(), emailTextField.getText(),
-//                    Integer.parseInt(phonenumberTextField.getText()), departmentChoiceBox.getValue());
-//            createCitizenService.createCA(usernameTextField.getText(), passwordTextField.getText(), "Borger");
-//            
+        //                && !addressTextField.getText().isEmpty() && !postalcodeTextField.getText().isEmpty()
+        //                && !phonenumberTextField.getText().isEmpty() && !cityTextField.getText().isEmpty()
+        //                && !emailTextField.getText().isEmpty() && !cprTextField.getText().isEmpty()) {
+        //            
+        //            if (passwordTextField.getText().equals(repeatPWTextField.getText())) {
+        //                
+        //            createCitizenService.createCI(firstnameTextField.getText(), middlenameTextField.getText(),
+        //                    lastnameTextField.getText(), Integer.parseInt(cprTextField.getText()),
+        //                    addressTextField.getText(), Integer.parseInt(postalcodeTextField.getText()),
+        //                    cityTextField.getText(), emailTextField.getText(),
+        //                    Integer.parseInt(phonenumberTextField.getText()), departmentChoiceBox.getValue());
+        //            createCitizenService.createCA(usernameTextField.getText(), passwordTextField.getText(), "Borger");
+        //            
+        //            }
+        //        }
+        // Alt for langt metode og for mange if statements xD?
+//        {
+//            if (firstnameTextField.getText().isEmpty() || lastnameTextField.getText().isEmpty()
+//                    || addressTextField.getText().isEmpty() || postalcodeTextField.getText().isEmpty()
+//                    || cityTextField.getText().isEmpty() || emailTextField.getText().isEmpty()
+//                    || phonenumberTextField.getText().isEmpty() || cprTextField.getText().isEmpty()
+//                    || departmentChoiceBox.getValue().isEmpty() || usernameTextField.getText().isEmpty()
+//                    || passwordTextField.getText().isEmpty() || repeatPWTextField.getText().isEmpty()) {
+//                checkLabel.setVisible(true);
+//
+//                if (passwordTextField.getText().equals(repeatPWTextField.getText())
+//                        && !passwordTextField.getText().isEmpty() && !repeatPWTextField.getText().isEmpty()) {
+//                    createCitizenService.createCI(firstnameTextField.getText(), middlenameTextField.getText(),
+//                            lastnameTextField.getText(), Integer.parseInt(cprTextField.getText()),
+//                            addressTextField.getText(), Integer.parseInt(postalcodeTextField.getText()),
+//                            cityTextField.getText(), emailTextField.getText(),
+//                            Integer.parseInt(phonenumberTextField.getText()), departmentChoiceBox.getValue());
+//                    createCitizenService.createCA(usernameTextField.getText(), passwordTextField.getText(), "Borger");
+//                    Stage stage = (Stage) okBtn.getScene().getWindow();
+//                    stage.close();
+//                }
+//
 //            }
 //        }
-
-        // Alt for langt metode og for mange if statements xD?
-        if (firstnameTextField.getText().isEmpty() || lastnameTextField.getText().isEmpty()
-                || addressTextField.getText().isEmpty() || postalcodeTextField.getText().isEmpty()
-                || cityTextField.getText().isEmpty() || emailTextField.getText().isEmpty()
-                || phonenumberTextField.getText().isEmpty() || cprTextField.getText().isEmpty()
-                || departmentChoiceBox.getValue().isEmpty() || usernameTextField.getText().isEmpty()
-                || passwordTextField.getText().isEmpty() || repeatPWTextField.getText().isEmpty()) {
-            checkLabel.setVisible(true);
-
-            if (passwordTextField.getText().equals(repeatPWTextField.getText())
-                    && !passwordTextField.getText().isEmpty() && !repeatPWTextField.getText().isEmpty()) {
-                createCitizenService.createCI(firstnameTextField.getText(), middlenameTextField.getText(),
-                        lastnameTextField.getText(), Integer.parseInt(cprTextField.getText()),
-                        addressTextField.getText(), Integer.parseInt(postalcodeTextField.getText()),
-                        cityTextField.getText(), emailTextField.getText(),
-                        Integer.parseInt(phonenumberTextField.getText()), departmentChoiceBox.getValue());
-                createCitizenService.createCA(usernameTextField.getText(), passwordTextField.getText(), "Borger");
-                Stage stage = (Stage) okBtn.getScene().getWindow();
-                stage.close();
-            }
-
-        }
     }
 
-        @FXML
-        private void cancelBtnHandler
-        (ActionEvent event
-        
-            ) {
+    @FXML
+    private void cancelBtnHandler(ActionEvent event) {
         Stage stage = (Stage) cancelBtn.getScene().getWindow();
-            stage.close();
-        }
-
+        stage.close();
     }
+
+}

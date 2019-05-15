@@ -33,7 +33,7 @@ public class UserProfileRepository {
     public List getCitizenInformation() {
         List<UserInformation2> uiList = new ArrayList<>();
         try {
-            rs = connection.createStatement().executeQuery("SELECT * FROM citizen_information");
+            rs = connection.createStatement().executeQuery("SELECT * FROM citizen_information ORDER BY user_id ASC");
             while (rs.next()) {
                 uiList.add(new UserInformation2(rs.getInt("user_id"), rs.getString("firstname"), rs.getString("middlename"),
                         rs.getString("lastname"), rs.getInt("user_cpr"), rs.getString("address"), rs.getInt("postal_code"),

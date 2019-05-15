@@ -46,10 +46,6 @@ public class FXMLMainMenuController implements Initializable {
     @FXML
     private Button citizenBTN;
     @FXML
-    private Button diaryBTN;
-    @FXML
-    private Button caseBTN;
-    @FXML
     private Pane switchingPane;
     @FXML
     private Button adminBTN;
@@ -59,8 +55,6 @@ public class FXMLMainMenuController implements Initializable {
     private Label nameOnUser;
     @FXML
     private Label department;
-    @FXML
-    private Button medicineBTN;
 
     /**
      * Initializes the controller class.
@@ -116,34 +110,15 @@ public class FXMLMainMenuController implements Initializable {
     private void citizenBTNHandler(ActionEvent event) {
         nullButtonEffect();
         citizenBTN.setEffect(getEffect());
+        staffService.clearUserInfo();
         loadAnotherFXML("FXMLUserProfile.fxml");
     }
-
-    @FXML
-    private void diaryBTNHandler(ActionEvent event) {
-        nullButtonEffect();
-        diaryBTN.setEffect(getEffect());
-        loadAnotherFXML("FXMLDiary.fxml");
-    }
-
-    @FXML
-    private void caseBTNHandler(ActionEvent event) {
-        nullButtonEffect();
-        caseBTN.setEffect(getEffect());
-        loadAnotherFXML("FXMLCaseMenu.fxml");
-    }
-
-    @FXML
-    private void medicineBTNhandler(ActionEvent event) {
-        nullButtonEffect();
-        medicineBTN.setEffect(getEffect());
-        loadAnotherFXML("FXMLMedicine.fxml");
-    }
-
+    
     @FXML
     private void adminBTNHandler(ActionEvent event) {
         nullButtonEffect();
         adminBTN.setEffect(getEffect());
+        staffService.clearUserInfo();
         loadAnotherFXML("FXMLAdmin.fxml");
     }
 
@@ -163,10 +138,7 @@ public class FXMLMainMenuController implements Initializable {
 
     private void nullButtonEffect() {
         citizenBTN.setEffect(null);
-        diaryBTN.setEffect(null);
-        caseBTN.setEffect(null);
         adminBTN.setEffect(null);
-        medicineBTN.setEffect(null);
     }
 
     private void staff() {
@@ -179,36 +151,18 @@ public class FXMLMainMenuController implements Initializable {
             case "Administrator":
                 citizenBTN.setDisable(false);
                 citizenBTN.setVisible(true);
-                diaryBTN.setDisable(false);
-                diaryBTN.setVisible(true);
-                caseBTN.setDisable(false);
-                caseBTN.setVisible(true);
-                medicineBTN.setDisable(false);
-                medicineBTN.setVisible(true);
                 adminBTN.setDisable(false);
                 adminBTN.setVisible(true);
                 break;
             case "Medicinansvarlig":
                 citizenBTN.setDisable(false);
                 citizenBTN.setVisible(true);
-                diaryBTN.setDisable(false);
-                diaryBTN.setVisible(true);
-                caseBTN.setDisable(true);
-                caseBTN.setVisible(false);
-                medicineBTN.setDisable(false);
-                medicineBTN.setVisible(true);
                 adminBTN.setDisable(true);
                 adminBTN.setVisible(false);
                 break;
-            case "Case worker":
+            case "Caseworker":
                 citizenBTN.setDisable(false);
                 citizenBTN.setVisible(true);
-                diaryBTN.setDisable(false);
-                diaryBTN.setVisible(true);
-                caseBTN.setDisable(false);
-                caseBTN.setVisible(true);
-                medicineBTN.setDisable(true);
-                medicineBTN.setVisible(false);
                 adminBTN.setDisable(true);
                 adminBTN.setVisible(false);
         }

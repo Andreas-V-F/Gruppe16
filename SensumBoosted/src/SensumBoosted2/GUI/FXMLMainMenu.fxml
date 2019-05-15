@@ -7,7 +7,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="mainMenuPane" prefHeight="700.0" prefWidth="1180.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SensumBoosted2.GUI.FXMLMainMenuController">
+<AnchorPane id="AnchorPane" fx:id="mainMenuPane" prefHeight="700.0" prefWidth="1180.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SensumBoosted2.GUI.FXMLMainMenuController">
    <Pane fx:id="sideMenuPane" prefHeight="700.0" prefWidth="180.0">
       <children>
             <Button fx:id="citizenBTN" layoutX="10.0" layoutY="81.0" mnemonicParsing="false" onAction="#citizenBTNHandler" prefHeight="80.0" prefWidth="160.0" text="Borger">
@@ -15,17 +15,7 @@
                <Font size="18.0" />
             </font>
          </Button>
-            <Button fx:id="diaryBTN" layoutX="10.0" layoutY="170.0" mnemonicParsing="false" onAction="#diaryBTNHandler" prefHeight="80.0" prefWidth="160.0" text="Dagbog">
-            <font>
-               <Font size="18.0" />
-            </font>
-         </Button>
             <Button fx:id="logoutBTN" layoutX="10.0" layoutY="610.0" mnemonicParsing="false" onAction="#logoutBTNHandler" prefHeight="80.0" prefWidth="160.0" text="Log ud">
-            <font>
-               <Font size="18.0" />
-            </font>
-         </Button>
-            <Button fx:id="caseBTN" layoutX="10.0" layoutY="259.0" mnemonicParsing="false" onAction="#caseBTNHandler" prefHeight="80.0" prefWidth="160.0" text="Sag">
             <font>
                <Font size="18.0" />
             </font>
@@ -43,11 +33,6 @@
          <Label fx:id="nameOnUser" layoutX="50.0" layoutY="31.0" text="Label" />
          <Label fx:id="department" layoutX="64.0" layoutY="48.0" text="Label" />
          <Line endY="619.0" layoutX="180.0" layoutY="81.0" startY="-82.99998474121094" />
-         <Button fx:id="medicineBTN" layoutX="12.0" layoutY="348.0" mnemonicParsing="false" onAction="#medicineBTNhandler" prefHeight="80.0" prefWidth="160.0" text="Medicin">
-            <font>
-               <Font size="18.0" />
-            </font>
-         </Button>
       </children>
    </Pane>
 </AnchorPane>

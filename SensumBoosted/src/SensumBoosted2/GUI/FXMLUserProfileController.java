@@ -29,6 +29,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -116,9 +117,11 @@ public class FXMLUserProfileController implements Initializable {
     @FXML
     private Button caseBtn;
     @FXML
-    private Button caseButton1;
+    private Button diaryBtn;
     @FXML
-    private Button caseButton2;
+    private Button medicineBtn;
+    @FXML
+    private AnchorPane rootPane;
 
     /**
      * Initializes the controller class.
@@ -126,6 +129,9 @@ public class FXMLUserProfileController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         initiateTableView();
+        permissions(false);
+        staffService.setUserInfo(null);
+
     }
 
     @FXML
@@ -221,9 +227,74 @@ public class FXMLUserProfileController implements Initializable {
     @FXML
     private void mouseClick(MouseEvent event) {
         staffService.setUserInfo(userInformationTableView.getSelectionModel().getSelectedItem());
+        permissions(true);
+
     }
 
     @FXML
-    private void openCasePane(ActionEvent event) {
+    private void openCasePane(ActionEvent event) throws IOException {
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("FXMLCaseMenuController.fxml"));
+        rootPane.getChildren().setAll(pane);
+    }
+
+    @FXML
+    private void openDiaryPane(ActionEvent event) throws IOException {
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("FXMLDiary.fxml"));
+        rootPane.getChildren().setAll(pane);
+    }
+
+    @FXML
+    private void openMedicinePane(ActionEvent event) throws IOException {
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("FXMLMedicine.fxml"));
+        rootPane.getChildren().setAll(pane);
+    }
+
+    private void permissions(boolean b) {
+        if (!b) {
+            switch (staffService.getStaffType()) {
+                case "Administrator":
+                    caseBtn.setDisable(true);
+                    caseBtn.setVisible(true);
+                    diaryBtn.setDisable(true);
+                    diaryBtn.setVisible(true);
+                    medicineBtn.setDisable(true);
+                    medicineBtn.setVisible(true);
+                    editUserBtn.setDisable(true);
+                    editUserBtn.setVisible(true);
+                    createCitizenBtn.setDisable(false);
+                    createCitizenBtn.setVisible(true);
+                    break;
+                case "Medicinansvarlig":
+                    caseBtn.setDisable(true);
+                    caseBtn.setVisible(false);
+                    diaryBtn.setDisable(true);
+                    diaryBtn.setVisible(true);
+                    medicineBtn.setDisable(true);
+                    medicineBtn.setVisible(true);
+                    editUserBtn.setDisable(true);
+                    editUserBtn.setVisible(false);
+                    createCitizenBtn.setDisable(true);
+                    createCitizenBtn.setVisible(false);
+                    break;
+                case "Caseworker":
+                    caseBtn.setDisable(true);
+                    caseBtn.setVisible(true);
+                    diaryBtn.setDisable(true);
+                    diaryBtn.setVisible(false);
+                    medicineBtn.setDisable(true);
+                    medicineBtn.setVisible(false);
+                    editUserBtn.setDisable(true);
+                    editUserBtn.setVisible(true);
+                    createCitizenBtn.setDisable(false);
+                    createCitizenBtn.setVisible(true);
+            }
+        } else {
+            Button[] buttons = {caseBtn, diaryBtn, medicineBtn, editUserBtn, createCitizenBtn};
+            for (Button button : buttons) {
+                if (button.isVisible()) {
+                    button.setDisable(false);
+                }
+            }
+        }
     }
 }

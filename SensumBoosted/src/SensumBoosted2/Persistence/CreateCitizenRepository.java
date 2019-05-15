@@ -30,15 +30,15 @@ public class CreateCitizenRepository {
     }
 
     // VIRKER IKKE... FIND UD AF PROBLEMET
-    public void createCitizenInformation(String firstname, String middlename, String lastname,
+    public void createCitizenInformation(int userId, String firstname, String middlename, String lastname,
             int cpr, String address, int postalcode, String city, String email, int phonenumber,
             String department) {
         try {
             Statement st = connection.createStatement();
             String sql = "INSERT INTO citizen_information "
-                    + "(firstname, middlename, lastname, cpr, address, "
+                    + "(user_id, firstname, middlename, lastname, user_cpr, address, "
                     + "postal_code, city, email, phonenumber, department)"
-                    + " VALUES ('" + firstname + "','" + middlename
+                    + " VALUES ('" + userId + "','" + firstname + "','" + middlename
                     + "','" + lastname + "'," + cpr + ",'" + address + "'," + postalcode
                     + ",'" + city + "','" + email + "'," + phonenumber + ",'" + department + "')";
             st.executeUpdate(sql);
@@ -47,7 +47,10 @@ public class CreateCitizenRepository {
         }
     }
 
-    public void createCitizenAccount(String username, String password, String usertype) {
+    public int createCitizenAccount(String firstname, String middlename, String lastname,
+            int cpr, String address, int postalcode, String city, String email, int phonenumber,
+            String department, String username, String password, String usertype) {
+        int userID = 0;
         try {
             Statement st = connection.createStatement();
             String sql = "INSERT INTO users "
@@ -55,8 +58,14 @@ public class CreateCitizenRepository {
                     + " VALUES ('" + username + "','" + encrypt.encryptString(password) + "','"
                     + usertype + "')";
             st.executeUpdate(sql);
+            sql = "SELECT user_id FROM users WHERE username='" + username + "';";
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                createCitizenInformation(rs.getInt("user_id"), firstname, middlename, lastname, cpr, address, postalcode, city, email, phonenumber, department);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(UserProfileRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return userID;
     }
 }
