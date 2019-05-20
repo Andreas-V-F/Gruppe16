@@ -70,25 +70,25 @@ public class FXMLDiaryController implements Initializable {
     private void DiaryEntryTableView(int logbookID) {
 
         System.out.println(ds.createDiaryEntryTableView(logbookID));
-//        
-//        text.setCellValueFactory(new PropertyValueFactory<>("text"));
-//
+        
+        text.setCellValueFactory(new PropertyValueFactory<>("text"));
+
         DiaryEntryTableView.setItems(ds.createDiaryEntryTableView(logbookID));
-//        DiaryEntryTableView.setEditable(true);
+        DiaryEntryTableView.setEditable(true);
 
     }
 
     @FXML
     private void saveDiaryButtonHandler(ActionEvent event) {
-        UserAccount x = citizenTableView.getSelectionModel().getSelectedItem();
+        DiaryEntry le = (DiaryEntry) DiaryEntryTableView.getSelectionModel().getSelectedItem();
         if (editMode == false) {
-            ds.saveDiary(x.getUserid(), diaryTextField.getText());
+            ds.saveDiary(le.getDiaryId(), diaryTextField.getText());
         } else if (editMode == true) {
-            DiaryEntry le = (DiaryEntry) DiaryEntryTableView.getSelectionModel().getSelectedItem();
             ds.editDiary(le.getDiaryId(), diaryTextField.getText());
             editMode = false;
         }
-        int id = ds.getDiaryId(ds.getCaseId(x.getUserid()));
+        
+        int id = ds.getDiaryIdByEntryId(le.getDiaryId());
         DiaryEntryTableView(id);
         diaryTextField.clear();
     }
@@ -103,8 +103,8 @@ public class FXMLDiaryController implements Initializable {
         if (event.getClickCount() > 1) {
             System.out.println("dbClickRowHandler");
             diaryTextField.clear();
-            UserAccount x = citizenTableView.getSelectionModel().getSelectedItem();
-            int id = ds.getDiaryId(ds.getCaseId(x.getUserid()));
+            DiaryEntry le = (DiaryEntry) DiaryEntryTableView.getSelectionModel().getSelectedItem();
+            int id = ds.getDiaryIdByEntryId(le.getDiaryId());
             DiaryEntryTableView(id);
         }
     }
@@ -116,14 +116,15 @@ public class FXMLDiaryController implements Initializable {
         DiaryEntry le = (DiaryEntry) DiaryEntryTableView.getSelectionModel().getSelectedItem();
         ds.deleteDiaryEntry(le.getDiaryId());
         System.out.println("DeleteDiaryBTN a");
-        long id = ds.getDiaryId(ds.getCaseId(x.getUserid()));
+        int id = ds.getDiaryIdByEntryId(le.getDiaryId());
+        DiaryEntryTableView(id);
     }
 
     @FXML
     private void editDiaryBTNHandler(ActionEvent event) {
+        editMode = true;
         DiaryEntry le = (DiaryEntry) DiaryEntryTableView.getSelectionModel().getSelectedItem();
         diaryTextField.setText(le.getText());
-        editMode = true;
     }
 
 }
