@@ -55,7 +55,7 @@ public class FXMLDiaryController implements Initializable {
 
     StaffService StaffService = new StaffService();
     @FXML
-    private TableView<?> DiaryEntryTableView;
+    private TableView<DiaryEntry> DiaryEntryTableView;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -80,7 +80,7 @@ public class FXMLDiaryController implements Initializable {
 
     @FXML
     private void saveDiaryButtonHandler(ActionEvent event) {
-        DiaryEntry le = (DiaryEntry) DiaryEntryTableView.getSelectionModel().getSelectedItem();
+        DiaryEntry le = DiaryEntryTableView.getSelectionModel().getSelectedItem();
         if (editMode == false) {
             ds.saveDiary(le.getDiaryId(), diaryTextField.getText());
         } else if (editMode == true) {
@@ -103,7 +103,7 @@ public class FXMLDiaryController implements Initializable {
         if (event.getClickCount() > 1) {
             System.out.println("dbClickRowHandler");
             diaryTextField.clear();
-            DiaryEntry le = (DiaryEntry) DiaryEntryTableView.getSelectionModel().getSelectedItem();
+            DiaryEntry le = DiaryEntryTableView.getSelectionModel().getSelectedItem();
             int id = ds.getDiaryIdByEntryId(le.getDiaryId());
             DiaryEntryTableView(id);
         }
@@ -111,9 +111,7 @@ public class FXMLDiaryController implements Initializable {
 
     @FXML
     private void DeleteDiaryBTN(MouseEvent event) {
-        UserAccount x = citizenTableView.getSelectionModel().getSelectedItem();
-        System.out.println("DeleteDiaryBTN b");
-        DiaryEntry le = (DiaryEntry) DiaryEntryTableView.getSelectionModel().getSelectedItem();
+        DiaryEntry le = DiaryEntryTableView.getSelectionModel().getSelectedItem();
         ds.deleteDiaryEntry(le.getDiaryId());
         System.out.println("DeleteDiaryBTN a");
         int id = ds.getDiaryIdByEntryId(le.getDiaryId());
@@ -123,7 +121,7 @@ public class FXMLDiaryController implements Initializable {
     @FXML
     private void editDiaryBTNHandler(ActionEvent event) {
         editMode = true;
-        DiaryEntry le = (DiaryEntry) DiaryEntryTableView.getSelectionModel().getSelectedItem();
+        DiaryEntry le = DiaryEntryTableView.getSelectionModel().getSelectedItem();
         diaryTextField.setText(le.getText());
     }
 
