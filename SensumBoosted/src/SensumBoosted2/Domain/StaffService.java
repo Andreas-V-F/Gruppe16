@@ -13,6 +13,7 @@ public class StaffService {
 
     private static Staff staff;
     private static UserInformation2 userInfo;
+    private int userId;
 
     public StaffService() {
     }
@@ -30,8 +31,12 @@ public class StaffService {
         }
     }
 
+    public void setUserID() {
+        userId = userInfo.getUserid();
+    }
+    
     public int getUserID() {
-        return userInfo.getUserid();
+        return userId;
     }
     
 

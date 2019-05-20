@@ -123,6 +123,7 @@ public class FXMLMainMenuController implements Initializable {
     private void diaryBTNHandler(ActionEvent event) {
         nullButtonEffect();
         diaryBTN.setEffect(getEffect());
+        staffService.setUserID();
         loadAnotherFXML("FXMLDiary.fxml");
     }
 

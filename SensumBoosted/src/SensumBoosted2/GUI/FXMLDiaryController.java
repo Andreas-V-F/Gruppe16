@@ -11,6 +11,8 @@ import SensumBoosted2.Domain.StaffService;
 import SensumBoosted2.Domain.UserAccount;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -58,6 +60,8 @@ public class FXMLDiaryController implements Initializable {
     private Label emailDiaryLBL;
     @FXML
     private Label adresseDiaryLBL;
+    
+    ObservableList<DiaryEntry> obListLE = FXCollections.observableArrayList();
 
     private boolean editMode = false;
 
@@ -67,14 +71,20 @@ public class FXMLDiaryController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        System.out.print(StaffService.getUserID());
+        System.out.print(ds.getCaseId(StaffService.getUserID()));
+        System.out.print(ds.getDiaryId(ds.getCaseId(StaffService.getUserID())));
+        
         diaryEntryTableView(ds.getDiaryId(ds.getCaseId(StaffService.getUserID())));
     }
 
     private void diaryEntryTableView(long logbookID) {
-
-        text.setCellValueFactory(new PropertyValueFactory<>("text"));
-
-        diaryEntryTableView.setItems(ds.createDiaryEntryTableView(logbookID));
+        
+        obListLE.clear();
+        obListLE = ds.createDiaryEntryTableView(logbookID);
+        text.setCellValueFactory(new PropertyValueFactory<>("entry_text"));
+        
+        diaryEntryTableView.setItems(obListLE);
         diaryEntryTableView.setEditable(true);
 
     }

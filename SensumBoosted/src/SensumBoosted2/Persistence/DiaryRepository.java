@@ -21,7 +21,7 @@ public class DiaryRepository {
             Statement st = connection.getConnection().createStatement();
             Long id = System.currentTimeMillis();
             String sql = "INSERT INTO diary "
-                    + "(sags_id, diary_id)"
+                    + "(case_id, diary_id)"
                     + " VALUES "
                     + "(" + sagsId + ',' + id + ")";
             st.execute(sql);
@@ -85,10 +85,10 @@ public class DiaryRepository {
         return id;
     }
 
-    public Long getDiaryId(long sagsId) {
+    public Long getDiaryId(long caseId) {
         Long id = null;
         try (Statement st = connection.getConnection().createStatement()) {
-            String sql = "SELECT diary_id FROM diary where sags_id = " + sagsId;
+            String sql = "SELECT diary_id FROM diary where case_id = " + caseId;
 
             rs = st.executeQuery(sql);
             while (rs.next()) {
