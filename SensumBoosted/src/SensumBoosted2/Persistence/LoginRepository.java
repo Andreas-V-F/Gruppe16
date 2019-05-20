@@ -9,13 +9,9 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import sensumboosted.Domain.Admin;
-import sensumboosted.Domain.CaseWorker;
 import sensumboosted.GUI.FXMLDocumentController;
-import sensumboosted.Persistence.Log;
 
 /**
  *

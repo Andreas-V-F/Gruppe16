@@ -3,8 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sensumboosted.Persistence;
-
+package SensumBoosted2.Persistence;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.FileHandler;

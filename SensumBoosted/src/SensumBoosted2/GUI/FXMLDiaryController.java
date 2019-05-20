@@ -17,7 +17,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -67,7 +66,7 @@ public class FXMLDiaryController implements Initializable {
 
     }
 
-    private void DiaryEntryTableView(int logbookID) {
+    private void DiaryEntryTableView(long logbookID) {
 
         System.out.println(ds.createDiaryEntryTableView(logbookID));
         
@@ -83,13 +82,13 @@ public class FXMLDiaryController implements Initializable {
         DiaryEntry le = DiaryEntryTableView.getSelectionModel().getSelectedItem();
         System.out.println(le);
         if (editMode == false) {
-            ds.saveDiary(le.getDiaryId(), diaryTextField.getText());
+            ds.saveDiary(le.getDiaryEntryId(), diaryTextField.getText());
         } else if (editMode == true) {
-            ds.editDiary(le.getDiaryId(), diaryTextField.getText());
+            ds.editDiary(le.getDiaryEntryId(), diaryTextField.getText());
             editMode = false;
         }
         
-        int id = ds.getDiaryIdByEntryId(le.getDiaryId());
+        long id = ds.getDiaryIdByEntryId(le.getDiaryEntryId());
         DiaryEntryTableView(id);
         diaryTextField.clear();
     }
@@ -105,7 +104,7 @@ public class FXMLDiaryController implements Initializable {
             System.out.println("dbClickRowHandler");
             diaryTextField.clear();
             DiaryEntry le = DiaryEntryTableView.getSelectionModel().getSelectedItem();
-            int id = ds.getDiaryIdByEntryId(le.getDiaryId());
+            long id = ds.getDiaryIdByEntryId(le.getDiaryEntryId());
             DiaryEntryTableView(id);
         }
     }
@@ -113,9 +112,9 @@ public class FXMLDiaryController implements Initializable {
     @FXML
     private void DeleteDiaryBTN(MouseEvent event) {
         DiaryEntry le = DiaryEntryTableView.getSelectionModel().getSelectedItem();
-        ds.deleteDiaryEntry(le.getDiaryId());
+        ds.deleteDiaryEntry(le.getDiaryEntryId());
         System.out.println("DeleteDiaryBTN a");
-        int id = ds.getDiaryIdByEntryId(le.getDiaryId());
+        long id = ds.getDiaryIdByEntryId(le.getDiaryEntryId());
         DiaryEntryTableView(id);
     }
 

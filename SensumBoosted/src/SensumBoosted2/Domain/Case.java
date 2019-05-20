@@ -20,9 +20,9 @@ public class Case {
     private String inquirer;
     private String assessment;
     private String taskPurpose;
-    private String takeGoal;
+    private String taskGoal;
 
-    public Case(UserInformation2 userInfo, String inquiryText, Date addedDate, Date editDate, String inquirer, String assessment, String taskPurpose, String takeGoal) {
+    public Case(UserInformation2 userInfo, String inquiryText, Date addedDate, Date editDate, String inquirer, String assessment, String taskPurpose, String taskGoal) {
         this.userInfo = userInfo;
         this.inquiryText = inquiryText;
         this.addedDate = addedDate;
@@ -30,7 +30,7 @@ public class Case {
         this.inquirer = inquirer;
         this.assessment = assessment;
         this.taskPurpose = taskPurpose;
-        this.takeGoal = takeGoal;
+        this.taskGoal = taskGoal;
     }
 
     public Case(String inquiryText, Date addedDate, Date editDate, String assessment) {
@@ -72,8 +72,8 @@ public class Case {
         return taskPurpose;
     }
 
-    public String getTakeGoal() {
-        return takeGoal;
+    public String getTaskGoal() {
+        return taskGoal;
     }
     
     

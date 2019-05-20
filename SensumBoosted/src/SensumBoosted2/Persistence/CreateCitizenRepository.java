@@ -20,11 +20,13 @@ public class CreateCitizenRepository {
 
     ConnectRepository connectRepository;
     Connection connection;
+    CaseRepository caseRepository;
     ResultSet rs;
     Encryption encrypt;
 
     public CreateCitizenRepository() {
         connectRepository = new ConnectRepository();
+        caseRepository = new CaseRepository();
         connection = connectRepository.getConnection();
         encrypt = new Encryption();
     }
@@ -41,9 +43,12 @@ public class CreateCitizenRepository {
                     + "','" + lastname + "'," + cpr + ",'" + address + "'," + postalcode
                     + ",'" + city + "','" + email + "'," + phonenumber + ",'" + department + "')";
             st.executeUpdate(sql);
+            st.close();
+            caseRepository.createCase(userId, "", "", "", "", "");
         } catch (SQLException ex) {
             Logger.getLogger(UserProfileRepository.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            System.out.println("yoot");
+        } 
     }
 
     public void createCitizenAccount(String firstname, String middlename, String lastname,
@@ -63,6 +68,7 @@ public class CreateCitizenRepository {
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserProfileRepository.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("test");
         }
     }
 

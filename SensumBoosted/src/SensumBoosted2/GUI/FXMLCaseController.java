@@ -230,4 +230,8 @@ public class FXMLCaseController implements Initializable {
         radioButtonCitizen.setSelected(true);
         radioButtonYes.setSelected(true);
     }
+
+    @FXML
+    private void handleDiaryButton(ActionEvent event) {
+    }
 }

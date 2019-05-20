@@ -16,7 +16,6 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import java.util.stream.Stream;
 import sensumboosted.GUI.FXMLDocumentController;
-import sensumboosted.Persistence.Log;
 
 /**
  *

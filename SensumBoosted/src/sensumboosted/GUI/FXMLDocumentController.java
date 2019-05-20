@@ -52,7 +52,6 @@ import sensumboosted.Domain.Encryption;
 import sensumboosted.Domain.LogEntry;
 import sensumboosted.Domain.Permission;
 import sensumboosted.Domain.User;
-import sensumboosted.Persistence.Log;
 import SensumBoosted2.Domain.UserAccount;
 import sensumboosted.Domain.UserInformation;
 
@@ -70,7 +69,6 @@ public class FXMLDocumentController implements Initializable {
     private DatabaseController dbController = new DatabaseController();
     private FXMLLoader loader = new FXMLLoader();
     private Encryption encrypt = new Encryption();
-    private Log myLog;
     private Case userCase = new Case();
     private boolean editMode = false;
 
@@ -580,13 +578,13 @@ public class FXMLDocumentController implements Initializable {
                             System.out.println("DEN BLIVER FANGET HER");
                         }
 
-                        logLoginAttempt(logName, attempt);
+//                        logLoginAttempt(logName, attempt);
                         j = true;
                         System.out.println(j.toString()); // Only to see what happens in the console
                     } else {
                         logName = getUsernameField();
                         attempt = "har forsøgt at logge ind";
-                        logLoginAttempt(logName, attempt);
+//                        logLoginAttempt(logName, attempt);
                         System.out.println("Oplysninger er ikke udfyldt korrekt!"); // Only to see what happens in the console
                         loginInfoLabel.setText("Oplysninger er ikke udfyldt korrekt!");
                         System.out.println(j.toString());  // Only to see what happens in the console
@@ -597,7 +595,7 @@ public class FXMLDocumentController implements Initializable {
             } else if (getUsernameField().isEmpty() && getPasswordField().isEmpty()) {
                 logName = "INTET BRUGERNAVN INDTASTET";
                 attempt = "har forsøgt at logge ind";
-                logLoginAttempt(logName, attempt);
+//                logLoginAttempt(logName, attempt);
                 System.out.println("Felterne er ikke udfyldt!"); // Only to see what happens in the console
                 loginInfoLabel.setText("Felterne er ikke udfyldt!");
             } else {
@@ -607,7 +605,7 @@ public class FXMLDocumentController implements Initializable {
                     logName = getUsernameField();
                 }
                 attempt = "har forsøgt at logge ind";
-                logLoginAttempt(logName, attempt);
+//                logLoginAttempt(logName, attempt);
                 System.out.println("Et af felterne er ikke udfyldt!"); // Only to see what happens in the console
                 loginInfoLabel.setText("Et af felterne er ikke udfyldt!");
             }
@@ -678,17 +676,17 @@ public class FXMLDocumentController implements Initializable {
         createUserPane.setDisable(true);
     }
 
-    private void logLoginAttempt(String username, String attempt) {
-        try {
-            myLog = new Log("LoginLog.txt");
-            myLog.getLogger().setLevel(Level.ALL);
-            myLog.getLogger().info("Bruger: \"" + username + "\" " + attempt);
-        } catch (SecurityException ex) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+//    private void logLoginAttempt(String username, String attempt) {
+//        try {
+//            myLog = new Log("LoginLog.txt");
+//            myLog.getLogger().setLevel(Level.ALL);
+//            myLog.getLogger().info("Bruger: \"" + username + "\" " + attempt);
+//        } catch (SecurityException ex) {
+//            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (IOException ex) {
+//            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
 
     private void clearCreateTextField() {
         createUsernameField.clear();

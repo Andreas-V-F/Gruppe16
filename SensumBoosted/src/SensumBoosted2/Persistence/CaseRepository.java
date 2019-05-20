@@ -22,44 +22,51 @@ import java.util.List;
 public class CaseRepository {
 
     ConnectRepository connectRepository;
+    DiaryRepository diaryRepository;
     private Connection connection;
     private ResultSet rs;
 
     public CaseRepository() {
         connectRepository = new ConnectRepository();
         connection = connectRepository.getConnection();
+        diaryRepository = new DiaryRepository();
     }
 
-    public void createCase(Case case1) {
-        closeAllCases(case1);
-        int sagsId = (int) (Math.random() * 1000);
+    public void createCase(int userID, String inquiryText, String inquirer, String assessmentText, String taskPurpose, String taskGoal) {
+        closeAllCases(userID);
+        long caseId = System.currentTimeMillis();
         try {
             Statement st = connection.createStatement();
-            String sql = "INSERT INTO sager (case_id,user_id,isopen,inquiry_text,edit_date,inquirer,assessment,taskpurpose,taskgoal) VALUES ('" + sagsId + "','" + case1.getUserInfo().getUserid() + "','true','" + case1.getInquiryText() + "','" + new Date() + "','" + case1.getInquirer() + "','" + case1.getAssessment() + "','" + case1.getTaskPurpose() + "','" + case1.getTakeGoal() + "');";
-            rs = st.executeQuery(sql);
+            String sql = "INSERT INTO sager (case_id,user_id,isopen,inquiry_text,edit_date,inquirer,assessment,taskpurpose,taskgoal) VALUES ('" + caseId + "','" + userID + "','true','" + inquiryText + "','" + new Date() + "','" + inquirer + "','" + assessmentText + "','" + taskPurpose + "','" + taskGoal + "');";
+            st.executeUpdate(sql);
+            st.close();
+            System.out.println("calling method");
+            diaryRepository.createDiary(caseId, userID);
+            System.out.println("called method");
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            System.out.println("YEEET");
+        } 
+
+    }
+
+    public void closeAllCases(int userID) {
+        try {
+            Statement st = connection.createStatement();
+            String sql = "UPDATE sager SET isopen = 'false' WHERE user_id = '" + userID + "';";
+            st.executeUpdate(sql);
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-
     }
 
-    public void closeAllCases(Case case1) {
+    public boolean hasOpenCase(int userID) {
         try {
             Statement st = connection.createStatement();
-            String sql = "UPDATE sager SET isopen = 'false' WHERE user_id = '" + case1.getUserInfo().getUserid() + "';";
-            rs = st.executeQuery(sql);
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
-
-    public boolean hasOpenCase(Case case1) {
-        try {
-            Statement st = connection.createStatement();
-            String sql = "SELECT user_id FROM sager WHERE user_id='" + case1.getUserInfo().getUserid() + "' AND isopen='true';";
+            String sql = "SELECT user_id FROM sager WHERE user_id='" + userID + "' AND isopen='true';";
             rs = st.executeQuery(sql);
             rs.next();
-            if (rs.getInt(1) == case1.getUserInfo().getUserid()) {
+            if (rs.getInt(1) == userID) {
                 return true;
             }
 
@@ -69,12 +76,12 @@ public class CaseRepository {
         return false;
     }
 
-    public void saveCase(Case case1) {
+    public void saveCase(int userID, String inquiryText, String inquirer, String assessmentText, String taskPurpose, String taskGoal) {
 
         try {
             Statement st = connection.createStatement();
-            String sql = "UPDATE sager SET inquiry_text = '" + case1.getInquiryText() + "', inquirer='" + case1.getInquirer() + "', assessment='" + case1.getAssessment() + "', taskpurpose='" + case1.getTaskPurpose() + "', taskgoal='" + case1.getTakeGoal() + "', edit_date ='" + new Date() + "' WHERE user_id ='" + case1.getUserInfo().getUserid() + "' AND isopen ='true';";
-            rs = st.executeQuery(sql);
+            String sql = "UPDATE sager SET inquiry_text = '" + inquiryText + "', inquirer='" + inquirer + "', assessment='" + assessmentText + "', taskpurpose='" + taskPurpose + "', taskgoal='" + taskGoal + "', edit_date ='" + new Date() + "' WHERE user_id ='" + userID + "' AND isopen ='true';";
+            st.executeUpdate(sql);
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -94,17 +101,26 @@ public class CaseRepository {
         return -1;
     }
 
-    public Case CaseText(Case case1) {
-        Case case2 = null;
-        if (hasOpenCase(case1)) {
+    public String[] CaseText(int userID) {
+        String inquiryText = null;
+        String inquirerText = null;
+        String assesmentText = null;
+        String taskPurposeText = null;
+        String taskGoalText = null;
+        if (hasOpenCase(userID)) {
             try {
                 Statement st = connection.createStatement();
-                String sql = "SELECT * FROM sager WHERE user_id='" + case1.getUserInfo().getUserid()+ "' AND isopen = 'true';";
+                String sql = "SELECT inquiry_text, inquirer, assessment, taskpurpose, taskgoal FROM sager WHERE user_id='" + userID + "' AND isopen = 'true';";
                 rs = st.executeQuery(sql);
                 while (rs.next()) {
-                    case2 = new Case(case1.getUserInfo(), rs.getString("inquiry_text"), rs.getDate("added_date"), rs.getDate("edit_date"), rs.getString("inquirer"), rs.getString("assessment"), rs.getString("taskpurpose"), rs.getString("taskgoal"));
+                    inquiryText = rs.getString("inquiry_text");
+                    inquirerText = rs.getString("inquirer");
+                    assesmentText = rs.getString("assessment");
+                    taskPurposeText = rs.getString("taskpurpose");
+                    taskGoalText = rs.getString("taskgoal");
                 }
-                return case2;
+                String[] caseStrings = {inquiryText, inquirerText, assesmentText, taskPurposeText, taskGoalText};
+                return caseStrings;
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
             }
@@ -112,10 +128,10 @@ public class CaseRepository {
         return null;
     }
 
-    public List getPreviousCases(Case case1) {
+    public List getPreviousCases(int userID) {
         List<Case> cases = new ArrayList<>();
         try {
-            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM sager WHERE user_id='" + case1.getUserInfo().getUserid() + "' AND isopen ='false';");
+            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM sager WHERE user_id='" + userID + "' AND isopen ='false';");
             while (rs.next()) {
                 cases.add(new Case(rs.getString("inquiry_text"), rs.getDate("added_date"), rs.getDate("edit_date"), rs.getString("assessment")));
             }

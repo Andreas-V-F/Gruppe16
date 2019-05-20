@@ -15,33 +15,27 @@ import javafx.collections.ObservableList;
  * @author Andreas Frederiksen
  */
 public class CaseService {
-    
+
     private CaseRepository caseRepository;
     private StaffService staffService;
-    private Case case1;
     private static Case preCase;
 
     public CaseService() {
         staffService = new StaffService();
-        case1 = new Case(staffService.getUserInfo());
         this.caseRepository = new CaseRepository();
     }
 
     public void saveCase(String inquiryText, String inquirer, String assessmentText, String taskPurpose, String taskGoal) {
-        
-        
-       
-        Case case2 = new Case(staffService.getUserInfo(), inquiryText, null,  new Date(), inquirer, assessmentText, taskPurpose, taskGoal);
-        if (caseRepository.hasOpenCase(case2)) {
-            caseRepository.saveCase(case2);
+
+        if (caseRepository.hasOpenCase(staffService.getUserID())) {
+            caseRepository.saveCase(staffService.getUserID(), inquiryText, inquirer, assessmentText, taskPurpose, taskGoal);
         } else {
-            caseRepository.createCase(case2);
+            caseRepository.createCase(staffService.getUserID(), inquiryText, inquirer, assessmentText, taskPurpose, taskGoal);
         }
     }
 
     public void closeCase() {
-        
-        caseRepository.closeAllCases(case1);
+        caseRepository.closeAllCases(staffService.getUserID());
     }
 
     public String printToInfo() {
@@ -49,39 +43,38 @@ public class CaseService {
     }
 
     public String[] printToCase() {
-        if (caseRepository.hasOpenCase(case1)) {
-             Case case2 = caseRepository.CaseText(case1);
-        String[] cases = new String[7];
-        cases[0] = case2.getInquiryText();
-        cases[1] = case2.getInquirer().split("/")[0];
-        cases[2] = case2.getInquirer().split("/")[1];
-        cases[3] = case2.getInquirer().split("/")[2];
-        cases[4] = case2.getAssessment();
-        cases[5] = case2.getTaskPurpose();
-        cases[6] = case2.getTaskPurpose();
-        return cases;
+        if (caseRepository.hasOpenCase(staffService.getUserID())) {
+            String[] caseText = caseRepository.CaseText(staffService.getUserID());
+            if (!caseText[1].equals("")) {
+                String[] cases = {caseText[0], caseText[1].split("/")[0], caseText[1].split("/")[1], caseText[1].split("/")[2], caseText[2], caseText[3], caseText[4]};
+                return cases;
+            }
+            else{
+                String[] cases = {caseText[0], "Borger", "", "Ja", caseText[2], caseText[3], caseText[4]};
+                return cases;
+            }
         }
-       return null;
+        return null;
     }
 
     public ObservableList sendPreviousCases() {
-        
+
         ObservableList<Case> cases;
-        cases = FXCollections.observableArrayList(caseRepository.getPreviousCases(case1));
+        cases = FXCollections.observableArrayList(caseRepository.getPreviousCases(staffService.getUserID()));
 
         return cases;
     }
-    
-    public String sendPreviousInquiryText(Object o){
+
+    public String sendPreviousInquiryText(Object o) {
         Case case2 = (Case) o;
         return case2.getInquiryText();
     }
-    
+
     public String sendPreviousAssessmentText(Object o) {
         Case case2 = (Case) o;
         return case2.getAssessment();
     }
-    
+
     public String[] casePrintStrings() {
         Case case2;
         case2 = caseRepository.selectPreviousCase(preCase);
@@ -95,6 +88,7 @@ public class CaseService {
         cases[6] = case2.getTaskPurpose();
         return cases;
     }
+
     public void preCase(Object o) {
         preCase = (Case) o;
     }

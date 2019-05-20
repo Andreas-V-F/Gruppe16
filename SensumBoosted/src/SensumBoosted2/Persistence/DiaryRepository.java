@@ -16,24 +16,23 @@ public class DiaryRepository {
     ConnectRepository connection = new ConnectRepository();
     private ResultSet rs = null;
 
-    public Long createDiary(int sagsId) {
+    public void createDiary(long sagsId, int userID) {
+        System.out.println("tried");
         try {
             Statement st = connection.getConnection().createStatement();
             long id = System.currentTimeMillis();
             String sql = "INSERT INTO diary "
-                    + "(sags_id, diary_id)"
-                    + " VALUES "
-                    + "(" + sagsId + ',' + id + ")";
+                    + "(case_id, diary_id, user_id)"
+                    + " VALUES ('" + sagsId + "','" + id + "','" + userID + "');";
             st.execute(sql);
             st.close();
-            return id;
+            createDiaryEntry(id, "");
         } catch (SQLException ex) {
-            Logger.getLogger(sensumboosted.Persistence.DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
+            Logger.getLogger(SensumBoosted2.Persistence.DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        } 
     }
 
-    public void createDiaryEntry(int diaryID, String text) {
+    public void createDiaryEntry(long diaryID, String text) {
         try {
             Statement st = connection.getConnection().createStatement();
             long entryID = System.currentTimeMillis();
@@ -43,11 +42,10 @@ public class DiaryRepository {
                     + "(diary_entry_id, diary_id, entry_text, create_timestamp)"
                     + " VALUES "
                     + "(" + entryID + ',' + diaryID + ",'" + text + "', '" + timestamp + "')";
-            System.out.println("slq :" + sql);
             st.execute(sql);
             st.close();
         } catch (SQLException ex) {
-            Logger.getLogger(sensumboosted.Persistence.DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SensumBoosted2.Persistence.DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -67,49 +65,49 @@ public class DiaryRepository {
         }
     }
 
-    public int getCaseId(int userID) {
-        int id = 0;
+    public long getCaseId(int userID) {
+        long id = 0;
 
         try (Statement st = connection.getConnection().createStatement()) {
             String sql = "SELECT case_id FROM sager where user_id = " + userID;
             rs = st.executeQuery(sql);
             while (rs.next()) {
-                id = rs.getInt("case_id");
+                id = rs.getLong("case_id");
             }
         } catch (SQLException ex) {
-            Logger.getLogger(sensumboosted.Persistence.DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SensumBoosted2.Persistence.DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return id;
     }
 
-    public int getDiaryId(int sagsId) {
-        int id = 0;
+    public long getDiaryId(long sagsId) {
+        long id = 0;
         try (Statement st = connection.getConnection().createStatement()) {
             String sql = "SELECT diary_id FROM diary where case_id = " + sagsId;
 
             rs = st.executeQuery(sql);
             while (rs.next()) {
-                id = rs.getInt("diary_id");
+                id = rs.getLong("diary_id");
 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(sensumboosted.Persistence.DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SensumBoosted2.Persistence.DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return id;
     }
     
-    public int getDiaryIdByEntryId(long entryId) {
-        int id = 0;
+    public long getDiaryIdByEntryId(long entryId) {
+        long id = 0;
         try (Statement st = connection.getConnection().createStatement()) {
             String sql = "SELECT diary_id FROM diary_entry where diary_entry_id = " + entryId;
 
             rs = st.executeQuery(sql);
             while (rs.next()) {
-                id = rs.getInt("diary_id");
+                id = rs.getLong("diary_id");
 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(sensumboosted.Persistence.DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SensumBoosted2.Persistence.DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return id;
     }
@@ -129,7 +127,7 @@ public class DiaryRepository {
 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(sensumboosted.Persistence.DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SensumBoosted2.Persistence.DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return entries;
     }
@@ -145,7 +143,7 @@ public class DiaryRepository {
 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(sensumboosted.Persistence.DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SensumBoosted2.Persistence.DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return cnt;
     }
@@ -159,11 +157,11 @@ public class DiaryRepository {
             st.execute(sql);
 
         } catch (SQLException ex) {
-            Logger.getLogger(sensumboosted.Persistence.DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SensumBoosted2.Persistence.DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public List createDiaryEntryTableView(int logbookID) {
+    public List createDiaryEntryTableView(long logbookID) {
         List<DiaryEntry> diaries = new ArrayList<>();
         try {
             ResultSet rs = connection.getConnection().createStatement().executeQuery("SELECT * FROM diary_entry WHERE diary_id = " + logbookID + "order by create_timestamp DESC");

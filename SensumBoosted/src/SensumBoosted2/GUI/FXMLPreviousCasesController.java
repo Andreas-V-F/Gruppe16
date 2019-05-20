@@ -75,6 +75,9 @@ public class FXMLPreviousCasesController implements Initializable {
 
     @FXML
     private void onMouseClicked(MouseEvent event) {
+        if(tableView.getSelectionModel().getSelectedItem() == null){
+            return;
+        }
         diaryButton.setDisable(false);
         lookAtCaseButton.setDisable(false);
 

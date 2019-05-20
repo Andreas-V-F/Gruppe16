@@ -24,10 +24,15 @@ public class ConnectRepository {
     private FXMLUserProfileController upController;
 
     public ConnectRepository() {
-        connect();
+       connect();
     }
+    
+    
 
     private Connection connect() {
+        if(connection != null){
+            return connection;
+        }
         try {
             Class.forName("org.postgresql.Driver");
         } catch (java.lang.ClassNotFoundException e) {
@@ -42,7 +47,7 @@ public class ConnectRepository {
         return connection;
     }
 
-    public Connection getConnection() {
+    public static Connection getConnection() {
         return connection;
     }
 }

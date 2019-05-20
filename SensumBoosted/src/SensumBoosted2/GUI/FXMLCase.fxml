@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="520.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SensumBoosted2.GUI.FXMLCaseController">
+<AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="520.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SensumBoosted2.GUI.FXMLCaseController">
    <children>
       <ScrollPane fx:id="scrollPane" hmax="0.0" layoutX="14.0" layoutY="14.0" prefHeight="498.0" prefWidth="897.0">
          <content>
@@ -120,6 +120,7 @@
                      <children>
                         <Button fx:id="saveButton" mnemonicParsing="false" onAction="#handleSaveAction" prefHeight="85.0" prefWidth="141.0" text="Gem" />
                         <Button fx:id="closeButton" mnemonicParsing="false" onAction="#handleCloseAction" prefHeight="85.0" prefWidth="141.0" text="Luk" />
+                        <Button mnemonicParsing="false" onAction="#handleDiaryButton" prefHeight="85.0" prefWidth="141.0" text="Dagbog" />
                      </children>
                   </HBox>
                   <Button mnemonicParsing="false" onAction="#handleBackAction" prefHeight="85.0" prefWidth="141.0" text="Tilbage" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />

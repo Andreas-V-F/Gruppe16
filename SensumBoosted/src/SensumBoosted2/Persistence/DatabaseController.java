@@ -6,8 +6,6 @@
 
 package SensumBoosted2.Persistence;
 
-import sensumboosted.Persistence.Log;
-
 /**
  *
  * @author Mikkel Hoeyberg

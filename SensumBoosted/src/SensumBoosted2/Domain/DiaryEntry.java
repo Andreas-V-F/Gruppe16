@@ -23,11 +23,11 @@ public class DiaryEntry {
         this.text = text;
     }
     
-    public long getDiaryId() {
+    public long getDiaryEntryId() {
         return diaryEntryId;
     }
 
-    public void setDiaryId(int diaryEntryId) {
+    public void setDiaryId(long diaryEntryId) {
         this.diaryEntryId = diaryEntryId;
     }
     

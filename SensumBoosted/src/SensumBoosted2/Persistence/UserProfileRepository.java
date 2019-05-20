@@ -98,20 +98,67 @@ public class UserProfileRepository {
             Statement st = connection.createStatement();
             String sql = "DELETE FROM citizen_information WHERE user_id= '" + selectedUserID + "'";
             st.executeUpdate(sql);
+            st.close();
             deleteUser(selectedUserID);
         } catch (SQLException ex) {
             Logger.getLogger(UserProfileRepository.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
     }
-    
-    private void deleteUser(int userID){
+
+    private void deleteUser(int userID) {
         try {
             Statement st = connection.createStatement();
             String sql = "DELETE FROM users WHERE user_id= '" + userID + "'";
             st.executeUpdate(sql);
+            st.close();
+            deleteCase(userID);
         } catch (SQLException ex) {
             Logger.getLogger(UserProfileRepository.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
+    }
+
+    private void deleteCase(int userID) {
+        try {
+            Statement st = connection.createStatement();
+            String sql = "DELETE FROM sager WHERE user_id= '" + userID + "'";
+            st.executeUpdate(sql);
+            st.close();
+            deleteDiary(userID);
+        } catch (SQLException ex) {
+            Logger.getLogger(UserProfileRepository.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+
+    }
+
+    private void deleteDiary(int userID) {
+        try {
+            Statement st = connection.createStatement();
+            String sql = "SELECT diary_id FROM diary WHERE user_id= '" + userID + "'";
+            rs = st.executeQuery(sql);
+            int diaryID = -1;
+            while (rs.next() || diaryID != -1) {
+                diaryID = rs.getInt(sql);
+            }
+            sql = "DELETE FROM diary WHERE diary_id = '" + diaryID + "'";
+            st.executeUpdate(sql);
+            st.close();
+            deleteDiaryEntry(diaryID);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UserProfileRepository.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }
+    
+    private void deleteDiaryEntry(int diaryID){
+        try {
+            Statement st = connection.createStatement();
+            String sql = "DELETE FROM diary_entry WHERE diary_id = '" + diaryID + "'";
+            st.executeUpdate(sql);
+            st.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserProfileRepository.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
     }
 
 }

@@ -233,6 +233,9 @@ public class FXMLUserProfileController implements Initializable {
 
     @FXML
     private void mouseClick(MouseEvent event) {
+        if(userInformationTableView.getSelectionModel().getSelectedItem() == null){
+            return;
+        }
         staffService.setUserInfo(userInformationTableView.getSelectionModel().getSelectedItem());
         permissions(true);
 
@@ -240,7 +243,7 @@ public class FXMLUserProfileController implements Initializable {
 
     @FXML
     private void openCasePane(ActionEvent event) throws IOException {
-        AnchorPane pane = FXMLLoader.load(getClass().getResource("FXMLCaseMenuController.fxml"));
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("FXMLCaseMenu.fxml"));
         rootPane.getChildren().setAll(pane);
     }
 
