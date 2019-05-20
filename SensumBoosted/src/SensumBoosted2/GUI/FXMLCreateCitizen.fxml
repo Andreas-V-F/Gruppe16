@@ -136,17 +136,11 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <Label fx:id="usernameLabel" text="Brugernavn:*">
-                                 <font>
-                                    <Font size="13.0" />
-                                 </font>
-                              </Label>
                               <Label fx:id="passwordLabel" text="Password:*" GridPane.rowIndex="1">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="usernameTextField" GridPane.columnIndex="1" />
                               <PasswordField fx:id="passwordTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <PasswordField fx:id="repeatPWTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <Label fx:id="repeatPasswordLabel" text="Gentag Password:*" GridPane.rowIndex="2">

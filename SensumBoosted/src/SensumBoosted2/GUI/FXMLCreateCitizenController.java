@@ -56,8 +56,6 @@ public class FXMLCreateCitizenController implements Initializable {
     @FXML
     private ChoiceBox<String> departmentChoiceBox;
     @FXML
-    private TextField usernameTextField;
-    @FXML
     private TextField passwordTextField;
     @FXML
     private TextField repeatPWTextField;
@@ -82,8 +80,6 @@ public class FXMLCreateCitizenController implements Initializable {
     @FXML
     private Label departmentLabel;
     @FXML
-    private Label usernameLabel;
-    @FXML
     private Label passwordLabel;
     @FXML
     private Label repeatPasswordLabel;
@@ -103,7 +99,7 @@ public class FXMLCreateCitizenController implements Initializable {
     private void okBtnHandler(ActionEvent event) {
         TextField[] textFields = {firstnameTextField, middlenameTextField, lastnameTextField, addressTextField,
             phonenumberTextField, cityTextField, emailTextField, cprTextField, postalcodeTextField,
-            usernameTextField, passwordTextField, repeatPWTextField};
+            passwordTextField, repeatPWTextField};
 
         for (TextField text : textFields) {
             System.out.println(text.getText());
@@ -113,6 +109,34 @@ public class FXMLCreateCitizenController implements Initializable {
                 checkLabel.setVisible(true);
                 return;
             }
+        }
+
+        if (!postalcodeChecker()) {
+            checkLabel.setText("Ugyldigt postnummer");
+            checkLabel.setDisable(false);
+            checkLabel.setVisible(true);
+            return;
+        }
+
+        if (!emailChecker()) {
+            checkLabel.setText("Ugyldig email");
+            checkLabel.setDisable(false);
+            checkLabel.setVisible(true);
+            return;
+        }
+
+        if (!numberChecker()) {
+            checkLabel.setText("Ugyldigt telefonnummer");
+            checkLabel.setDisable(false);
+            checkLabel.setVisible(true);
+            return;
+        }
+
+        if (!cprChecker()) {
+            checkLabel.setText("Ugyldigt CPR nummer");
+            checkLabel.setDisable(false);
+            checkLabel.setVisible(true);
+            return;
         }
 
         if (!passwordTextField.getText().equals(repeatPWTextField.getText())) {
@@ -125,51 +149,10 @@ public class FXMLCreateCitizenController implements Initializable {
         FXMLUserProfileController.okPressed = true;
 
         createCitizenService.createCA(firstnameTextField.getText(), middlenameTextField.getText(), lastnameTextField.getText(), Integer.parseInt(cprTextField.getText()), addressTextField.getText(),
-                Integer.parseInt(postalcodeTextField.getText()), cityTextField.getText(), emailTextField.getText(), Integer.parseInt(phonenumberTextField.getText()), departmentChoiceBox.getValue(), usernameTextField.getText(), passwordTextField.getText(), "Borger");
+                Integer.parseInt(postalcodeTextField.getText()), cityTextField.getText(), emailTextField.getText(), Integer.parseInt(phonenumberTextField.getText()), departmentChoiceBox.getValue(), passwordTextField.getText(), "Borger");
 
         Stage stage = (Stage) cancelBtn.getScene().getWindow();
         stage.close();
-
-//        if (!firstnameTextField.getText().isEmpty() && !lastnameTextField.getText().isEmpty()
-        //                && !addressTextField.getText().isEmpty() && !postalcodeTextField.getText().isEmpty()
-        //                && !phonenumberTextField.getText().isEmpty() && !cityTextField.getText().isEmpty()
-        //                && !emailTextField.getText().isEmpty() && !cprTextField.getText().isEmpty()) {
-        //            
-        //            if (passwordTextField.getText().equals(repeatPWTextField.getText())) {
-        //                
-        //            createCitizenService.createCI(firstnameTextField.getText(), middlenameTextField.getText(),
-        //                    lastnameTextField.getText(), Integer.parseInt(cprTextField.getText()),
-        //                    addressTextField.getText(), Integer.parseInt(postalcodeTextField.getText()),
-        //                    cityTextField.getText(), emailTextField.getText(),
-        //                    Integer.parseInt(phonenumberTextField.getText()), departmentChoiceBox.getValue());
-        //            createCitizenService.createCA(usernameTextField.getText(), passwordTextField.getText(), "Borger");
-        //            
-        //            }
-        //        }
-        // Alt for langt metode og for mange if statements xD?
-//        {
-//            if (firstnameTextField.getText().isEmpty() || lastnameTextField.getText().isEmpty()
-//                    || addressTextField.getText().isEmpty() || postalcodeTextField.getText().isEmpty()
-//                    || cityTextField.getText().isEmpty() || emailTextField.getText().isEmpty()
-//                    || phonenumberTextField.getText().isEmpty() || cprTextField.getText().isEmpty()
-//                    || departmentChoiceBox.getValue().isEmpty() || usernameTextField.getText().isEmpty()
-//                    || passwordTextField.getText().isEmpty() || repeatPWTextField.getText().isEmpty()) {
-//                checkLabel.setVisible(true);
-//
-//                if (passwordTextField.getText().equals(repeatPWTextField.getText())
-//                        && !passwordTextField.getText().isEmpty() && !repeatPWTextField.getText().isEmpty()) {
-//                    createCitizenService.createCI(firstnameTextField.getText(), middlenameTextField.getText(),
-//                            lastnameTextField.getText(), Integer.parseInt(cprTextField.getText()),
-//                            addressTextField.getText(), Integer.parseInt(postalcodeTextField.getText()),
-//                            cityTextField.getText(), emailTextField.getText(),
-//                            Integer.parseInt(phonenumberTextField.getText()), departmentChoiceBox.getValue());
-//                    createCitizenService.createCA(usernameTextField.getText(), passwordTextField.getText(), "Borger");
-//                    Stage stage = (Stage) okBtn.getScene().getWindow();
-//                    stage.close();
-//                }
-//
-//            }
-//        }
     }
 
     @FXML
@@ -178,4 +161,57 @@ public class FXMLCreateCitizenController implements Initializable {
         stage.close();
     }
 
+    private boolean cprChecker() {
+        if (cprTextField.getText().length() != 8) {
+            return false;
+        }
+
+        try {
+            int cpr = Integer.parseInt(cprTextField.getText());
+        } catch (NumberFormatException e) {
+            return false;
+        }
+
+        if (createCitizenService.cprCheck(Integer.parseInt(cprTextField.getText()))) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean numberChecker() {
+        if (phonenumberTextField.getText().length() != 8) {
+            return false;
+        }
+
+        try {
+            int number = Integer.parseInt(phonenumberTextField.getText());
+        } catch (NumberFormatException e) {
+            return false;
+        }
+
+        if (createCitizenService.numberCheck(Integer.parseInt(phonenumberTextField.getText()))) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean postalcodeChecker() {
+        if (postalcodeTextField.getText().length() != 4) {
+            return false;
+        }
+
+        try {
+            int postalcode = Integer.parseInt(postalcodeTextField.getText());
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean emailChecker() {
+        if (emailTextField.getText().contains("@") == false || emailTextField.getText().contains(".") == false) {
+            return false;
+        }
+        return true;
+    }
 }

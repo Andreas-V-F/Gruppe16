@@ -29,7 +29,6 @@ public class CreateCitizenRepository {
         encrypt = new Encryption();
     }
 
-    // VIRKER IKKE... FIND UD AF PROBLEMET
     public void createCitizenInformation(int userId, String firstname, String middlename, String lastname,
             int cpr, String address, int postalcode, String city, String email, int phonenumber,
             String department) {
@@ -47,18 +46,17 @@ public class CreateCitizenRepository {
         }
     }
 
-    public int createCitizenAccount(String firstname, String middlename, String lastname,
+    public void createCitizenAccount(String firstname, String middlename, String lastname,
             int cpr, String address, int postalcode, String city, String email, int phonenumber,
-            String department, String username, String password, String usertype) {
-        int userID = 0;
+            String department, String password, String usertype) {
         try {
             Statement st = connection.createStatement();
             String sql = "INSERT INTO users "
                     + "(username, password, user_type, department)"
-                    + " VALUES ('" + username + "','" + encrypt.encryptString(password) + "','"
+                    + " VALUES ('" + cpr + "','" + encrypt.encryptString(password) + "','"
                     + usertype + "','" + department + "')";
             st.executeUpdate(sql);
-            sql = "SELECT user_id FROM users WHERE username='" + username + "';";
+            sql = "SELECT user_id FROM users WHERE username='" + cpr + "';";
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
                 createCitizenInformation(rs.getInt("user_id"), firstname, middlename, lastname, cpr, address, postalcode, city, email, phonenumber, department);
@@ -66,6 +64,43 @@ public class CreateCitizenRepository {
         } catch (SQLException ex) {
             Logger.getLogger(UserProfileRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return userID;
+    }
+
+    public boolean checkCprRepo(int cpr) {
+        boolean exists = true;
+        try {
+            Statement st = connection.createStatement();
+            String sql = "SELECT user_cpr FROM citizen_information WHERE user_cpr='" + cpr + "';";
+            ResultSet rs = st.executeQuery(sql);
+            int count = 0;
+            while (rs.next()) {
+                count++;
+            }
+            if(count == 0){
+                exists = false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserProfileRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return exists;
+    }
+    
+    public boolean checkPhoneRepo(int number) {
+        boolean exists = true;
+        try {
+            Statement st = connection.createStatement();
+            String sql = "SELECT phonenumber FROM citizen_information WHERE phonenumber='" + number + "';";
+            ResultSet rs = st.executeQuery(sql);
+            int count = 0;
+            while (rs.next()) {
+                count++;
+            }
+            if(count == 0){
+                exists = false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserProfileRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return exists;
     }
 }

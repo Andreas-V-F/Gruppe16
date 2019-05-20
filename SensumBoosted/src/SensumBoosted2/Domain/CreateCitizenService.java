@@ -21,10 +21,17 @@ public class CreateCitizenService {
 //            String department) {
 //        createCitizenRepository.createCitizenInformation(firstname, middlename, lastname, cpr, address, postalcode, city, email, phonenumber, department);
 //    }
-
     public void createCA(String firstname, String middlename, String lastname,
             int cpr, String address, int postalcode, String city, String email, int phonenumber,
-            String department, String username, String password, String usertype) {
-        createCitizenRepository.createCitizenAccount(firstname, middlename, lastname, cpr, address, postalcode, city, email, phonenumber, department, username, password, usertype);
+            String department, String password, String usertype) {
+        createCitizenRepository.createCitizenAccount(firstname, middlename, lastname, cpr, address, postalcode, city, email, phonenumber, department, password, usertype);
+    }
+
+    public boolean cprCheck(int cpr) {
+        return createCitizenRepository.checkCprRepo(cpr);
+    }
+    
+    public boolean numberCheck(int number) {
+        return createCitizenRepository.checkPhoneRepo(number);
     }
 }

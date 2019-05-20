@@ -108,6 +108,7 @@
          <Button fx:id="caseBtn" layoutX="48.0" layoutY="77.0" mnemonicParsing="false" onAction="#openCasePane" prefHeight="46.0" prefWidth="137.0" text="Sager" />
          <Button fx:id="diaryBtn" layoutX="48.0" layoutY="138.0" mnemonicParsing="false" onAction="#openDiaryPane" prefHeight="46.0" prefWidth="137.0" text="Dagbog" />
          <Button fx:id="medicineBtn" layoutX="48.0" layoutY="201.0" mnemonicParsing="false" onAction="#openMedicinePane" prefHeight="46.0" prefWidth="137.0" text="Medicin udlevering" />
+         <Button fx:id="deleteUserBtn" layoutX="810.0" layoutY="178.0" mnemonicParsing="false" onAction="#deleteUserBtnHandler" prefHeight="46.0" prefWidth="137.0" text="Slet borger" />
          </children>
       </Pane>
 </AnchorPane>

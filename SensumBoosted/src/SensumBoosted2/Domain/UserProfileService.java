@@ -48,4 +48,8 @@ public class UserProfileService {
         userProfileRepository.saveCitizenInformation(firstname, middlename, lastname, cpr, address, postalcode, city, email, selectedUserID);
     }
     
+    public void deleteUser(int selectedUserID){
+        userProfileRepository.deleteCitizenInformation(selectedUserID);
+    }
+    
 }

@@ -93,4 +93,25 @@ public class UserProfileRepository {
         }
     }
 
+    public void deleteCitizenInformation(int selectedUserID) {
+        try {
+            Statement st = connection.createStatement();
+            String sql = "DELETE FROM citizen_information WHERE user_id= '" + selectedUserID + "'";
+            st.executeUpdate(sql);
+            deleteUser(selectedUserID);
+        } catch (SQLException ex) {
+            Logger.getLogger(UserProfileRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void deleteUser(int userID){
+        try {
+            Statement st = connection.createStatement();
+            String sql = "DELETE FROM users WHERE user_id= '" + userID + "'";
+            st.executeUpdate(sql);
+        } catch (SQLException ex) {
+            Logger.getLogger(UserProfileRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }

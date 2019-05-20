@@ -124,6 +124,8 @@ public class FXMLUserProfileController implements Initializable {
     private Button medicineBtn;
     @FXML
     private AnchorPane rootPane;
+    @FXML
+    private Button deleteUserBtn;
 
     public FXMLUserProfileController() {
     }
@@ -255,7 +257,7 @@ public class FXMLUserProfileController implements Initializable {
     }
 
     private void permissions(boolean b) {
-        Button[] buttons = {caseBtn, diaryBtn, medicineBtn, editUserBtn, createCitizenBtn};
+        Button[] buttons = {caseBtn, diaryBtn, medicineBtn, editUserBtn, createCitizenBtn, deleteUserBtn};
         if (!b) {
             for (Button button : buttons) {
                 button.setDisable(true);
@@ -266,6 +268,7 @@ public class FXMLUserProfileController implements Initializable {
                     diaryBtn.setVisible(true);
                     medicineBtn.setVisible(true);
                     editUserBtn.setVisible(true);
+                    deleteUserBtn.setVisible(true);
                     createCitizenBtn.setDisable(false);
                     createCitizenBtn.setVisible(true);
                     break;
@@ -281,6 +284,7 @@ public class FXMLUserProfileController implements Initializable {
                     diaryBtn.setVisible(false);
                     medicineBtn.setVisible(false);
                     editUserBtn.setVisible(true);
+                    deleteUserBtn.setVisible(true);
                     createCitizenBtn.setDisable(false);
                     createCitizenBtn.setVisible(true);
                 default:
@@ -300,18 +304,21 @@ public class FXMLUserProfileController implements Initializable {
     }
 
     ;
-    
-    public void refreshTable() {
-        userProfileService = new UserProfileService();
-        initiateCols();
-        userInformationTableView.setItems(userProfileService.getCI());
-    }
 
     @FXML
     private void onMouseEntered(MouseEvent event) {
         if (okPressed) {
-            refreshTable();
+            initiateTableView();
             okPressed = false;
         }
+    }
+
+    @FXML
+    private void deleteUserBtnHandler(ActionEvent event) {
+        ui = (UserInformation2) userInformationTableView.getSelectionModel().getSelectedItem();
+        userProfileService.deleteUser(ui.getUserid());
+        initiateTableView();
+        staffService.setUserInfo(null);
+        permissions(false);
     }
 }
