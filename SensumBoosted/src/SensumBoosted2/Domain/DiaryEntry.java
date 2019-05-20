@@ -12,9 +12,9 @@ package SensumBoosted2.Domain;
 public class DiaryEntry {
 
     String text;
-    int diaryEntryId;
+    long diaryEntryId;
     
-    public DiaryEntry(String text, int diaryEntryId) {
+    public DiaryEntry(String text, long diaryEntryId) {
         this.text = text;
         this.diaryEntryId = diaryEntryId;
     }
@@ -23,7 +23,7 @@ public class DiaryEntry {
         this.text = text;
     }
     
-    public int getDiaryId() {
+    public long getDiaryId() {
         return diaryEntryId;
     }
 

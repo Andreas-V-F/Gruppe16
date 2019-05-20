@@ -51,10 +51,9 @@ public class DiaryRepository {
         }
     }
 
-    public void editDiaryEntry(int diaryEntryID, String text) {
+    public void editDiaryEntry(long diaryEntryID, String text) {
         try {
             Statement st = connection.getConnection().createStatement();
-            long entryID = System.currentTimeMillis();
             Date date = new Date();
             Timestamp timestamp = new Timestamp(date.getTime());
             String sql = "UPDATE public.diary_entry"
@@ -99,7 +98,7 @@ public class DiaryRepository {
         return id;
     }
     
-    public int getDiaryIdByEntryId(int entryId) {
+    public int getDiaryIdByEntryId(long entryId) {
         int id = 0;
         try (Statement st = connection.getConnection().createStatement()) {
             String sql = "SELECT diary_id FROM diary_entry where diary_entry_id = " + entryId;
@@ -151,7 +150,7 @@ public class DiaryRepository {
         return cnt;
     }
 
-    public void deleteDiaryEntry(int diaryEntryId) {
+    public void deleteDiaryEntry(long diaryEntryId) {
         //int id = getDiaryId(getCaseId(diaryEntryId));
         //System.out.print(id);
 
@@ -171,7 +170,7 @@ public class DiaryRepository {
 
             while (rs.next()) {
                 String text = rs.getString("entry_text");
-                int diaryId = rs.getInt("diary_entry_id");
+                long diaryId = rs.getLong("diary_entry_id");
 
                 diaries.add(new DiaryEntry(text, diaryId));
 

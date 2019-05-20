@@ -18,7 +18,7 @@ public class DiaryService {
 
     }
 
-    public void editDiaryEntry(int diaryEntryID, String text) {
+    public void editDiaryEntry(long diaryEntryID, String text) {
         dr.editDiaryEntry(diaryEntryID, text);
 
     }
@@ -35,7 +35,7 @@ public class DiaryService {
         return id;
     }
     
-    public int getDiaryIdByEntryId(int entryId) {
+    public int getDiaryIdByEntryId(long entryId) {
         int id = dr.getDiaryIdByEntryId(entryId);
         return id;
     }
@@ -46,20 +46,20 @@ public class DiaryService {
 
     }
 
-    public void saveDiary(int entryId, String text) {
+    public void saveDiary(long entryId, String text) {
         int diaryID = dr.getDiaryIdByEntryId(entryId);
 
         createDiaryEntry(diaryID, text);
 
     }
 
-    public void editDiary(int diaryID, String text) {
+    public void editDiary(long diaryID, String text) {
         editDiaryEntry(diaryID, text);
 
 
     }
 
-    public void deleteDiaryEntry(int diaryEntryId) {
+    public void deleteDiaryEntry(long diaryEntryId) {
         dr.deleteDiaryEntry(diaryEntryId);
 
     }

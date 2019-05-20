@@ -81,6 +81,7 @@ public class FXMLDiaryController implements Initializable {
     @FXML
     private void saveDiaryButtonHandler(ActionEvent event) {
         DiaryEntry le = DiaryEntryTableView.getSelectionModel().getSelectedItem();
+        System.out.println(le);
         if (editMode == false) {
             ds.saveDiary(le.getDiaryId(), diaryTextField.getText());
         } else if (editMode == true) {
