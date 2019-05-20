@@ -52,7 +52,9 @@ public class LoginRepository {
     private boolean checkDatabaseForUser(String loginUsername, String loginPassword) {
         loginPassword = new Encryption().encryptString(loginPassword);
         boolean checked = false;
-        String sql = "SELECT username,password FROM users WHERE username='" + loginUsername + "' AND password='" + loginPassword + "'";
+        String sql = "SELECT username,password "
+                + "FROM users "
+                + "WHERE username='" + loginUsername + "' AND password='" + loginPassword + "'";
         try {
             ResultSet rs = connectRepository.getConnection().createStatement().executeQuery(sql);
             while (rs.next()) {
@@ -60,7 +62,6 @@ public class LoginRepository {
             }
         } catch (SQLException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("DEN BLIVER FANGET HER");
         }
         System.out.println("checked: " + checked);
         return checked;
@@ -96,7 +97,7 @@ public class LoginRepository {
 
         return staffinfo;
     }
-    
+
 //    public int getIdFromUsername(String loginUsername){
 //        int userId = 0;
 //        try {
@@ -112,5 +113,4 @@ public class LoginRepository {
 //        return userId;
 //        
 //    }
-
 }

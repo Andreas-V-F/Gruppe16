@@ -67,6 +67,7 @@ public class FXMLMainMenuController implements Initializable {
             Logger.getLogger(FXMLMainMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
         citizenBTN.setEffect(getEffect());
+        
     }
 
     public FXMLMainMenuController() {

@@ -123,7 +123,8 @@ public class FXMLCreateCitizenController implements Initializable {
         }
 
         createCitizenService.createCA(firstnameTextField.getText(), middlenameTextField.getText(), lastnameTextField.getText(), Integer.parseInt(cprTextField.getText()), addressTextField.getText(),
-                Integer.parseInt(postalcodeTextField.getText()), cityTextField.getText(), emailTextField.getText(), Integer.parseInt(phonenumberTextField.getText()), departmentChoiceBox.getValue(), usernameTextField.getText(), passwordTextField.getText(), "Borger");
+                Integer.parseInt(postalcodeTextField.getText()), cityTextField.getText(), emailTextField.getText(), Integer.parseInt(phonenumberTextField.getText()), departmentChoiceBox.getValue(),
+                usernameTextField.getText(), passwordTextField.getText(), "Borger");
 
 //        if (!firstnameTextField.getText().isEmpty() && !lastnameTextField.getText().isEmpty()
         //                && !addressTextField.getText().isEmpty() && !postalcodeTextField.getText().isEmpty()
