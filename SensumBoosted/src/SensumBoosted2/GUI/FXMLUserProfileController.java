@@ -44,6 +44,8 @@ public class FXMLUserProfileController implements Initializable {
     private UserProfileService userProfileService;
     private UserInformation2 ui;
 
+    public static boolean okPressed;
+
     @FXML
     private Button createCitizenBtn;
     @FXML
@@ -123,6 +125,9 @@ public class FXMLUserProfileController implements Initializable {
     @FXML
     private AnchorPane rootPane;
 
+    public FXMLUserProfileController() {
+    }
+
     /**
      * Initializes the controller class.
      */
@@ -131,7 +136,7 @@ public class FXMLUserProfileController implements Initializable {
         initiateTableView();
         permissions(false);
         staffService.setUserInfo(null);
-
+        okPressed = false;
     }
 
     @FXML
@@ -291,6 +296,22 @@ public class FXMLUserProfileController implements Initializable {
                     button.setDisable(false);
                 }
             }
+        }
+    }
+
+    ;
+    
+    public void refreshTable() {
+        userProfileService = new UserProfileService();
+        initiateCols();
+        userInformationTableView.setItems(userProfileService.getCI());
+    }
+
+    @FXML
+    private void onMouseEntered(MouseEvent event) {
+        if (okPressed) {
+            refreshTable();
+            okPressed = false;
         }
     }
 }

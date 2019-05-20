@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SensumBoosted2.GUI.FXMLUserProfileController">
-    <Pane fx:id="userSettingPane" layoutX="1.0" layoutY="1.0" prefHeight="700.0" prefWidth="1000.0">
+    <Pane fx:id="userSettingPane" layoutX="1.0" layoutY="1.0" onMouseEntered="#onMouseEntered" prefHeight="700.0" prefWidth="1000.0">
          <children>
             <Button fx:id="createCitizenBtn" layoutX="810.0" layoutY="54.0" mnemonicParsing="false" onAction="#createCitizenBtnEventHandler" prefHeight="46.0" prefWidth="137.0" text="Opret ny borger" />
             <Label layoutX="219.0" layoutY="44.0" prefHeight="20.0" prefWidth="149.0" text="SØG PÅ BORGER MED ">
