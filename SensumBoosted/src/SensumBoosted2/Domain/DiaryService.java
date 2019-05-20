@@ -34,6 +34,11 @@ public class DiaryService {
         int id = dr.getDiaryId(sagsId);
         return id;
     }
+    
+    public int getDiaryIdByEntryId(int entryId) {
+        int id = dr.getDiaryIdByEntryId(entryId);
+        return id;
+    }
 
     public List<String> getDiaryEntries(int diaryID) {
         List<String> entries = dr.getDiaryEntries(diaryID);
@@ -41,11 +46,10 @@ public class DiaryService {
 
     }
 
-    public void saveDiary(int userid, String text) {
-//        long caseid = getCaseId(userid); -------------------
-//        long diaryID = getDiaryId(caseid);
+    public void saveDiary(int entryId, String text) {
+        int diaryID = dr.getDiaryIdByEntryId(entryId);
 
-//        createDiaryEntry(diaryID, text);
+        createDiaryEntry(diaryID, text);
 
     }
 

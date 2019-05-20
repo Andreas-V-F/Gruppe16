@@ -98,6 +98,22 @@ public class DiaryRepository {
         }
         return id;
     }
+    
+    public int getDiaryIdByEntryId(int entryId) {
+        int id = 0;
+        try (Statement st = connection.getConnection().createStatement()) {
+            String sql = "SELECT diary_id FROM diary_entry where diary_entry_id = " + entryId;
+
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                id = rs.getInt("diary_id");
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(sensumboosted.Persistence.DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return id;
+    }
 
     public List<String> getDiaryEntries(int diaryID) {
         List<String> entries = new ArrayList<>();
