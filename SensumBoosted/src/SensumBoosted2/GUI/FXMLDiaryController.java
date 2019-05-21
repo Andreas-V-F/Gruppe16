@@ -59,12 +59,8 @@ public class FXMLDiaryController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        System.out.println("diary id: " + ds.getDiaryId(ds.getCaseId(StaffService.getUserID())));
-//        System.out.println(StaffService.getUserID());
-//        System.out.println(ds.getCaseId(StaffService.getUserID()));
         text.setCellValueFactory(new PropertyValueFactory<>("text"));
         DiaryEntryTableView(ds.getDiaryId(ds.getCaseId(StaffService.getUserID())));
-
     }
 
     private void DiaryEntryTableView(int logbookID) {

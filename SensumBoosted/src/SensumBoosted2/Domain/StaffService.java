@@ -33,7 +33,6 @@ public class StaffService {
     public int getUserID() {
         return userInfo.getUserid();
     }
-    
 
     public String getStaffType() {
         return staff.getUsertype();

@@ -18,7 +18,7 @@ public class DiaryService {
 
     }
 
-    public void editDiaryEntry(int diaryEntryID, String text) {
+    public void editDiary(int diaryEntryID, String text) {
         dr.editDiaryEntry(diaryEntryID, text);
 
     }
