@@ -17,11 +17,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="520.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SensumBoosted2.GUI.FXMLCaseController">
+<AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SensumBoosted2.GUI.FXMLCaseController">
    <children>
-      <ScrollPane fx:id="scrollPane" hmax="0.0" layoutX="14.0" layoutY="14.0" prefHeight="498.0" prefWidth="897.0">
+      <ScrollPane fx:id="scrollPane" hmax="0.0" layoutX="14.0" layoutY="14.0" prefHeight="700.0" prefWidth="970.0">
          <content>
-            <GridPane hgap="5.0" prefHeight="1430.0" prefWidth="893.0" vgap="10.0">
+            <GridPane hgap="5.0" prefHeight="1430.0" prefWidth="950.0" vgap="10.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="350.0" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -116,14 +116,6 @@
                      </font>
                   </TextArea>
                   <ImageView fx:id="imgView" fitHeight="145.0" fitWidth="214.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="2.0" GridPane.rowIndex="6">
-                     <children>
-                        <Button fx:id="saveButton" mnemonicParsing="false" onAction="#handleSaveAction" prefHeight="85.0" prefWidth="141.0" text="Gem" />
-                        <Button fx:id="closeButton" mnemonicParsing="false" onAction="#handleCloseAction" prefHeight="85.0" prefWidth="141.0" text="Luk" />
-                        <Button mnemonicParsing="false" onAction="#handleDiaryButton" prefHeight="85.0" prefWidth="141.0" text="Dagbog" />
-                     </children>
-                  </HBox>
-                  <Button mnemonicParsing="false" onAction="#handleBackAction" prefHeight="85.0" prefWidth="141.0" text="Tilbage" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
                   <Label text="Hvad drejer henvendelsen sig om? " GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP">
                      <font>
                         <Font size="16.0" />
@@ -142,6 +134,20 @@
                </children>
             </GridPane>
          </content>
+         <padding>
+            <Insets top="100.0" />
+         </padding>
       </ScrollPane>
+      <HBox prefHeight="100.0" prefWidth="800.0" spacing="10.0">
+         <children>
+            <Button fx:id="saveButton" mnemonicParsing="false" onAction="#handleSaveAction" prefHeight="46.0" prefWidth="137.0" text="Gem" />
+            <Button fx:id="closeButton" mnemonicParsing="false" onAction="#handleCloseAction" prefHeight="46.0" prefWidth="137.0" text="Luk" />
+            <Button mnemonicParsing="false" onAction="#handleDiaryButton" prefHeight="46.0" prefWidth="137.0" text="Dagbog" />
+            <Button mnemonicParsing="false" onAction="#handleBackAction" prefHeight="46.0" prefWidth="137.0" text="Tilbage" />
+         </children>
+         <padding>
+            <Insets left="15.0" top="15.0" />
+         </padding>
+      </HBox>
    </children>
 </AnchorPane>

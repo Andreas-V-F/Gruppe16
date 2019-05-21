@@ -17,7 +17,6 @@ public class DiaryRepository {
     private ResultSet rs = null;
 
     public void createDiary(long sagsId, int userID) {
-        System.out.println("tried");
         try {
             Statement st = connection.getConnection().createStatement();
             long id = System.currentTimeMillis();
@@ -26,22 +25,22 @@ public class DiaryRepository {
                     + " VALUES ('" + sagsId + "','" + id + "','" + userID + "');";
             st.execute(sql);
             st.close();
-            createDiaryEntry(id, "");
+            createDiaryEntry(id, "Ny note", "Sagsarbejder");
         } catch (SQLException ex) {
             Logger.getLogger(SensumBoosted2.Persistence.DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
     }
 
-    public void createDiaryEntry(long diaryID, String text) {
+    public void createDiaryEntry(long diaryID, String text, String permission) {
         try {
             Statement st = connection.getConnection().createStatement();
             long entryID = System.currentTimeMillis();
             Date date = new Date();
             Timestamp timestamp = new Timestamp(date.getTime());
             String sql = "INSERT INTO diary_entry "
-                    + "(diary_entry_id, diary_id, entry_text, create_timestamp)"
+                    + "(diary_entry_id, diary_id, entry_text, create_timestamp, permission)"
                     + " VALUES "
-                    + "(" + entryID + ',' + diaryID + ",'" + text + "', '" + timestamp + "')";
+                    + "(" + entryID + ',' + diaryID + ",'" + text + "', '" + timestamp + "', '" + permission + "__Administrator__Borger" + "')";
             st.execute(sql);
             st.close();
         } catch (SQLException ex) {
@@ -65,15 +64,17 @@ public class DiaryRepository {
         }
     }
 
-    public long getCaseId(int userID) {
+    public long getOriginalCaseID(int userID) {
         long id = 0;
 
         try (Statement st = connection.getConnection().createStatement()) {
-            String sql = "SELECT case_id FROM sager where user_id = " + userID;
+            String sql = "SELECT case_id FROM sager WHERE user_id = " + userID + " ORDER BY case_id ASC";
             rs = st.executeQuery(sql);
             while (rs.next()) {
                 id = rs.getLong("case_id");
+                break;
             }
+            return id;
         } catch (SQLException ex) {
             Logger.getLogger(SensumBoosted2.Persistence.DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -95,7 +96,7 @@ public class DiaryRepository {
         }
         return id;
     }
-    
+
     public long getDiaryIdByEntryId(long entryId) {
         long id = 0;
         try (Statement st = connection.getConnection().createStatement()) {
@@ -172,8 +173,8 @@ public class DiaryRepository {
 
                 diaries.add(new DiaryEntry(text, diaryId));
 
-                return diaries;
             }
+            return diaries;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }

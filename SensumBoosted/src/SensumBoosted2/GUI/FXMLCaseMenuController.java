@@ -5,6 +5,7 @@
  */
 package SensumBoosted2.GUI;
 
+import SensumBoosted2.Domain.CaseService;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -35,6 +36,9 @@ public class FXMLCaseMenuController implements Initializable {
     @FXML
     private void handleNewCaseButton(ActionEvent event) throws IOException {
         FXMLCaseController.boo = true;
+        CaseService caseService = new CaseService();
+        caseService.createCase("", "", "", "", "");
+        caseService.setSelectedCaseID(caseService.getOpenCaseID());
         AnchorPane pane = FXMLLoader.load(getClass().getResource("FXMLCase.fxml"));
         rootPane.getChildren().setAll(pane);
         

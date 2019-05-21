@@ -116,6 +116,8 @@ public class FXMLCaseController implements Initializable {
 
             caseService.closeCase();
             clear();
+            caseService.createCase("", "", "", "", "");
+            caseService.setSelectedCaseID(caseService.getOpenCaseID());
 
         }
 
@@ -232,6 +234,8 @@ public class FXMLCaseController implements Initializable {
     }
 
     @FXML
-    private void handleDiaryButton(ActionEvent event) {
+    private void handleDiaryButton(ActionEvent event) throws IOException {
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("FXMLDiary.fxml"));
+        rootPane.getChildren().setAll(pane);
     }
 }

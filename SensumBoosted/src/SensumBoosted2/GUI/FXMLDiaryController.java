@@ -5,18 +5,22 @@
  */
 package SensumBoosted2.GUI;
 
+import SensumBoosted2.Domain.CaseService;
 import SensumBoosted2.Domain.DiaryEntry;
 import SensumBoosted2.Domain.DiaryService;
 import SensumBoosted2.Domain.StaffService;
 import SensumBoosted2.Domain.UserAccount;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -44,85 +48,108 @@ public class FXMLDiaryController implements Initializable {
     @FXML
     private TableColumn<DiaryEntry, String> text;
     @FXML
-    private Button DeleteDiaryBTN;
-    @FXML
-    private Button editBTN;
+    private Button deleteDiaryBTN;
 
-    private boolean editMode = false;
+    public static boolean fromMenu;
 
     DiaryService ds = new DiaryService();
+    CaseService caseService = new CaseService();
 
     StaffService StaffService = new StaffService();
     @FXML
     private TableView<DiaryEntry> DiaryEntryTableView;
+    @FXML
+    private Button newBTN;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        System.out.println("diary id: " + ds.getDiaryId(ds.getCaseId(StaffService.getUserID())));
-//        System.out.println(StaffService.getUserID());
-//        System.out.println(ds.getCaseId(StaffService.getUserID()));
         text.setCellValueFactory(new PropertyValueFactory<>("text"));
-        DiaryEntryTableView(ds.getDiaryId(ds.getCaseId(StaffService.getUserID())));
+        refreshTable();
+        if (!fromMenu && !caseService.isOpenCase()) {
+            newBTN.setDisable(true);
+            newBTN.setVisible(false);
+            saveDiaryButton.setDisable(true);
+            saveDiaryButton.setVisible(false);
+            deleteDiaryBTN.setDisable(true);
+            deleteDiaryBTN.setVisible(false);
+        }
 
     }
 
     private void DiaryEntryTableView(long logbookID) {
 
-        System.out.println(ds.createDiaryEntryTableView(logbookID));
-        
         text.setCellValueFactory(new PropertyValueFactory<>("text"));
 
         DiaryEntryTableView.setItems(ds.createDiaryEntryTableView(logbookID));
-        DiaryEntryTableView.setEditable(true);
 
     }
 
     @FXML
     private void saveDiaryButtonHandler(ActionEvent event) {
-        DiaryEntry le = DiaryEntryTableView.getSelectionModel().getSelectedItem();
-        System.out.println(le);
-        if (editMode == false) {
-            ds.saveDiary(le.getDiaryEntryId(), diaryTextField.getText());
-        } else if (editMode == true) {
-            ds.editDiary(le.getDiaryEntryId(), diaryTextField.getText());
-            editMode = false;
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Bekræft");
+        alert.setHeaderText(null);
+        alert.setContentText("Er du sikker på du vil gemme?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            ds.editDiary(DiaryEntryTableView.getSelectionModel().getSelectedItem().getDiaryEntryId(), diaryTextField.getText());
+            refreshTable();
         }
-        
-        long id = ds.getDiaryIdByEntryId(le.getDiaryEntryId());
-        DiaryEntryTableView(id);
-        diaryTextField.clear();
+        deleteDiaryBTN.setDisable(false);
+        saveDiaryButton.setDisable(false);
     }
 
     @FXML
     private void backToCasePaneHandler(ActionEvent event) throws IOException {
-        AnchorPane pane = FXMLLoader.load(getClass().getResource("FXMLUserProfile.fxml"));
-        rootPane.getChildren().setAll(pane);
-    }
-
-    private void dbClickRowHandler(MouseEvent event) {
-        if (event.getClickCount() > 1) {
-            System.out.println("dbClickRowHandler");
-            diaryTextField.clear();
-            DiaryEntry le = DiaryEntryTableView.getSelectionModel().getSelectedItem();
-            long id = ds.getDiaryIdByEntryId(le.getDiaryEntryId());
-            DiaryEntryTableView(id);
+        if (fromMenu) {
+            AnchorPane pane = FXMLLoader.load(getClass().getResource("FXMLUserProfile.fxml"));
+            rootPane.getChildren().setAll(pane);
+        } else {
+            AnchorPane pane = FXMLLoader.load(getClass().getResource("FXMLCaseMenu.fxml"));
+            rootPane.getChildren().setAll(pane);
         }
     }
 
     @FXML
     private void DeleteDiaryBTN(MouseEvent event) {
-        DiaryEntry le = DiaryEntryTableView.getSelectionModel().getSelectedItem();
-        ds.deleteDiaryEntry(le.getDiaryEntryId());
-        System.out.println("DeleteDiaryBTN a");
-        long id = ds.getDiaryIdByEntryId(le.getDiaryEntryId());
-        DiaryEntryTableView(id);
+        ds.deleteDiaryEntry(DiaryEntryTableView.getSelectionModel().getSelectedItem().getDiaryEntryId());
+        deleteDiaryBTN.setDisable(false);
+        saveDiaryButton.setDisable(false);
+        refreshTable();
     }
 
     @FXML
-    private void editDiaryBTNHandler(ActionEvent event) {
-        editMode = true;
-        DiaryEntry le = DiaryEntryTableView.getSelectionModel().getSelectedItem();
-        diaryTextField.setText(le.getText());
+    private void onMouseClicked(MouseEvent event) {
+        if (DiaryEntryTableView.getSelectionModel().getSelectedItem() == null) {
+            return;
+        }
+        if (fromMenu || caseService.isOpenCase()) {
+            deleteDiaryBTN.setDisable(false);
+            saveDiaryButton.setDisable(false);
+        }
+
+        diaryTextField.setText(DiaryEntryTableView.getSelectionModel().getSelectedItem().getText());
+    }
+
+    @FXML
+    private void newDiaryBTNHandler(ActionEvent event) {
+        if (fromMenu) {
+            ds.createDiaryEntry(ds.getDiaryId(ds.getOriginalCaseID(StaffService.getUserID())), "Ny note");
+        } else {
+            ds.createDiaryEntry(ds.getDiaryId(caseService.getSelectedCaseID()), "Ny note");
+        }
+        deleteDiaryBTN.setDisable(false);
+        saveDiaryButton.setDisable(false);
+        refreshTable();
+
+    }
+
+    private void refreshTable() {
+        if (fromMenu) {
+            DiaryEntryTableView(ds.getDiaryId(ds.getOriginalCaseID(StaffService.getUserID())));
+        } else {
+            DiaryEntryTableView(ds.getDiaryId(caseService.getSelectedCaseID()));
+        }
     }
 
 }

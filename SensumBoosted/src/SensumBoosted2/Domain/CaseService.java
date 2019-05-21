@@ -6,7 +6,6 @@
 package SensumBoosted2.Domain;
 
 import SensumBoosted2.Persistence.CaseRepository;
-import java.util.Date;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -19,6 +18,7 @@ public class CaseService {
     private CaseRepository caseRepository;
     private StaffService staffService;
     private static Case preCase;
+    private static long selectedCaseID;
 
     public CaseService() {
         staffService = new StaffService();
@@ -30,6 +30,12 @@ public class CaseService {
         if (caseRepository.hasOpenCase(staffService.getUserID())) {
             caseRepository.saveCase(staffService.getUserID(), inquiryText, inquirer, assessmentText, taskPurpose, taskGoal);
         } else {
+            caseRepository.createCase(staffService.getUserID(), inquiryText, inquirer, assessmentText, taskPurpose, taskGoal);
+        }
+    }
+
+    public void createCase(String inquiryText, String inquirer, String assessmentText, String taskPurpose, String taskGoal) {
+        if (!caseRepository.hasOpenCase(staffService.getUserID())) {
             caseRepository.createCase(staffService.getUserID(), inquiryText, inquirer, assessmentText, taskPurpose, taskGoal);
         }
     }
@@ -48,8 +54,7 @@ public class CaseService {
             if (!caseText[1].equals("")) {
                 String[] cases = {caseText[0], caseText[1].split("/")[0], caseText[1].split("/")[1], caseText[1].split("/")[2], caseText[2], caseText[3], caseText[4]};
                 return cases;
-            }
-            else{
+            } else {
                 String[] cases = {caseText[0], "Borger", "", "Ja", caseText[2], caseText[3], caseText[4]};
                 return cases;
             }
@@ -91,6 +96,31 @@ public class CaseService {
 
     public void preCase(Object o) {
         preCase = (Case) o;
+    }
+
+    public static void setSelectedCaseID(long selectedCaseID) {
+        CaseService.selectedCaseID = selectedCaseID;
+    }
+
+    public static void setSelectedCaseID(Object o) {
+        Case case1 = (Case) o;
+        System.out.println("WORKS");
+        CaseService.selectedCaseID = case1.getCaseID();
+    }
+
+    public static long getSelectedCaseID() {
+        return selectedCaseID;
+    }
+
+    public long getOpenCaseID() {
+        return caseRepository.findCaseID(staffService.getUserID());
+    }
+
+    public boolean isOpenCase() {
+        if (getOpenCaseID() == getSelectedCaseID()) {
+            return true;
+        }
+        return false;
     }
 
 }

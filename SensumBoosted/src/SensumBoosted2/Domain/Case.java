@@ -12,7 +12,8 @@ import java.util.Date;
  * @author Andreas Frederiksen
  */
 public class Case {
-
+    
+    private long caseID;
     private UserInformation2 userInfo;
     private String inquiryText;
     private Date addedDate;
@@ -22,7 +23,8 @@ public class Case {
     private String taskPurpose;
     private String taskGoal;
 
-    public Case(UserInformation2 userInfo, String inquiryText, Date addedDate, Date editDate, String inquirer, String assessment, String taskPurpose, String taskGoal) {
+    public Case(long caseID, UserInformation2 userInfo, String inquiryText, Date addedDate, Date editDate, String inquirer, String assessment, String taskPurpose, String taskGoal) {
+        this.caseID = caseID;
         this.userInfo = userInfo;
         this.inquiryText = inquiryText;
         this.addedDate = addedDate;
@@ -33,15 +35,12 @@ public class Case {
         this.taskGoal = taskGoal;
     }
 
-    public Case(String inquiryText, Date addedDate, Date editDate, String assessment) {
+    public Case(long caseID, String inquiryText, Date addedDate, Date editDate, String assessment) {
+        this.caseID = caseID;
         this.inquiryText = inquiryText;
         this.addedDate = addedDate;
         this.editDate = editDate;
         this.assessment = assessment;
-    }
-
-    public Case(UserInformation2 userInfo) {
-        this.userInfo = userInfo;
     }
 
     public String getInquiryText() {
@@ -74,6 +73,11 @@ public class Case {
 
     public String getTaskGoal() {
         return taskGoal;
+    }
+    
+    public long getCaseID(){
+        System.out.println("returned" + caseID);
+        return caseID;
     }
     
     

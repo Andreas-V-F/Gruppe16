@@ -4,8 +4,6 @@
  * and open the template in the editor.
  */
 package SensumBoosted2.Persistence;
-
-import SensumBoosted2.GUI.FXMLUserProfileController;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -20,8 +18,6 @@ public class ConnectRepository {
     private final String url = "jdbc:postgresql://balarama.db.elephantsql.com:5432/rsrrjzno";
     private final String userDB = "rsrrjzno";
     private final String passDB = "afVcwMqs2zGaNtod0axmHcsrAuy5u7uD";
-
-    private FXMLUserProfileController upController;
 
     public ConnectRepository() {
        connect();

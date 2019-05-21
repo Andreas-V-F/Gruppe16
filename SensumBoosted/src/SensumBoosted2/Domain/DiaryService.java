@@ -8,13 +8,14 @@ import javafx.collections.ObservableList;
 public class DiaryService {
 
     DiaryRepository dr = new DiaryRepository();
+    StaffService staffService = new StaffService();
 
     public void createDiary(long sagsId, int userID) {
         dr.createDiary(sagsId, userID);
     }
 
     public void createDiaryEntry(long diaryID, String text) {
-        dr.createDiaryEntry(diaryID, text);
+        dr.createDiaryEntry(diaryID, text, staffService.getStaffType());
 
     }
 
@@ -23,10 +24,8 @@ public class DiaryService {
 
     }
 
-    public long getCaseId(int userID) {
-        System.out.println("test");
-        long id = dr.getCaseId(userID);
-        System.out.println("test");
+    public long getOriginalCaseID(int userID) {
+        long id = dr.getOriginalCaseID(userID);
         return id;
     }
     

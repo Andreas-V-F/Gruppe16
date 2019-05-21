@@ -88,13 +88,13 @@ public class CaseRepository {
 
     }
 
-    public int findCaseID(Case case1) {
+    public long findCaseID(int userID) {
         try {
             Statement st = connection.createStatement();
-            String sql = "SELECT case_id FROM sager WHERE user_id='" + case1.getUserInfo().getUserid() + "' AND isopen='true';";
+            String sql = "SELECT case_id FROM sager WHERE user_id='" + userID + "' AND isopen='true';";
             rs = st.executeQuery(sql);
             rs.next();
-            return rs.getInt(1);
+            return rs.getLong(1);
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -133,7 +133,7 @@ public class CaseRepository {
         try {
             ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM sager WHERE user_id='" + userID + "' AND isopen ='false';");
             while (rs.next()) {
-                cases.add(new Case(rs.getString("inquiry_text"), rs.getDate("added_date"), rs.getDate("edit_date"), rs.getString("assessment")));
+                cases.add(new Case(rs.getLong("case_id"), rs.getString("inquiry_text"), rs.getDate("added_date"), rs.getDate("edit_date"), rs.getString("assessment")));
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -149,7 +149,7 @@ public class CaseRepository {
             String sql = "SELECT * FROM sager WHERE inquiry_text='" + case1.getInquiryText() + "' AND added_date='" + case1.getAddedDate() + "';";
             rs = st.executeQuery(sql);
             while (rs.next()) {
-                case2 = new Case(case1.getUserInfo(), rs.getString("inquiry_text"), rs.getDate("added_date"), rs.getDate("edit_date"), rs.getString("inquirer"), rs.getString("assessment"), rs.getString("taskpurpose"), rs.getString("taskgoal"));
+                case2 = new Case(rs.getLong("case_id"), case1.getUserInfo(), rs.getString("inquiry_text"), rs.getDate("added_date"), rs.getDate("edit_date"), rs.getString("inquirer"), rs.getString("assessment"), rs.getString("taskpurpose"), rs.getString("taskgoal"));
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

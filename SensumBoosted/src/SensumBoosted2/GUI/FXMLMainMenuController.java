@@ -152,7 +152,7 @@ public class FXMLMainMenuController implements Initializable {
                 adminBTN.setDisable(true);
                 adminBTN.setVisible(false);
                 break;
-            case "Caseworker":
+            case "Sagsarbejder":
                 citizenBTN.setDisable(false);
                 citizenBTN.setVisible(true);
                 adminBTN.setDisable(true);

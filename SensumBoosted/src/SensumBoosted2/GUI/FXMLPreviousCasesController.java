@@ -75,11 +75,13 @@ public class FXMLPreviousCasesController implements Initializable {
 
     @FXML
     private void onMouseClicked(MouseEvent event) {
-        if(tableView.getSelectionModel().getSelectedItem() == null){
+        if (tableView.getSelectionModel().getSelectedItem() == null) {
             return;
         }
         diaryButton.setDisable(false);
         lookAtCaseButton.setDisable(false);
+        
+        CaseService.setSelectedCaseID(tableView.getSelectionModel().getSelectedItem());
 
         inqText.setText(caseService.sendPreviousInquiryText(tableView.getSelectionModel().getSelectedItem()));
         assText.setText(caseService.sendPreviousAssessmentText(tableView.getSelectionModel().getSelectedItem()));
@@ -87,8 +89,9 @@ public class FXMLPreviousCasesController implements Initializable {
     }
 
     @FXML
-    private void handleDiaryButton(ActionEvent event) {
-
+    private void handleDiaryButton(ActionEvent event) throws IOException {
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("FXMLDiary.fxml"));
+        rootPane.getChildren().setAll(pane);
     }
 
     @FXML

@@ -11,6 +11,7 @@ import SensumBoosted2.Domain.UserProfileService;
 import SensumBoosted2.GUI.FXMLUserProfileController;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,7 +21,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
@@ -93,8 +96,6 @@ public class FXMLUserProfileController implements Initializable {
     //Tableview FXML
     @FXML
     private TableView<?> userInformationTableView;
-    @FXML
-    private TableColumn<?, ?> userIDColumn;
     @FXML
     private TableColumn<?, ?> firstnameColumn;
     @FXML
@@ -187,7 +188,6 @@ public class FXMLUserProfileController implements Initializable {
 
     //Tableview - COLUMN
     private void initiateCols() {
-        userIDColumn.setCellValueFactory(new PropertyValueFactory<>("userid"));
         firstnameColumn.setCellValueFactory(new PropertyValueFactory<>("firstname"));
         middlenameColumn.setCellValueFactory(new PropertyValueFactory<>("middlename"));
         lastnameColumn.setCellValueFactory(new PropertyValueFactory<>("lastname"));
@@ -233,7 +233,7 @@ public class FXMLUserProfileController implements Initializable {
 
     @FXML
     private void mouseClick(MouseEvent event) {
-        if(userInformationTableView.getSelectionModel().getSelectedItem() == null){
+        if (userInformationTableView.getSelectionModel().getSelectedItem() == null) {
             return;
         }
         staffService.setUserInfo(userInformationTableView.getSelectionModel().getSelectedItem());
@@ -243,12 +243,14 @@ public class FXMLUserProfileController implements Initializable {
 
     @FXML
     private void openCasePane(ActionEvent event) throws IOException {
+        FXMLDiaryController.fromMenu = false;
         AnchorPane pane = FXMLLoader.load(getClass().getResource("FXMLCaseMenu.fxml"));
         rootPane.getChildren().setAll(pane);
     }
 
     @FXML
     private void openDiaryPane(ActionEvent event) throws IOException {
+        FXMLDiaryController.fromMenu = true;
         AnchorPane pane = FXMLLoader.load(getClass().getResource("FXMLDiary.fxml"));
         rootPane.getChildren().setAll(pane);
     }
@@ -318,10 +320,17 @@ public class FXMLUserProfileController implements Initializable {
 
     @FXML
     private void deleteUserBtnHandler(ActionEvent event) {
-        ui = (UserInformation2) userInformationTableView.getSelectionModel().getSelectedItem();
-        userProfileService.deleteUser(ui.getUserid());
-        initiateTableView();
-        staffService.setUserInfo(null);
-        permissions(false);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Bekræft");
+        alert.setHeaderText(null);
+        alert.setContentText("Er du sikker på du vil slette denne borger og alt tilhørende?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            ui = (UserInformation2) userInformationTableView.getSelectionModel().getSelectedItem();
+            userProfileService.deleteUser(ui.getUserid());
+            initiateTableView();
+            staffService.setUserInfo(null);
+            permissions(false);
+        }
     }
 }

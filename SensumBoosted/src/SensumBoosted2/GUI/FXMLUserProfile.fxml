@@ -79,15 +79,14 @@
          <Button fx:id="editUserBtn" layoutX="810.0" layoutY="115.0" mnemonicParsing="false" onAction="#editUserBtnHandler" prefHeight="46.0" prefWidth="137.0" text="Rediger borger" />
          <TableView fx:id="userInformationTableView" layoutX="-1.0" layoutY="304.0" onMouseClicked="#mouseClick" prefHeight="396.0" prefWidth="1001.0">
            <columns>
-             <TableColumn fx:id="userIDColumn" prefWidth="41.0" text="ID" />
              <TableColumn fx:id="firstnameColumn" minWidth="0.0" prefWidth="127.0" text="Fornavn" />
                <TableColumn fx:id="middlenameColumn" prefWidth="132.0" text="Mellemnavn" />
                <TableColumn fx:id="lastnameColumn" prefWidth="126.0" text="Efternavn" />
                <TableColumn fx:id="cprColumn" prefWidth="99.0" text="CPR" />
-               <TableColumn fx:id="addressColumn" prefWidth="124.0" text="Adresse" />
-               <TableColumn fx:id="postalcodeColumn" prefWidth="93.0" text="Postnummer" />
-               <TableColumn fx:id="cityColumn" prefWidth="109.0" text="By" />
-               <TableColumn fx:id="emailColumn" prefWidth="149.0" text="E-mail" />
+               <TableColumn fx:id="addressColumn" prefWidth="131.0" text="Adresse" />
+               <TableColumn fx:id="postalcodeColumn" prefWidth="86.0" text="Postnummer" />
+               <TableColumn fx:id="cityColumn" prefWidth="134.0" text="By" />
+               <TableColumn fx:id="emailColumn" prefWidth="165.0" text="E-mail" />
            </columns>
          </TableView>
          <Label layoutX="14.0" layoutY="14.0" prefHeight="56.0" prefWidth="205.0" text="BRUGER PROFIL">
