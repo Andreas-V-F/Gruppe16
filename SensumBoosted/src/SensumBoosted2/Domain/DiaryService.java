@@ -46,16 +46,10 @@ public class DiaryService {
 
     }
 
-    public void saveDiary(int entryId, String text) {
-        int diaryID = dr.getDiaryIdByEntryId(entryId);
+    public void saveDiary(int diaryId, String text) {
+        int diaryID = dr.getDiaryIdByEntryId(diaryId);
 
         createDiaryEntry(diaryID, text);
-
-    }
-
-    public void editDiary(int diaryID, String text) {
-        editDiaryEntry(diaryID, text);
-
 
     }
 

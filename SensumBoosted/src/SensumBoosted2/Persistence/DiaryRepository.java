@@ -33,7 +33,7 @@ public class DiaryRepository {
         return null;
     }
 
-    public void createDiaryEntry(int diaryID, String text) {
+    public void createDiaryEntry(long diaryID, String text) {
         try {
             Statement st = connection.getConnection().createStatement();
             long entryID = System.currentTimeMillis();
@@ -135,23 +135,23 @@ public class DiaryRepository {
         return entries;
     }
 
-    public int getCount(String tableName) {
-        int cnt = 0;
-        try (Statement st = connection.getConnection().createStatement()) {
-            String sql = "SELECT COUNT(*) AS cnt FROM " + tableName;
+//    public int getCount(String tableName) {
+//        int cnt = 0;
+//        try (Statement st = connection.getConnection().createStatement()) {
+//            String sql = "SELECT COUNT(*) AS cnt FROM " + tableName;
+//
+//            rs = st.executeQuery(sql);
+//            while (rs.next()) {
+//                cnt = rs.getInt("cnt");
+//
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(sensumboosted.Persistence.DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return cnt;
+//    }
 
-            rs = st.executeQuery(sql);
-            while (rs.next()) {
-                cnt = rs.getInt("cnt");
-
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(sensumboosted.Persistence.DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return cnt;
-    }
-
-    public void deleteDiaryEntry(int diaryEntryId) {
+    public void deleteDiaryEntry(long diaryEntryId) {
         //int id = getDiaryId(getCaseId(diaryEntryId));
         //System.out.print(id);
 
