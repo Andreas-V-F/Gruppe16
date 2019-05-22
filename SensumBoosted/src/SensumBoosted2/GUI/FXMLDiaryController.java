@@ -9,7 +9,6 @@ import SensumBoosted2.Domain.CaseService;
 import SensumBoosted2.Domain.DiaryEntry;
 import SensumBoosted2.Domain.DiaryService;
 import SensumBoosted2.Domain.StaffService;
-import SensumBoosted2.Domain.UserAccount;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
@@ -44,7 +43,6 @@ public class FXMLDiaryController implements Initializable {
     private TextArea diaryTextField;
     @FXML
     private Button saveDiaryButton;
-    private TableView<UserAccount> citizenTableView;
     @FXML
     private TableColumn<DiaryEntry, String> text;
     @FXML

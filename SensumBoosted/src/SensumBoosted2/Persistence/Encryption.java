@@ -7,9 +7,6 @@ package SensumBoosted2.Persistence;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import sensumboosted.GUI.FXMLDocumentController;
 
 /**
  *
@@ -33,7 +30,7 @@ public class Encryption {
                 sb.append(String.format("%02x", b & 0xff));
             }
         } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
         }
         return sb.toString().toUpperCase();
     }

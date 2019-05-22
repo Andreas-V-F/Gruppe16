@@ -15,7 +15,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import java.util.stream.Stream;
-import sensumboosted.GUI.FXMLDocumentController;
 
 /**
  *
@@ -48,9 +47,9 @@ public class LogRepository {
             myLog.getLogger().setLevel(Level.ALL);
             myLog.getLogger().info("Bruger: \"" + username + "\" " + attempt);
         } catch (SecurityException ex) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
         } catch (IOException ex) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
         }
     }
 

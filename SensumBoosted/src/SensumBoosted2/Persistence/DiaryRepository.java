@@ -60,7 +60,7 @@ public class DiaryRepository {
             st.execute(sql);
             st.close();
         } catch (SQLException ex) {
-            Logger.getLogger(sensumboosted.Persistence.DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
         }
     }
 

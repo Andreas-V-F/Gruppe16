@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import sensumboosted.GUI.FXMLDocumentController;
 
 /**
  *
@@ -55,10 +54,8 @@ public class LoginRepository {
                 checked = true;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("DEN BLIVER FANGET HER");
+            System.out.println(ex.getMessage());
         }
-        System.out.println("checked: " + checked);
         return checked;
     }
 
@@ -69,9 +66,9 @@ public class LoginRepository {
             logRepository.getLogger().setLevel(Level.ALL);
             logRepository.getLogger().info("Bruger: \"" + username + "\" " + attempt);
         } catch (SecurityException ex) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
         } catch (IOException ex) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
         }
     }
 
