@@ -19,7 +19,7 @@ public class DiaryService {
 
     }
 
-    public void editDiaryEntry(long diaryEntryID, String text) {
+    public void editDiary(long diaryEntryID, String text) {
         dr.editDiaryEntry(diaryEntryID, text);
 
     }
@@ -43,12 +43,6 @@ public class DiaryService {
         long diaryID = getDiaryIdByEntryId(entryId);
 
         createDiaryEntry(diaryID, text);
-
-    }
-
-    public void editDiary(long diaryID, String text) {
-        editDiaryEntry(diaryID, text);
-
 
     }
 
