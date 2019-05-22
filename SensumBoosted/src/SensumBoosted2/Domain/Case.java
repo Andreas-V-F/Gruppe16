@@ -14,7 +14,7 @@ import java.util.Date;
 public class Case {
     
     private long caseID;
-    private UserInformation2 userInfo;
+    private UserInformation userInfo;
     private String inquiryText;
     private Date addedDate;
     private Date editDate;
@@ -23,7 +23,7 @@ public class Case {
     private String taskPurpose;
     private String taskGoal;
 
-    public Case(long caseID, UserInformation2 userInfo, String inquiryText, Date addedDate, Date editDate, String inquirer, String assessment, String taskPurpose, String taskGoal) {
+    public Case(long caseID, UserInformation userInfo, String inquiryText, Date addedDate, Date editDate, String inquirer, String assessment, String taskPurpose, String taskGoal) {
         this.caseID = caseID;
         this.userInfo = userInfo;
         this.inquiryText = inquiryText;
@@ -59,7 +59,7 @@ public class Case {
         return assessment;
     }
 
-    public UserInformation2 getUserInfo() {
+    public UserInformation getUserInfo() {
         return userInfo;
     }
 

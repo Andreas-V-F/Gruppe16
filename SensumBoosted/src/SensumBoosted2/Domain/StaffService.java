@@ -12,7 +12,7 @@ package SensumBoosted2.Domain;
 public class StaffService {
 
     private static Staff staff;
-    private static UserInformation2 userInfo;
+    private static UserInformation userInfo;
 
     public StaffService() {
     }
@@ -24,7 +24,7 @@ public class StaffService {
 
     public static void setUserInfo(Object o) {
         try {
-            StaffService.userInfo = (UserInformation2) o;
+            StaffService.userInfo = (UserInformation) o;
             System.out.println(userInfo.getUserid());
         } catch (Exception e) {
         }
@@ -59,7 +59,7 @@ public class StaffService {
         StaffService.userInfo = null;
     }
     
-    public UserInformation2 getUserInfo(){
+    public UserInformation getUserInfo(){
         return userInfo;
     }
 

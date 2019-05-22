@@ -6,10 +6,6 @@
 package SensumBoosted2.Domain;
 
 import SensumBoosted2.Persistence.LogRepository;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Scanner;
 
 /**
  *
@@ -17,7 +13,7 @@ import java.util.Scanner;
  */
 public class LogService {
 
-    private LogRepository logRepository;
+    private LogRepository logRepository = new LogRepository();;
     private static LogService instance;
 
     private LogService() {
@@ -31,7 +27,6 @@ public class LogService {
     }
 
     public String getLogFile() {
-        logRepository = new LogRepository();
         return logRepository.getLogFile("LoginLog.txt");
     }
 }

@@ -6,7 +6,7 @@
 package SensumBoosted2.GUI;
 
 import SensumBoosted2.Domain.StaffService;
-import SensumBoosted2.Domain.UserInformation2;
+import SensumBoosted2.Domain.UserInformation;
 import SensumBoosted2.Domain.UserProfileService;
 import SensumBoosted2.GUI.FXMLUserProfileController;
 import java.io.IOException;
@@ -45,7 +45,7 @@ import javafx.stage.Stage;
 public class FXMLUserProfileController implements Initializable {
 
     private UserProfileService userProfileService;
-    private UserInformation2 ui;
+    private UserInformation ui;
 
     public static boolean okPressed;
 
@@ -171,7 +171,7 @@ public class FXMLUserProfileController implements Initializable {
 
     @FXML
     private void saveBtnHandler(ActionEvent event) {
-        ui = (UserInformation2) userInformationTableView.getSelectionModel().getSelectedItem();
+        ui = (UserInformation) userInformationTableView.getSelectionModel().getSelectedItem();
         if (!editFirstnameField.getText().equals(ui.getFirstname()) || !editMiddlenameField.getText().equals(ui.getMiddlename())
                 || !editLastnameField.getText().equals(ui.getLastname()) || !editCPRField.getText().equals(Integer.toString(ui.getCpr()))
                 || !editAddressField.getText().equals(Integer.toString(ui.getPostalcode())) || !editCityField.getText().equals(ui.getCity())
@@ -219,7 +219,7 @@ public class FXMLUserProfileController implements Initializable {
 
     @FXML
     private void editUserBtnHandler(ActionEvent event) {
-        ui = (UserInformation2) userInformationTableView.getSelectionModel().getSelectedItem();
+        ui = (UserInformation) userInformationTableView.getSelectionModel().getSelectedItem();
 
         editFirstnameField.setText(ui.getFirstname());
         editMiddlenameField.setText(ui.getMiddlename());
@@ -327,7 +327,7 @@ public class FXMLUserProfileController implements Initializable {
         alert.setContentText("Er du sikker på du vil slette denne borger og alt tilhørende?");
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
-            ui = (UserInformation2) userInformationTableView.getSelectionModel().getSelectedItem();
+            ui = (UserInformation) userInformationTableView.getSelectionModel().getSelectedItem();
             userProfileService.deleteUser(ui.getUserid());
             initiateTableView();
             staffService.setUserInfo(null);

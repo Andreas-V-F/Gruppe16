@@ -5,7 +5,7 @@
  */
 package SensumBoosted2.Persistence;
 
-import SensumBoosted2.Domain.UserInformation2;
+import SensumBoosted2.Domain.UserInformation;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -31,11 +31,11 @@ public class UserProfileRepository {
     }
 
     public List getCitizenInformation() {
-        List<UserInformation2> uiList = new ArrayList<>();
+        List<UserInformation> uiList = new ArrayList<>();
         try {
             rs = connection.createStatement().executeQuery("SELECT * FROM citizen_information ORDER BY lastname, firstname ASC");
             while (rs.next()) {
-                uiList.add(new UserInformation2(rs.getInt("user_id"), rs.getString("firstname"), rs.getString("middlename"),
+                uiList.add(new UserInformation(rs.getInt("user_id"), rs.getString("firstname"), rs.getString("middlename"),
                         rs.getString("lastname"), rs.getInt("user_cpr"), rs.getString("address"), rs.getInt("postal_code"),
                         rs.getString("city"), rs.getString("email")));
             }
@@ -46,11 +46,11 @@ public class UserProfileRepository {
     }
 
     public List cprSearchCitizenInformation(int cpr) {
-        List<UserInformation2> uiList = new ArrayList<>();
+        List<UserInformation> uiList = new ArrayList<>();
         try {
             rs = connection.createStatement().executeQuery("SELECT * FROM citizen_information WHERE cpr = " + cpr);
             while (rs.next()) {
-                uiList.add(new UserInformation2(rs.getInt("user_id"), rs.getString("firstname"), rs.getString("middlename"),
+                uiList.add(new UserInformation(rs.getInt("user_id"), rs.getString("firstname"), rs.getString("middlename"),
                         rs.getString("lastname"), rs.getInt("user_cpr"), rs.getString("address"), rs.getInt("postal_code"),
                         rs.getString("city"), rs.getString("email")));
             }
@@ -61,11 +61,11 @@ public class UserProfileRepository {
     }
 
     public List firstnameSearchCitizenInformation(String firstname) {
-        List<UserInformation2> uiList = new ArrayList<>();
+        List<UserInformation> uiList = new ArrayList<>();
         try {
             rs = connection.createStatement().executeQuery("SELECT * FROM citizen_information WHERE firstname = '" + firstname + "'");
             while (rs.next()) {
-                uiList.add(new UserInformation2(rs.getInt("user_id"), rs.getString("firstname"), rs.getString("middlename"),
+                uiList.add(new UserInformation(rs.getInt("user_id"), rs.getString("firstname"), rs.getString("middlename"),
                         rs.getString("lastname"), rs.getInt("user_cpr"), rs.getString("address"), rs.getInt("postal_code"),
                         rs.getString("city"), rs.getString("email")));
             }

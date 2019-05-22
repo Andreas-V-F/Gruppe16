@@ -23,21 +23,21 @@ public class UserProfileService {
     }
     
     public ObservableList getCI() {
-        ObservableList<UserInformation2> ui;
+        ObservableList<UserInformation> ui;
         ui = FXCollections.observableArrayList(userProfileRepository.getCitizenInformation());
         
         return ui;
     }
     
     public ObservableList cprSearchCI(String cpr) {
-        ObservableList<UserInformation2> ui;
+        ObservableList<UserInformation> ui;
         ui = FXCollections.observableArrayList(userProfileRepository.cprSearchCitizenInformation(Integer.parseInt(cpr)));
         
         return ui;
     }
     
     public ObservableList firstnameSearchCI(String firstname) {
-        ObservableList<UserInformation2> ui;
+        ObservableList<UserInformation> ui;
         ui = FXCollections.observableArrayList(userProfileRepository.firstnameSearchCitizenInformation(firstname));
         
         return ui;

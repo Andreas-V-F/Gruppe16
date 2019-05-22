@@ -9,7 +9,7 @@ package SensumBoosted2.Domain;
  *
  * @author Alex
  */
-public class UserInformation2 {
+public class UserInformation {
     
     int userid;
     String firstname;
@@ -21,7 +21,7 @@ public class UserInformation2 {
     String city;
     String email;
     
-    public UserInformation2(int userid, String firstName, String middleName,
+    public UserInformation(int userid, String firstName, String middleName,
             String lastName, int cpr, String address, int postalCode, String city,
             String email) {
         this.userid = userid;
