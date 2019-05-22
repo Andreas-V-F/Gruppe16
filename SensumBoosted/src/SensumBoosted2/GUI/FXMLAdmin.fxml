@@ -5,11 +5,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SensumBoosted2.GUI.FXMLAdminController">
+<AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SensumBoosted2.GUI.FXMLAdminController">
    <children>
       <Pane prefHeight="700.0" prefWidth="1000.0">
          <children>
-            <Button layoutX="10.0" layoutY="158.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="180.0" text="Opret medarbejder" />
+            <Button layoutX="10.0" layoutY="158.0" mnemonicParsing="false" onAction="#createEmployeeBTN" prefHeight="60.0" prefWidth="180.0" text="Opret medarbejder" />
             <Button layoutX="10.0" layoutY="227.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="180.0" text="Se ansatte" />
             <Button layoutX="10.0" layoutY="365.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="180.0" text="Se borgere" />
             <Button layoutX="10.0" layoutY="296.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="180.0" text="Ændre ansatte" />

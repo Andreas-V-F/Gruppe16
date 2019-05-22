@@ -11,14 +11,16 @@ package SensumBoosted2.Domain;
  */
 public class Staff {
     private String username;
+    private String name;
     private String usertype;
     private String userID;
     private String department;
 
    
 
-    public Staff(String username, String usertype, String userID, String department) {
+    public Staff(String username, String name, String usertype, String userID, String department) {
         this.username = username;
+        this.name = name;
         this.usertype = usertype;
         this.userID = userID;
         this.department = department;
@@ -34,6 +36,14 @@ public class Staff {
 
     public String getDepartment() {
         return department;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getUserID() {
+        return userID;
     }
     
     

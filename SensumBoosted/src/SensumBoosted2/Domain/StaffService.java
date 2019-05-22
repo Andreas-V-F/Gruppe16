@@ -39,8 +39,12 @@ public class StaffService {
         return staff.getUsertype();
     }
 
-    public String getStaffName() {
+    public String getStaffUsername() {
         return staff.getUsername();
+    }
+    
+    public String getStaffName(){
+        return staff.getName();
     }
 
     public String getStaffDepartment() {

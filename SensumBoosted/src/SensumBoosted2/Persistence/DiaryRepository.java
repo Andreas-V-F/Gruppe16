@@ -113,19 +113,20 @@ public class DiaryRepository {
         return id;
     }
 
-    public List<String> getDiaryEntries(int diaryID) {
+    public List<String> getDiaryEntries(int diaryID, String perm) {
         List<String> entries = new ArrayList<>();
-        int timestamp = 0;
 
         try (Statement st = connection.getConnection().createStatement()) {
-            String sql = "SELECT entry_text, create_timestamp FROM diary_entry WHERE diary_id = " + diaryID + "order by create_timestamp DESC";
+            String sql = "SELECT entry_text, permission FROM diary_entry WHERE diary_id = " + diaryID;
 
             rs = st.executeQuery(sql);
             while (rs.next()) {
-                System.out.println("");
-                entries.add(rs.getString("entry_text"));
-                //timestamp = rs.getint("create_timestamp");
-
+                if (rs.getString("permission").contains(perm)) {
+                    entries.add(rs.getString("entry_text"));
+                    System.out.println("added");
+                } else {
+                    System.out.println("not added");
+                }
             }
         } catch (SQLException ex) {
             Logger.getLogger(SensumBoosted2.Persistence.DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
@@ -162,16 +163,21 @@ public class DiaryRepository {
         }
     }
 
-    public List createDiaryEntryTableView(long logbookID) {
+    public List createDiaryEntryTableView(long logbookID, String permission) {
         List<DiaryEntry> diaries = new ArrayList<>();
         try {
-            ResultSet rs = connection.getConnection().createStatement().executeQuery("SELECT * FROM diary_entry WHERE diary_id = " + logbookID + "order by create_timestamp DESC");
+            ResultSet rs = connection.getConnection().createStatement().executeQuery("SELECT diary_entry_id, entry_text, permission FROM diary_entry WHERE diary_id = " + logbookID + "ORDER BY create_timestamp DESC");
 
             while (rs.next()) {
-                String text = rs.getString("entry_text");
-                long diaryId = rs.getLong("diary_entry_id");
+                if (rs.getString("permission").contains(permission)) {
+                    String text = rs.getString("entry_text");
+                    long diaryId = rs.getLong("diary_entry_id");
 
-                diaries.add(new DiaryEntry(text, diaryId));
+                    diaries.add(new DiaryEntry(text, diaryId));
+                    System.out.println("added");
+                } else {
+                    System.out.println("not added");
+                }
 
             }
             return diaries;

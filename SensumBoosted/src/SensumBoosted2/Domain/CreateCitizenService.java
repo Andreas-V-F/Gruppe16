@@ -15,12 +15,6 @@ public class CreateCitizenService {
 
     CreateCitizenRepository createCitizenRepository = new CreateCitizenRepository();
 
-//    //METODE VIRKER IKKE... FIX!
-//    public void createCI(String firstname, String middlename, String lastname,
-//            int cpr, String address, int postalcode, String city, String email, int phonenumber,
-//            String department) {
-//        createCitizenRepository.createCitizenInformation(firstname, middlename, lastname, cpr, address, postalcode, city, email, phonenumber, department);
-//    }
     public void createCA(String firstname, String middlename, String lastname,
             int cpr, String address, int postalcode, String city, String email, int phonenumber,
             String department, String password, String usertype) {

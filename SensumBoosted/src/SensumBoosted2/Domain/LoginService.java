@@ -6,6 +6,8 @@
 package SensumBoosted2.Domain;
 
 import SensumBoosted2.Persistence.LoginRepository;
+import SensumBoosted2.Persistence.EmployeeRepository;
+import SensumBoosted2.Persistence.UserProfileRepository;
 
 /**
  *
@@ -25,12 +27,16 @@ public class LoginService {
     }
 
     public boolean validateLogin() {
-        
+
         boolean validatedLogin = false;
         loginRepository = new LoginRepository();
         if (loginRepository.validateInDatabase(loginUsername, loginPassword)) {
             String[] staffinfo = loginRepository.returnStaffInformation(loginUsername);
-            Staff staff = new Staff(loginUsername, staffinfo[0], staffinfo[1], staffinfo[2]);
+            if (staffinfo[0].equals("Borger")) {
+                staff = new Staff(loginUsername, new UserProfileRepository().getName(Integer.parseInt(staffinfo[1])) ,staffinfo[0], staffinfo[1], staffinfo[2]);
+            } else{
+                staff = new Staff(loginUsername, new EmployeeRepository().getName(Integer.parseInt(staffinfo[1])) ,staffinfo[0], staffinfo[1], staffinfo[2]);
+            }
             StaffService staffService = new StaffService();
             staffService.setStaff(staff);
             validatedLogin = true;
@@ -38,5 +44,5 @@ public class LoginService {
         }
         return validatedLogin;
     }
-    
+
 }

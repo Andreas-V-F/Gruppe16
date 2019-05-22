@@ -157,6 +157,7 @@ public class FXMLMainMenuController implements Initializable {
                 citizenBTN.setVisible(true);
                 adminBTN.setDisable(true);
                 adminBTN.setVisible(false);
+                break;
             default:
                 citizenBTN.setDisable(true);
                 citizenBTN.setVisible(false);

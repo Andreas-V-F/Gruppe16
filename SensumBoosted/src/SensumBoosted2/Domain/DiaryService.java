@@ -39,12 +39,6 @@ public class DiaryService {
         return id;
     }
 
-    public List<String> getDiaryEntries(int diaryID) {
-        List<String> entries = dr.getDiaryEntries(diaryID);
-        return entries;
-
-    }
-
     public void saveDiary(long entryId, String text) {
         long diaryID = getDiaryIdByEntryId(entryId);
 
@@ -65,7 +59,7 @@ public class DiaryService {
     
     public ObservableList createDiaryEntryTableView(long logbookID) {
         ObservableList<DiaryEntry> diaries;
-        diaries = FXCollections.observableArrayList(dr.createDiaryEntryTableView(logbookID));
+        diaries = FXCollections.observableArrayList(dr.createDiaryEntryTableView(logbookID, staffService.getStaffType()));
         return diaries;
     }
     

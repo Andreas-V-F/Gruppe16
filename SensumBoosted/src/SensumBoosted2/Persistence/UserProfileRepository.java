@@ -102,7 +102,7 @@ public class UserProfileRepository {
             deleteUser(selectedUserID);
         } catch (SQLException ex) {
             Logger.getLogger(UserProfileRepository.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
     }
 
     private void deleteUser(int userID) {
@@ -114,7 +114,7 @@ public class UserProfileRepository {
             deleteCase(userID);
         } catch (SQLException ex) {
             Logger.getLogger(UserProfileRepository.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
     }
 
     private void deleteCase(int userID) {
@@ -126,7 +126,7 @@ public class UserProfileRepository {
             deleteDiary(userID);
         } catch (SQLException ex) {
             Logger.getLogger(UserProfileRepository.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
 
     }
 
@@ -146,10 +146,10 @@ public class UserProfileRepository {
 
         } catch (SQLException ex) {
             Logger.getLogger(UserProfileRepository.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
     }
-    
-    private void deleteDiaryEntry(int diaryID){
+
+    private void deleteDiaryEntry(int diaryID) {
         try {
             Statement st = connection.createStatement();
             String sql = "DELETE FROM diary_entry WHERE diary_id = '" + diaryID + "'";
@@ -157,8 +157,26 @@ public class UserProfileRepository {
             st.close();
         } catch (SQLException ex) {
             Logger.getLogger(UserProfileRepository.class.getName()).log(Level.SEVERE, null, ex);
-        } 
-        
+        }
+
+    }
+
+    public String getName(int userID) {
+        try {
+            Statement st = connection.createStatement();
+            String sql = "SELECT * FROM citizen_information WHERE user_id = '" + userID + "'";
+            rs = st.executeQuery(sql);
+            String name = null;
+            while(rs.next()){
+                name = rs.getString("firstname") + " " + rs.getString("middlename") + " " + rs.getString("lastname");
+            }
+            st.close();
+            return name;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return null;
+
     }
 
 }
