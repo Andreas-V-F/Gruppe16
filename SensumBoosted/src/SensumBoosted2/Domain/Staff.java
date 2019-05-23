@@ -10,6 +10,7 @@ package SensumBoosted2.Domain;
  * @author Andreas Frederiksen
  */
 public class Staff {
+    
     private String username;
     private String name;
     private String usertype;

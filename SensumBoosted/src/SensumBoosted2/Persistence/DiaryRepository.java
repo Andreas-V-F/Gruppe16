@@ -56,7 +56,6 @@ public class DiaryRepository {
             String sql = "UPDATE public.diary_entry"
                     + "    SET entry_text= '" + text + "', create_timestamp= '" + timestamp + "'"
                     + "    WHERE diary_entry_id = " + diaryEntryID + "; ";
-            System.out.println("slq :" + sql);
             st.execute(sql);
             st.close();
         } catch (SQLException ex) {
@@ -123,9 +122,6 @@ public class DiaryRepository {
             while (rs.next()) {
                 if (rs.getString("permission").contains(perm)) {
                     entries.add(rs.getString("entry_text"));
-                    System.out.println("added");
-                } else {
-                    System.out.println("not added");
                 }
             }
         } catch (SQLException ex) {
@@ -174,15 +170,56 @@ public class DiaryRepository {
                     long diaryId = rs.getLong("diary_entry_id");
 
                     diaries.add(new DiaryEntry(text, diaryId));
-                    System.out.println("added");
-                } else {
-                    System.out.println("not added");
-                }
+                } 
 
             }
             return diaries;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
+        }
+        return null;
+    }
+
+    public long getMedicinEntryID(int cpr, long diaryID) {
+        try (Statement st = connection.getConnection().createStatement()) {
+            String sql = "SELECT * FROM diary_entry WHERE diary_id = " + diaryID;
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                if (rs.getString("entry_text").contains("Medicinudlevering for: " + cpr)) {
+                    return rs.getLong("diary_entry_id");
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(SensumBoosted2.Persistence.DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+    }
+
+    public String getEntryText(long entryID) {
+        try (Statement st = connection.getConnection().createStatement()) {
+            String sql = "SELECT entry_text FROM diary_entry WHERE diary_entry_id = " + entryID;
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                return rs.getString("entry_text");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(SensumBoosted2.Persistence.DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public String getCreatorPerm(long diaryEntryID) {
+        try (Statement st = connection.getConnection().createStatement()) {
+            String sql = "SELECT permission FROM diary_entry WHERE diary_entry_id = " + diaryEntryID;
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                return rs.getString("permission").split("__")[0];
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(SensumBoosted2.Persistence.DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }

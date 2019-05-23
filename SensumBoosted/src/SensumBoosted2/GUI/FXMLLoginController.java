@@ -9,8 +9,6 @@ import SensumBoosted2.Domain.LoginService;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -71,8 +69,7 @@ public class FXMLLoginController implements Initializable {
             setMainMenuWindowSize(event);
             loginAnchorPane.getChildren().setAll(pane);
         } catch (IOException ex) {
-            System.out.println("Fejl med at indlæse MainMenu FXML");
-            Logger.getLogger(FXMLLoginController.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
         }
     }
 

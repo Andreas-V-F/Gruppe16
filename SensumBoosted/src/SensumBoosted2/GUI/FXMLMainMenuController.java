@@ -33,6 +33,7 @@ import javafx.scene.paint.Color;
  * @author Mikkel Høyberg
  */
 public class FXMLMainMenuController implements Initializable {
+
     private StaffService staffService;
 
     @FXML
@@ -59,19 +60,26 @@ public class FXMLMainMenuController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        staff();
         try {
-            Pane pane = FXMLLoader.load(getClass().getResource("FXMLUserProfile.fxml"));
-            switchingPane.getChildren().setAll(pane);
-            staff();
+            if (!staffService.getStaffType().equals("Borger")) {
+                Pane pane = FXMLLoader.load(getClass().getResource("FXMLUserProfile.fxml"));
+                switchingPane.getChildren().setAll(pane);
+            } else {
+                FXMLDiaryController.fromMenu = true;
+                staffService.setUserInfo(staffService.getUserInfoFromUserID(staffService.getStaffUserID()));
+                Pane pane = FXMLLoader.load(getClass().getResource("FXMLDiary.fxml"));
+                switchingPane.getChildren().setAll(pane);
+            }
         } catch (IOException ex) {
-            Logger.getLogger(FXMLMainMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
         }
         citizenBTN.setEffect(getEffect());
     }
 
     public FXMLMainMenuController() {
     }
-    
+
     private void setLoginWindowSize(Event event) {
         ((Node) (event.getSource())).getScene().getWindow().setWidth(310);
         ((Node) (event.getSource())).getScene().getWindow().setHeight(265);

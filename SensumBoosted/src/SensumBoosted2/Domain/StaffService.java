@@ -5,6 +5,8 @@
  */
 package SensumBoosted2.Domain;
 
+import SensumBoosted2.Persistence.UserProfileRepository;
+
 /**
  *
  * @author Andreas Frederiksen
@@ -61,6 +63,15 @@ public class StaffService {
     
     public UserInformation getUserInfo(){
         return userInfo;
+    }
+    
+    public String getStaffUserID(){
+        return staff.getUserID();
+    }
+
+    public Object getUserInfoFromUserID(String staffUserID) {
+        UserProfileRepository userProfileRepository = new UserProfileRepository();
+        return userProfileRepository.getUserinfo(Integer.parseInt(staffUserID));
     }
 
 }

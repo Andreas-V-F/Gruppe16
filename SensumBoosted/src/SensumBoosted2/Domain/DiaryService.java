@@ -1,6 +1,7 @@
 package SensumBoosted2.Domain;
 
 import SensumBoosted2.Persistence.DiaryRepository;
+import java.util.Date;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -39,13 +40,6 @@ public class DiaryService {
         return id;
     }
 
-    public void saveDiary(long entryId, String text) {
-        long diaryID = getDiaryIdByEntryId(entryId);
-
-        createDiaryEntry(diaryID, text);
-
-    }
-
     public void deleteDiaryEntry(long diaryEntryId) {
         dr.deleteDiaryEntry(diaryEntryId);
 
@@ -55,6 +49,19 @@ public class DiaryService {
         ObservableList<DiaryEntry> diaries;
         diaries = FXCollections.observableArrayList(dr.createDiaryEntryTableView(logbookID, staffService.getStaffType()));
         return diaries;
+    }
+    
+    public void medicineDiaryEntry(long diaryID, String medicine, String amount, int cpr){
+        String output = new Date() + "\t" + medicine + "\t" + amount + "\n";
+        if(dr.getMedicinEntryID(cpr, diaryID) == -1){
+            dr.createDiaryEntry(diaryID, "Medicinudlevering for: " + cpr + "\n" + output, "Medicinansvarlig");
+        } else{
+            dr.editDiaryEntry(dr.getMedicinEntryID(cpr, diaryID), dr.getEntryText(dr.getMedicinEntryID(cpr, diaryID)) + output);
+        };
+    }
+    
+    public String getCreatorPerm(long diaryEntryID){
+        return dr.getCreatorPerm(diaryEntryID);
     }
     
     

@@ -24,6 +24,7 @@ import javafx.stage.Stage;
  * @author Andreas Ibsen Cor
  */
 public class FXMLCreateEmployeeController implements Initializable {
+
     @FXML
     private Label firstnameLabel;
     @FXML
@@ -57,14 +58,14 @@ public class FXMLCreateEmployeeController implements Initializable {
     @FXML
     private Label usernameLabel;
     @FXML
-    private PasswordField usernameTextField;
+    private TextField usernameTextField;
     @FXML
     private Button okBtn;
     @FXML
     private Button cancelBtn;
     @FXML
     private Label checkLabel;
-    
+
     private CreateEmployeeService createEmployeeService;
 
     /**
@@ -73,17 +74,17 @@ public class FXMLCreateEmployeeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         createEmployeeService = new CreateEmployeeService();
-        
+
         String[] departments = {"Misbrug", "Handicap"};
         departmentChoiceBox.getItems().addAll(departments);
-        
+
         String[] staffTypes = {"Administrator", "Medicinansvarlig", "Sagsarbejder", "Alment"};
         staffTypeChoiceBox.getItems().addAll(staffTypes);
-    }    
+    }
 
     @FXML
     private void okBtnHandler(ActionEvent event) {
-        TextField[] textFields = {firstnameTextField, middlenameTextField, lastnameTextField, emailTextField, usernameTextField,  passwordTextField, repeatPWTextField};
+        TextField[] textFields = {firstnameTextField, middlenameTextField, lastnameTextField, emailTextField, usernameTextField, passwordTextField, repeatPWTextField};
         for (TextField text : textFields) {
             System.out.println(text.getText());
             if (text.getText().isEmpty() && text != middlenameTextField) {
@@ -116,13 +117,15 @@ public class FXMLCreateEmployeeController implements Initializable {
 
     @FXML
     private void cancelBtnHandler(ActionEvent event) {
+        Stage stage = (Stage) cancelBtn.getScene().getWindow();
+        stage.close();
     }
-    
+
     private boolean emailChecker() {
         if (emailTextField.getText().contains("@") == false || emailTextField.getText().contains(".") == false) {
             return false;
         }
         return true;
     }
-    
+
 }

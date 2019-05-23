@@ -16,23 +16,29 @@ public class UserInformation {
     String middlename;
     String lastname;
     int cpr;
+    int phonenumber;
     String address;
     int postalcode;
     String city;
     String email;
     
     public UserInformation(int userid, String firstName, String middleName,
-            String lastName, int cpr, String address, int postalCode, String city,
+            String lastName, int cpr, int phonenumber, String address, int postalCode, String city,
             String email) {
         this.userid = userid;
         this.firstname = firstName;
         this.middlename = middleName;
         this.lastname = lastName;
         this.cpr = cpr;
+        this.phonenumber = phonenumber;
         this.address = address;
         this.postalcode = postalCode;
         this.city = city;
         this.email = email;
+    }
+
+    public int getPhonenumber() {
+        return phonenumber;
     }
 
     public int getUserid() {

@@ -5,6 +5,7 @@
  */
 package SensumBoosted2.GUI;
 
+import SensumBoosted2.Domain.CreateCitizenService;
 import SensumBoosted2.Domain.StaffService;
 import SensumBoosted2.Domain.UserInformation;
 import SensumBoosted2.Domain.UserProfileService;
@@ -68,7 +69,7 @@ public class FXMLUserProfileController implements Initializable {
     @FXML
     public TextField editLastnameField;
     @FXML
-    public TextField editCPRField;
+    public TextField editPhoneField;
     @FXML
     public TextField editAddressField;
     @FXML
@@ -103,7 +104,7 @@ public class FXMLUserProfileController implements Initializable {
     @FXML
     private TableColumn<?, ?> lastnameColumn;
     @FXML
-    private TableColumn<?, ?> cprColumn;
+    private TableColumn<?, ?> phoneColumn;
     @FXML
     private TableColumn<?, ?> addressColumn;
     @FXML
@@ -127,6 +128,10 @@ public class FXMLUserProfileController implements Initializable {
     private AnchorPane rootPane;
     @FXML
     private Button deleteUserBtn;
+    
+    CreateCitizenService createCitizenService = new CreateCitizenService();
+    @FXML
+    private Label errorLabel;
 
     public FXMLUserProfileController() {
     }
@@ -172,15 +177,30 @@ public class FXMLUserProfileController implements Initializable {
     @FXML
     private void saveBtnHandler(ActionEvent event) {
         ui = (UserInformation) userInformationTableView.getSelectionModel().getSelectedItem();
+        saveStatusLabel.setVisible(false);
+        if(!numberChecker(editPhoneField.getText()) || !postalcodeChecker(editPostalCodeField.getText()) || !emailChecker(editEmailField.getText())){
+            errorLabel.setVisible(true);
+            return;
+        }
+        
         if (!editFirstnameField.getText().equals(ui.getFirstname()) || !editMiddlenameField.getText().equals(ui.getMiddlename())
-                || !editLastnameField.getText().equals(ui.getLastname()) || !editCPRField.getText().equals(Integer.toString(ui.getCpr()))
+                || !editLastnameField.getText().equals(ui.getLastname()) || !editPhoneField.getText().equals(Integer.toString(ui.getPhonenumber()))
                 || !editAddressField.getText().equals(Integer.toString(ui.getPostalcode())) || !editCityField.getText().equals(ui.getCity())
                 || !editEmailField.getText().equals(ui.getEmail())) {
 
             userProfileService.saveCI(editFirstnameField.getText(), editMiddlenameField.getText(), editLastnameField.getText(),
-                    Integer.parseInt(editCPRField.getText()), editAddressField.getText(), Integer.parseInt(editPostalCodeField.getText()),
+                    Integer.parseInt(editPhoneField.getText()), editAddressField.getText(), Integer.parseInt(editPostalCodeField.getText()),
                     editCityField.getText(), editEmailField.getText(), ui.getUserid());
-            saveStatusLabel.setText("Ændringer gemt");
+            saveStatusLabel.setVisible(true);
+            errorLabel.setVisible(false);
+            editFirstnameField.clear();
+            editMiddlenameField.clear();
+            editLastnameField.clear();
+            editPhoneField.clear();
+            editAddressField.clear();
+            editPostalCodeField.clear();
+            editCityField.clear();
+            editEmailField.clear();
         }
         initiateTableView();
 
@@ -191,7 +211,7 @@ public class FXMLUserProfileController implements Initializable {
         firstnameColumn.setCellValueFactory(new PropertyValueFactory<>("firstname"));
         middlenameColumn.setCellValueFactory(new PropertyValueFactory<>("middlename"));
         lastnameColumn.setCellValueFactory(new PropertyValueFactory<>("lastname"));
-        cprColumn.setCellValueFactory(new PropertyValueFactory<>("cpr"));
+        phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phonenumber"));
         addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
         postalcodeColumn.setCellValueFactory(new PropertyValueFactory<>("postalcode"));
         cityColumn.setCellValueFactory(new PropertyValueFactory<>("city"));
@@ -211,6 +231,10 @@ public class FXMLUserProfileController implements Initializable {
         initiateCols();
 
         if (rbCPR.isSelected()) {
+            if(!cprChecker(searchUserTextField.getText())){
+                errorLabel.setVisible(true);
+                return;
+            }
             userInformationTableView.setItems(userProfileService.cprSearchCI(searchUserTextField.getText()));
         } else if (rbFirstname.isSelected()) {
             userInformationTableView.setItems(userProfileService.firstnameSearchCI(searchUserTextField.getText()));
@@ -220,11 +244,11 @@ public class FXMLUserProfileController implements Initializable {
     @FXML
     private void editUserBtnHandler(ActionEvent event) {
         ui = (UserInformation) userInformationTableView.getSelectionModel().getSelectedItem();
-
+        
         editFirstnameField.setText(ui.getFirstname());
         editMiddlenameField.setText(ui.getMiddlename());
         editLastnameField.setText(ui.getLastname());
-        editCPRField.setText(Integer.toString(ui.getCpr()));
+        editPhoneField.setText(Integer.toString(ui.getCpr()));
         editAddressField.setText(ui.getAddress());
         editPostalCodeField.setText(Integer.toString(ui.getPostalcode()));
         editCityField.setText(ui.getCity());
@@ -299,6 +323,7 @@ public class FXMLUserProfileController implements Initializable {
                     medicineBtn.setVisible(false);
                     editUserBtn.setVisible(false);
                     createCitizenBtn.setVisible(false);
+                    deleteUserBtn.setVisible(false);
             }
         } else {
             for (Button button : buttons) {
@@ -333,5 +358,55 @@ public class FXMLUserProfileController implements Initializable {
             staffService.setUserInfo(null);
             permissions(false);
         }
+    }
+    
+    private boolean cprChecker(String cprText) {
+        if (cprText.length() != 8) {
+            return false;
+        }
+
+        try {
+            int cpr = Integer.parseInt(cprText);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return true;
+    }
+    
+    private boolean postalcodeChecker(String postalNumber) {
+        if (postalNumber.length() != 4) {
+            return false;
+        }
+
+        try {
+            int postalcode = Integer.parseInt(postalNumber);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return true;
+    }
+    
+     private boolean numberChecker(String phone) {
+        if (phone.length() != 8) {
+            return false;
+        }
+
+        try {
+            int number = Integer.parseInt(phone);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+
+        if (createCitizenService.numberCheck(Integer.parseInt(phone))) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean emailChecker(String email) {
+        if (email.contains("@") == false || email.contains(".") == false) {
+            return false;
+        }
+        return true;
     }
 }

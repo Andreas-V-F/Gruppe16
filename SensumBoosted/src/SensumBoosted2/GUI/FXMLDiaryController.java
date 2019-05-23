@@ -53,7 +53,7 @@ public class FXMLDiaryController implements Initializable {
     DiaryService ds = new DiaryService();
     CaseService caseService = new CaseService();
 
-    StaffService StaffService = new StaffService();
+    StaffService staffService = new StaffService();
     @FXML
     private TableView<DiaryEntry> DiaryEntryTableView;
     @FXML
@@ -125,14 +125,31 @@ public class FXMLDiaryController implements Initializable {
             deleteDiaryBTN.setDisable(false);
             saveDiaryButton.setDisable(false);
         }
-
+        if (!DiaryEntryTableView.getSelectionModel().getSelectedItem().getText().contains("Medicinudlevering for:")) {
+            diaryTextField.setEditable(true);
+            deleteDiaryBTN.setDisable(false);
+            saveDiaryButton.setDisable(false);
+        } else {
+            diaryTextField.setEditable(false);
+            deleteDiaryBTN.setDisable(true);
+            saveDiaryButton.setDisable(true);
+        }
+        if (ds.getCreatorPerm(DiaryEntryTableView.getSelectionModel().getSelectedItem().getDiaryEntryId()).equals(staffService.getStaffType()) || staffService.getStaffType().equals("Administrator")) {
+            diaryTextField.setEditable(true);
+            deleteDiaryBTN.setDisable(false);
+            saveDiaryButton.setDisable(false);
+        } else {
+            diaryTextField.setEditable(false);
+            deleteDiaryBTN.setDisable(true);
+            saveDiaryButton.setDisable(true);
+        }
         diaryTextField.setText(DiaryEntryTableView.getSelectionModel().getSelectedItem().getText());
     }
 
     @FXML
     private void newDiaryBTNHandler(ActionEvent event) {
         if (fromMenu) {
-            ds.createDiaryEntry(ds.getDiaryId(ds.getOriginalCaseID(StaffService.getUserID())), "Ny note");
+            ds.createDiaryEntry(ds.getDiaryId(ds.getOriginalCaseID(staffService.getUserID())), "Ny note");
         } else {
             ds.createDiaryEntry(ds.getDiaryId(caseService.getSelectedCaseID()), "Ny note");
         }
@@ -144,7 +161,7 @@ public class FXMLDiaryController implements Initializable {
 
     private void refreshTable() {
         if (fromMenu) {
-            DiaryEntryTableView(ds.getDiaryId(ds.getOriginalCaseID(StaffService.getUserID())));
+            DiaryEntryTableView(ds.getDiaryId(ds.getOriginalCaseID(staffService.getUserID())));
         } else {
             DiaryEntryTableView(ds.getDiaryId(caseService.getSelectedCaseID()));
         }

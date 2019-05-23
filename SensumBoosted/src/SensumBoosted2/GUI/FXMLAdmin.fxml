@@ -9,13 +9,9 @@
    <children>
       <Pane prefHeight="700.0" prefWidth="1000.0">
          <children>
-            <Button layoutX="10.0" layoutY="158.0" mnemonicParsing="false" onAction="#createEmployeeBTN" prefHeight="60.0" prefWidth="180.0" text="Opret medarbejder" />
-            <Button layoutX="10.0" layoutY="227.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="180.0" text="Se ansatte" />
-            <Button layoutX="10.0" layoutY="365.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="180.0" text="Se borgere" />
-            <Button layoutX="10.0" layoutY="296.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="180.0" text="Ændre ansatte" />
-            <Button fx:id="seeLogLoginBTN" accessibleRole="TOGGLE_BUTTON" layoutX="10.0" layoutY="561.0" mnemonicParsing="false" onAction="#seeLogLoginBTNHandler" prefHeight="60.0" prefWidth="180.0" text="Se log for Log ind" />
-            <Button layoutX="10.0" layoutY="630.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="180.0" text="Hallo?" />
-            <TextArea fx:id="logTextArea" layoutX="200.0" layoutY="158.0" prefHeight="532.0" prefWidth="773.0" />
+            <Button layoutX="211.0" layoutY="91.0" mnemonicParsing="false" onAction="#createEmployeeBTN" prefHeight="60.0" prefWidth="180.0" text="Opret medarbejder" />
+            <Button fx:id="seeLogLoginBTN" accessibleRole="TOGGLE_BUTTON" layoutX="24.0" layoutY="91.0" mnemonicParsing="false" onAction="#seeLogLoginBTNHandler" prefHeight="60.0" prefWidth="180.0" text="Se log for Log ind" />
+            <TextArea fx:id="logTextArea" layoutX="24.0" layoutY="158.0" prefHeight="532.0" prefWidth="949.0" />
          </children>
       </Pane>
    </children>

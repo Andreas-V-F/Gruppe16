@@ -159,7 +159,6 @@ public class FXMLCaseController implements Initializable {
     }
 
     public void update(boolean b) {
-
         infoBox.setText(caseService.printToInfo());
 
         if (b == true) {
