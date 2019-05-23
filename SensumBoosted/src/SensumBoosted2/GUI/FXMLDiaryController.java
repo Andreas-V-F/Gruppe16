@@ -99,13 +99,10 @@ public class FXMLDiaryController implements Initializable {
 
     @FXML
     private void backToCasePaneHandler(ActionEvent event) throws IOException {
-        if (fromMenu) {
-            AnchorPane pane = FXMLLoader.load(getClass().getResource("FXMLUserProfile.fxml"));
-            rootPane.getChildren().setAll(pane);
-        } else {
-            AnchorPane pane = FXMLLoader.load(getClass().getResource("FXMLCaseMenu.fxml"));
-            rootPane.getChildren().setAll(pane);
-        }
+
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("FXMLUserProfile.fxml"));
+        rootPane.getChildren().setAll(pane);
+
     }
 
     @FXML

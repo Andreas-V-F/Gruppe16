@@ -69,7 +69,7 @@ public class FXMLPreviousCasesController implements Initializable {
 
     @FXML
     private void handleBackButton(ActionEvent event) throws IOException {
-        AnchorPane pane = FXMLLoader.load(getClass().getResource("FXMLCaseMenu.fxml"));
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("FXMLUserProfile.fxml"));
         rootPane.getChildren().setAll(pane);
     }
 

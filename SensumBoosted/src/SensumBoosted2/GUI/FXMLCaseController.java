@@ -153,7 +153,7 @@ public class FXMLCaseController implements Initializable {
             handleSaveAction(event);
         }
 
-        AnchorPane pane = FXMLLoader.load(getClass().getResource("FXMLCaseMenu.fxml"));
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("FXMLUserProfile.fxml"));
         rootPane.getChildren().setAll(pane);
 
     }

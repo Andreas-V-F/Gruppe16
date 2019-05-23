@@ -5,6 +5,7 @@
  */
 package SensumBoosted2.GUI;
 
+import SensumBoosted2.Domain.CaseService;
 import SensumBoosted2.Domain.CreateCitizenService;
 import SensumBoosted2.Domain.StaffService;
 import SensumBoosted2.Domain.UserInformation;
@@ -132,6 +133,8 @@ public class FXMLUserProfileController implements Initializable {
     CreateCitizenService createCitizenService = new CreateCitizenService();
     @FXML
     private Label errorLabel;
+    @FXML
+    private Button prevCaseButton;
 
     public FXMLUserProfileController() {
     }
@@ -268,8 +271,13 @@ public class FXMLUserProfileController implements Initializable {
     @FXML
     private void openCasePane(ActionEvent event) throws IOException {
         FXMLDiaryController.fromMenu = false;
-        AnchorPane pane = FXMLLoader.load(getClass().getResource("FXMLCaseMenu.fxml"));
+        FXMLCaseController.boo = true;
+        CaseService caseService = new CaseService();
+        caseService.createCase("", "", "", "", "");
+        caseService.setSelectedCaseID(caseService.getOpenCaseID());
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("FXMLCase.fxml"));
         rootPane.getChildren().setAll(pane);
+        
     }
 
     @FXML
@@ -286,7 +294,7 @@ public class FXMLUserProfileController implements Initializable {
     }
 
     private void permissions(boolean b) {
-        Button[] buttons = {caseBtn, diaryBtn, medicineBtn, editUserBtn, createCitizenBtn, deleteUserBtn};
+        Button[] buttons = {caseBtn, prevCaseButton, diaryBtn, medicineBtn, editUserBtn, createCitizenBtn, deleteUserBtn};
         if (!b) {
             for (Button button : buttons) {
                 button.setDisable(true);
@@ -294,31 +302,34 @@ public class FXMLUserProfileController implements Initializable {
             switch (staffService.getStaffType()) {
                 case "Administrator":
                     caseBtn.setVisible(true);
+                    prevCaseButton.setVisible(true);
                     diaryBtn.setVisible(true);
                     medicineBtn.setVisible(true);
                     editUserBtn.setVisible(true);
                     deleteUserBtn.setVisible(true);
-                    createCitizenBtn.setDisable(false);
                     createCitizenBtn.setVisible(true);
                     break;
                 case "Medicinansvarlig":
                     caseBtn.setVisible(false);
+                    prevCaseButton.setVisible(false);
                     diaryBtn.setVisible(true);
                     medicineBtn.setVisible(true);
                     editUserBtn.setVisible(false);
+                    deleteUserBtn.setVisible(false);
                     createCitizenBtn.setVisible(false);
                     break;
                 case "Sagsarbejder":
                     caseBtn.setVisible(true);
+                    prevCaseButton.setVisible(true);
                     diaryBtn.setVisible(true);
                     medicineBtn.setVisible(false);
                     editUserBtn.setVisible(true);
                     deleteUserBtn.setVisible(true);
-                    createCitizenBtn.setDisable(false);
                     createCitizenBtn.setVisible(true);
                     break;
                 default:
                     caseBtn.setVisible(false);
+                    prevCaseButton.setVisible(false);
                     diaryBtn.setVisible(false);
                     medicineBtn.setVisible(false);
                     editUserBtn.setVisible(false);
@@ -408,5 +419,11 @@ public class FXMLUserProfileController implements Initializable {
             return false;
         }
         return true;
+    }
+
+    @FXML
+    private void prevCaseButtonHandler(ActionEvent event) throws IOException {
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("FXMLPreviousCases.fxml"));
+        rootPane.getChildren().setAll(pane);
     }
 }
