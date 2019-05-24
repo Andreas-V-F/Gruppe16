@@ -308,6 +308,7 @@ public class FXMLUserProfileController implements Initializable {
                     editUserBtn.setVisible(true);
                     deleteUserBtn.setVisible(true);
                     createCitizenBtn.setVisible(true);
+                    createCitizenBtn.setDisable(false);
                     break;
                 case "Medicinansvarlig":
                     caseBtn.setVisible(false);
@@ -326,6 +327,7 @@ public class FXMLUserProfileController implements Initializable {
                     editUserBtn.setVisible(true);
                     deleteUserBtn.setVisible(true);
                     createCitizenBtn.setVisible(true);
+                    createCitizenBtn.setDisable(false);
                     break;
                 default:
                     caseBtn.setVisible(false);
