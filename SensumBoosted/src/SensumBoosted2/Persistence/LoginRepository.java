@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 public class LoginRepository {
 
     private ConnectRepository connectRepository;
-    private LogRepository logRepository;
+//    private LogRepository logRepository;
 
     public LoginRepository() {
     }
@@ -61,10 +61,10 @@ public class LoginRepository {
 
     private void logLoginAttempt(String username, String attempt) {
         try {
-            logRepository = new LogRepository();
-            logRepository.createLog("LoginLog.txt");
-            logRepository.getLogger().setLevel(Level.ALL);
-            logRepository.getLogger().info("Bruger: \"" + username + "\" " + attempt);
+            LogRepository logAttempt = LogRepository.getInstance();
+            logAttempt.createLog("LoginLog.txt");
+            logAttempt.getLogger().setLevel(Level.ALL);
+            logAttempt.getLogger().info("Bruger: \"" + username + "\" " + attempt);
         } catch (SecurityException ex) {
             System.out.println(ex.getMessage());
         } catch (IOException ex) {
@@ -89,7 +89,7 @@ public class LoginRepository {
 
         return staffinfo;
     }
-    
+
 //    public int getIdFromUsername(String loginUsername){
 //        int userId = 0;
 //        try {
@@ -105,5 +105,4 @@ public class LoginRepository {
 //        return userId;
 //        
 //    }
-
 }

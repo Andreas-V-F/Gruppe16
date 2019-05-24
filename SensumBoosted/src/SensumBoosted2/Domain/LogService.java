@@ -13,7 +13,6 @@ import SensumBoosted2.Persistence.LogRepository;
  */
 public class LogService {
 
-    private LogRepository logRepository = new LogRepository();;
     private static LogService instance;
 
     private LogService() {
@@ -27,6 +26,6 @@ public class LogService {
     }
 
     public String getLogFile() {
-        return logRepository.getLogFile("LoginLog.txt");
+        return LogRepository.getInstance().getLogFile("LoginLog.txt");
     }
 }

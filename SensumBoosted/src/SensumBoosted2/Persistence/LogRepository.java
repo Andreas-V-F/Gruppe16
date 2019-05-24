@@ -5,6 +5,7 @@
  */
 package SensumBoosted2.Persistence;
 
+import SensumBoosted2.Domain.LogService;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -23,10 +24,18 @@ import java.util.stream.Stream;
 public class LogRepository {
 
     private Logger logger;
-    private Log myLog;
+    private static LogRepository instance;
+    private LogRepository myLog;
     private FileHandler fH;
 
-    public LogRepository() {
+    private LogRepository() {
+    }
+    
+        public static LogRepository getInstance() {
+        if (instance == null) {
+            instance = new LogRepository();
+        }
+        return instance;
     }
 
     public void createLog(String fileName) throws SecurityException, IOException {
@@ -43,7 +52,7 @@ public class LogRepository {
 
     public void logLoginAttempt(String username, String attempt) {
         try {
-            myLog = new Log("LoginLog.txt");
+            myLog.createLog("LoginLog.txt");
             myLog.getLogger().setLevel(Level.ALL);
             myLog.getLogger().info("Bruger: \"" + username + "\" " + attempt);
         } catch (SecurityException ex) {
