@@ -15,7 +15,7 @@ public class UserInformation {
     String firstname;
     String middlename;
     String lastname;
-    int cpr;
+    long cpr;
     int phonenumber;
     String address;
     int postalcode;
@@ -23,7 +23,7 @@ public class UserInformation {
     String email;
     
     public UserInformation(int userid, String firstName, String middleName,
-            String lastName, int cpr, int phonenumber, String address, int postalCode, String city,
+            String lastName, long cpr, int phonenumber, String address, int postalCode, String city,
             String email) {
         this.userid = userid;
         this.firstname = firstName;
@@ -73,11 +73,11 @@ public class UserInformation {
         this.lastname = lastname;
     }
 
-    public int getCpr() {
+    public long getCpr() {
         return cpr;
     }
 
-    public void setCpr(int cpr) {
+    public void setCpr(long cpr) {
         this.cpr = cpr;
     }
 

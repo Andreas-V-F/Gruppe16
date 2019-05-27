@@ -16,12 +16,12 @@ public class CreateCitizenService {
     CreateCitizenRepository createCitizenRepository = new CreateCitizenRepository();
 
     public void createCA(String firstname, String middlename, String lastname,
-            int cpr, String address, int postalcode, String city, String email, int phonenumber,
+            long cpr, String address, int postalcode, String city, String email, int phonenumber,
             String department, String password, String usertype) {
         createCitizenRepository.createCitizenAccount(firstname, middlename, lastname, cpr, address, postalcode, city, email, phonenumber, department, password, usertype);
     }
 
-    public boolean cprCheck(int cpr) {
+    public boolean cprCheck(long cpr) {
         return createCitizenRepository.checkCprRepo(cpr);
     }
     

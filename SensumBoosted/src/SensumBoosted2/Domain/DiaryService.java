@@ -51,7 +51,7 @@ public class DiaryService {
         return diaries;
     }
     
-    public void medicineDiaryEntry(long diaryID, String medicine, String amount, int cpr){
+    public void medicineDiaryEntry(long diaryID, String medicine, String amount, long cpr){
         String output = new Date() + "\t" + medicine + "\t" + amount + "\n";
         if(dr.getMedicinEntryID(cpr, diaryID) == -1){
             dr.createDiaryEntry(diaryID, "Medicinudlevering for: " + cpr + "\n" + output, "Medicinansvarlig");

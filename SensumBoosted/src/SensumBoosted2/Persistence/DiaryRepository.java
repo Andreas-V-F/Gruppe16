@@ -180,7 +180,7 @@ public class DiaryRepository {
         return null;
     }
 
-    public long getMedicinEntryID(int cpr, long diaryID) {
+    public long getMedicinEntryID(long cpr, long diaryID) {
         try (Statement st = connection.getConnection().createStatement()) {
             String sql = "SELECT * FROM diary_entry WHERE diary_id = " + diaryID;
             rs = st.executeQuery(sql);

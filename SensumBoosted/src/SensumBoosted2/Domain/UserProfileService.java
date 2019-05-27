@@ -43,9 +43,9 @@ public class UserProfileService {
         return ui;
     }
     
-    public void saveCI(String firstname, String middlename, String lastname, int cpr, String address,
+    public void saveCI(String firstname, String middlename, String lastname, int phone, String address,
                 int postalcode, String city, String email, int selectedUserID) {
-        userProfileRepository.saveCitizenInformation(firstname, middlename, lastname, cpr, address, postalcode, city, email, selectedUserID);
+        userProfileRepository.saveCitizenInformation(firstname, middlename, lastname, phone, address, postalcode, city, email, selectedUserID);
     }
     
     public void deleteUser(int selectedUserID){
