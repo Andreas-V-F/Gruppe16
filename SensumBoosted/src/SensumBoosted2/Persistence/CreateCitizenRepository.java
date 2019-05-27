@@ -32,7 +32,7 @@ public class CreateCitizenRepository {
     }
 
     public void createCitizenInformation(int userId, String firstname, String middlename, String lastname,
-            int cpr, String address, int postalcode, String city, String email, int phonenumber,
+            long cpr, String address, int postalcode, String city, String email, int phonenumber,
             String department) {
         try {
             Statement st = connection.createStatement();
@@ -52,7 +52,7 @@ public class CreateCitizenRepository {
     }
 
     public void createCitizenAccount(String firstname, String middlename, String lastname,
-            int cpr, String address, int postalcode, String city, String email, int phonenumber,
+            long cpr, String address, int postalcode, String city, String email, int phonenumber,
             String department, String password, String usertype) {
         try {
             Statement st = connection.createStatement();
@@ -72,7 +72,7 @@ public class CreateCitizenRepository {
         }
     }
 
-    public boolean checkCprRepo(int cpr) {
+    public boolean checkCprRepo(long cpr) {
         boolean exists = true;
         try {
             Statement st = connection.createStatement();

@@ -86,15 +86,6 @@ public class FXMLUserProfileController implements Initializable {
     @FXML
     private RadioButton rbFirstname;
 
-    public String firstname;
-    public String middlename;
-    public String lastname;
-    public int cpr;
-    public String address;
-    public int postalcode;
-    public String city;
-    public String email;
-
     //Tableview FXML
     @FXML
     private TableView<?> userInformationTableView;
@@ -251,7 +242,7 @@ public class FXMLUserProfileController implements Initializable {
         editFirstnameField.setText(ui.getFirstname());
         editMiddlenameField.setText(ui.getMiddlename());
         editLastnameField.setText(ui.getLastname());
-        editPhoneField.setText(Integer.toString(ui.getCpr()));
+        editPhoneField.setText(Integer.toString(ui.getPhonenumber()));
         editAddressField.setText(ui.getAddress());
         editPostalCodeField.setText(Integer.toString(ui.getPostalcode()));
         editCityField.setText(ui.getCity());
@@ -308,6 +299,7 @@ public class FXMLUserProfileController implements Initializable {
                     editUserBtn.setVisible(true);
                     deleteUserBtn.setVisible(true);
                     createCitizenBtn.setVisible(true);
+                    createCitizenBtn.setDisable(false);
                     break;
                 case "Medicinansvarlig":
                     caseBtn.setVisible(false);
@@ -326,6 +318,7 @@ public class FXMLUserProfileController implements Initializable {
                     editUserBtn.setVisible(true);
                     deleteUserBtn.setVisible(true);
                     createCitizenBtn.setVisible(true);
+                    createCitizenBtn.setDisable(false);
                     break;
                 default:
                     caseBtn.setVisible(false);
@@ -372,12 +365,12 @@ public class FXMLUserProfileController implements Initializable {
     }
     
     private boolean cprChecker(String cprText) {
-        if (cprText.length() != 8) {
+        if (cprText.length() != 10) {
             return false;
         }
 
         try {
-            int cpr = Integer.parseInt(cprText);
+            long cpr = Long.parseLong(cprText);
         } catch (NumberFormatException e) {
             return false;
         }

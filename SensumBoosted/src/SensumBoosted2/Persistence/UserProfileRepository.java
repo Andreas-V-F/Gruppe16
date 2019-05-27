@@ -36,7 +36,7 @@ public class UserProfileRepository {
             rs = connection.createStatement().executeQuery("SELECT * FROM citizen_information ORDER BY lastname, firstname ASC");
             while (rs.next()) {
                 uiList.add(new UserInformation(rs.getInt("user_id"), rs.getString("firstname"), rs.getString("middlename"),
-                        rs.getString("lastname"), rs.getInt("user_cpr"), rs.getInt("phonenumber"), rs.getString("address"), rs.getInt("postal_code"),
+                        rs.getString("lastname"), rs.getLong("user_cpr"), rs.getInt("phonenumber"), rs.getString("address"), rs.getInt("postal_code"),
                         rs.getString("city"), rs.getString("email")));
             }
         } catch (SQLException ex) {
@@ -45,13 +45,13 @@ public class UserProfileRepository {
         return uiList;
     }
 
-    public List cprSearchCitizenInformation(int cpr) {
+    public List cprSearchCitizenInformation(long cpr) {
         List<UserInformation> uiList = new ArrayList<>();
         try {
             rs = connection.createStatement().executeQuery("SELECT * FROM citizen_information WHERE user_cpr = " + cpr);
             while (rs.next()) {
                 uiList.add(new UserInformation(rs.getInt("user_id"), rs.getString("firstname"), rs.getString("middlename"),
-                        rs.getString("lastname"), rs.getInt("user_cpr"), rs.getInt("phonenumber"), rs.getString("address"), rs.getInt("postal_code"),
+                        rs.getString("lastname"), rs.getLong("user_cpr"), rs.getInt("phonenumber"), rs.getString("address"), rs.getInt("postal_code"),
                         rs.getString("city"), rs.getString("email")));
             }
         } catch (SQLException ex) {
@@ -66,7 +66,7 @@ public class UserProfileRepository {
             rs = connection.createStatement().executeQuery("SELECT * FROM citizen_information WHERE firstname = '" + firstname + "'");
             while (rs.next()) {
                 uiList.add(new UserInformation(rs.getInt("user_id"), rs.getString("firstname"), rs.getString("middlename"),
-                        rs.getString("lastname"), rs.getInt("user_cpr"), rs.getInt("phonenumber"), rs.getString("address"), rs.getInt("postal_code"),
+                        rs.getString("lastname"), rs.getLong("user_cpr"), rs.getInt("phonenumber"), rs.getString("address"), rs.getInt("postal_code"),
                         rs.getString("city"), rs.getString("email")));
             }
         } catch (SQLException ex) {
@@ -75,13 +75,13 @@ public class UserProfileRepository {
         return uiList;
     }
 
-    public void saveCitizenInformation(String firstname, String middlename, String lastname, int cpr, String address,
+    public void saveCitizenInformation(String firstname, String middlename, String lastname, int phone, String address,
             int postalcode, String city, String email, int selectedUserID) {
         try {
             Statement st = connection.createStatement();
             String sql = "UPDATE citizen_information "
                     + "SET firstname = '" + firstname + "', middlename = '" + middlename + "',"
-                    + "lastname = '" + lastname + "', user_cpr = " + cpr + ","
+                    + "lastname = '" + lastname + "', phonenumber = " + phone + ","
                     + "address = '" + address + "', postal_code = " + postalcode + ","
                     + "city = '" + city + "', email = '" + email + "'"
                     + " WHERE user_id = " + selectedUserID;
@@ -184,7 +184,7 @@ public class UserProfileRepository {
             rs = connection.createStatement().executeQuery("SELECT * FROM citizen_information ORDER BY lastname, firstname ASC");
             while (rs.next()) {
                 UserInformation ui = new UserInformation(rs.getInt("user_id"), rs.getString("firstname"), rs.getString("middlename"),
-                        rs.getString("lastname"), rs.getInt("user_cpr"), rs.getInt("phonenumber"), rs.getString("address"), rs.getInt("postal_code"),
+                        rs.getString("lastname"), rs.getLong("user_cpr"), rs.getInt("phonenumber"), rs.getString("address"), rs.getInt("postal_code"),
                         rs.getString("city"), rs.getString("email"));
                 return ui;
             }

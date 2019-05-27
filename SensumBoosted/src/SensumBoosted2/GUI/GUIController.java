@@ -26,7 +26,7 @@ public class GUIController extends Application {
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("FXMLLogin.fxml"));
         Scene scene = new Scene(root);
-        stage.setTitle("Sensom Boosted");
+        stage.setTitle("Sensum Boosted");
         File file = new File("src/Pictures/EGpicture.jpg");
         stage.getIcons().add(new Image(file.toURI().toString()));
         stage.setScene(scene);

@@ -160,12 +160,12 @@ public class FXMLCreateCitizenController implements Initializable {
     }
 
     private boolean cprChecker() {
-        if (cprTextField.getText().length() != 8) {
+        if (cprTextField.getText().length() != 10) {
             return false;
         }
 
         try {
-            int cpr = Integer.parseInt(cprTextField.getText());
+            long cpr = Long.parseLong(cprTextField.getText());
         } catch (NumberFormatException e) {
             return false;
         }
