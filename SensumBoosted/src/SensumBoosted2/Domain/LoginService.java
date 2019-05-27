@@ -37,8 +37,7 @@ public class LoginService {
             } else{
                 staff = new Staff(loginUsername, new EmployeeRepository().getName(Integer.parseInt(staffinfo[1])) ,staffinfo[0], staffinfo[1], staffinfo[2]);
             }
-            StaffService staffService = new StaffService();
-            staffService.setStaff(staff);
+            StaffService.setStaff(staff);
             validatedLogin = true;
             return validatedLogin;
         }
