@@ -58,6 +58,8 @@ public class FXMLDiaryController implements Initializable {
     private TableView<DiaryEntry> DiaryEntryTableView;
     @FXML
     private Button newBTN;
+    @FXML
+    private Button backBtn;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -70,6 +72,10 @@ public class FXMLDiaryController implements Initializable {
             saveDiaryButton.setVisible(false);
             deleteDiaryBTN.setDisable(true);
             deleteDiaryBTN.setVisible(false);
+        }
+        if(staffService.getStaffType().equals("Borger")){
+            backBtn.setDisable(true);
+            backBtn.setVisible(false);
         }
 
     }

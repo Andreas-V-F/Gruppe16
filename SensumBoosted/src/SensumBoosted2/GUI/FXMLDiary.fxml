@@ -20,7 +20,7 @@
                   <Font size="24.0" />
                </font>
             </Text>
-            <Button layoutX="794.0" layoutY="645.0" mnemonicParsing="false" onAction="#backToCasePaneHandler" prefHeight="55.0" prefWidth="195.0" text="Tilbage" />
+            <Button fx:id="backBtn" layoutX="794.0" layoutY="645.0" mnemonicParsing="false" onAction="#backToCasePaneHandler" prefHeight="55.0" prefWidth="195.0" text="Tilbage" />
             <TableView fx:id="DiaryEntryTableView" layoutX="10.0" layoutY="138.0" onMouseClicked="#onMouseClicked" prefHeight="480.0" prefWidth="490.0">
                <columns>
                   <TableColumn fx:id="text" prefWidth="499.0" text="Dagbogs noter" />
