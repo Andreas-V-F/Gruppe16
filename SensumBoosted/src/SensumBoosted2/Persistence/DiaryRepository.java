@@ -27,7 +27,7 @@ public class DiaryRepository {
             st.close();
             createDiaryEntry(id, "Ny note", "Sagsarbejder");
         } catch (SQLException ex) {
-            Logger.getLogger(SensumBoosted2.Persistence.DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SensumBoosted2.Persistence.DiaryRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -44,7 +44,7 @@ public class DiaryRepository {
             st.execute(sql);
             st.close();
         } catch (SQLException ex) {
-            Logger.getLogger(SensumBoosted2.Persistence.DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SensumBoosted2.Persistence.DiaryRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -75,7 +75,7 @@ public class DiaryRepository {
             }
             return id;
         } catch (SQLException ex) {
-            Logger.getLogger(SensumBoosted2.Persistence.DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SensumBoosted2.Persistence.DiaryRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
         return id;
     }
@@ -91,7 +91,7 @@ public class DiaryRepository {
 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(SensumBoosted2.Persistence.DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SensumBoosted2.Persistence.DiaryRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
         return id;
     }
@@ -107,7 +107,7 @@ public class DiaryRepository {
 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(SensumBoosted2.Persistence.DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SensumBoosted2.Persistence.DiaryRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
         return id;
     }
@@ -125,7 +125,7 @@ public class DiaryRepository {
                 }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(SensumBoosted2.Persistence.DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SensumBoosted2.Persistence.DiaryRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
         return entries;
     }
@@ -141,7 +141,7 @@ public class DiaryRepository {
 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(SensumBoosted2.Persistence.DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SensumBoosted2.Persistence.DiaryRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
         return cnt;
     }
@@ -155,7 +155,7 @@ public class DiaryRepository {
             st.execute(sql);
 
         } catch (SQLException ex) {
-            Logger.getLogger(SensumBoosted2.Persistence.DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SensumBoosted2.Persistence.DiaryRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -191,7 +191,7 @@ public class DiaryRepository {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(SensumBoosted2.Persistence.DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SensumBoosted2.Persistence.DiaryRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
         return -1;
     }
@@ -205,7 +205,7 @@ public class DiaryRepository {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(SensumBoosted2.Persistence.DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SensumBoosted2.Persistence.DiaryRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
@@ -219,7 +219,7 @@ public class DiaryRepository {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(SensumBoosted2.Persistence.DatabaseController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SensumBoosted2.Persistence.DiaryRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
