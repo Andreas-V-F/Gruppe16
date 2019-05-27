@@ -45,7 +45,8 @@ public class CreateEmployeeRepository {
         } 
     }
 
-    public void createEmployeeAccount(String firstname, String middlename, String lastname, String email, String usertype, String department, String username, String password) {
+    public void createEmployeeAccount(String firstname, String middlename, String lastname, 
+            String email, String usertype, String department, String username, String password) {
         try {
             Statement st = connection.createStatement();
             String sql = "INSERT INTO users "
