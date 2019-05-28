@@ -100,7 +100,6 @@ public class FXMLCreateCitizenController implements Initializable {
             passwordTextField, repeatPWTextField};
 
         for (TextField text : textFields) {
-            System.out.println(text.getText());
             if (text.getText().isEmpty() && text != middlenameTextField) {
                 checkLabel.setText("Udfyld venligst felter markerede med *");
                 checkLabel.setDisable(false);

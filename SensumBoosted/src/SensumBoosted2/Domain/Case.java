@@ -76,7 +76,6 @@ public class Case {
     }
     
     public long getCaseID(){
-        System.out.println("returned" + caseID);
         return caseID;
     }
     

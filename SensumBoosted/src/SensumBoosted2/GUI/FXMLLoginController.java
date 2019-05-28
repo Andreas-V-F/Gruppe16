@@ -110,7 +110,7 @@ public class FXMLLoginController implements Initializable {
         if (!usernameField.getText().isEmpty() && !passwordField.getText().isEmpty()) {
             createLoginUser();
             boolean b = loginService.validateLogin();
-            System.out.println(b);
+            
             if (b) {
                 loadAnotherFXML(event);
             } else {

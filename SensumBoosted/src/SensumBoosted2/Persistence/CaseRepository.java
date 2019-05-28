@@ -40,12 +40,12 @@ public class CaseRepository {
             String sql = "INSERT INTO sager (case_id,user_id,isopen,inquiry_text,edit_date,inquirer,assessment,taskpurpose,taskgoal) VALUES ('" + caseId + "','" + userID + "','true','" + inquiryText + "','" + new Date() + "','" + inquirer + "','" + assessmentText + "','" + taskPurpose + "','" + taskGoal + "');";
             st.executeUpdate(sql);
             st.close();
-            System.out.println("calling method");
+            
             diaryRepository.createDiary(caseId, userID);
-            System.out.println("called method");
+            
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
-            System.out.println("YEEET");
+            
         } 
 
     }

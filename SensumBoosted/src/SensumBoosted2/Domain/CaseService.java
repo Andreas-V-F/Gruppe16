@@ -104,7 +104,6 @@ public class CaseService {
 
     public static void setSelectedCaseID(Object o) {
         Case case1 = (Case) o;
-        System.out.println("WORKS");
         CaseService.selectedCaseID = case1.getCaseID();
     }
 

@@ -36,9 +36,9 @@ public class CreateEmployeeRepository {
                     + "email, user_type)"
                     + " VALUES ('" + userId + "','" + firstname + " " + middlename + " " + lastname
                     + "','" + email + "','" + usertype + "')";
-            System.out.println("sdas?asdads?");
+            
             st.executeUpdate(sql);
-            System.out.println("sdas??");
+            
             st.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -57,7 +57,7 @@ public class CreateEmployeeRepository {
             sql = "SELECT user_id FROM users WHERE username='" + username + "';";
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
-                System.out.println("HALLO??");
+                
                 createEmployeeInformation(rs.getInt("user_id"), firstname, middlename, lastname, email, usertype);
             }
         } catch (SQLException ex) {

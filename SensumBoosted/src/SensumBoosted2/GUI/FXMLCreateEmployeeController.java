@@ -86,7 +86,6 @@ public class FXMLCreateEmployeeController implements Initializable {
     private void okBtnHandler(ActionEvent event) {
         TextField[] textFields = {firstnameTextField, middlenameTextField, lastnameTextField, emailTextField, usernameTextField, passwordTextField, repeatPWTextField};
         for (TextField text : textFields) {
-            System.out.println(text.getText());
             if (text.getText().isEmpty() && text != middlenameTextField) {
                 checkLabel.setText("Udfyld venligst felter markerede med *");
                 checkLabel.setDisable(false);

@@ -21,13 +21,11 @@ public class StaffService {
 
     public static void setStaff(Staff staff) {
         StaffService.staff = staff;
-        System.out.println(staff.getUsertype());
     }
 
     public static void setUserInfo(Object o) {
         try {
             StaffService.userInfo = (UserInformation) o;
-            System.out.println(userInfo.getUserid());
         } catch (Exception e) {
         }
     }
@@ -35,7 +33,6 @@ public class StaffService {
     public int getUserID() {
         return userInfo.getUserid();
     }
-    
 
     public String getStaffType() {
         return staff.getUsertype();
@@ -44,8 +41,8 @@ public class StaffService {
     public String getStaffUsername() {
         return staff.getUsername();
     }
-    
-    public String getStaffName(){
+
+    public String getStaffName() {
         return staff.getName();
     }
 
@@ -56,16 +53,16 @@ public class StaffService {
     public void clearStaff() {
         StaffService.staff = null;
     }
-    
+
     public void clearUserInfo() {
         StaffService.userInfo = null;
     }
-    
-    public UserInformation getUserInfo(){
+
+    public UserInformation getUserInfo() {
         return userInfo;
     }
-    
-    public String getStaffUserID(){
+
+    public String getStaffUserID() {
         return staff.getUserID();
     }
 

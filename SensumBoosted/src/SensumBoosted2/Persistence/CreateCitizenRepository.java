@@ -47,7 +47,7 @@ public class CreateCitizenRepository {
             caseRepository.createCase(userId, "", "", "", "", "");
         } catch (SQLException ex) {
             Logger.getLogger(UserProfileRepository.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("yoot");
+            
         } 
     }
 
@@ -68,7 +68,7 @@ public class CreateCitizenRepository {
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserProfileRepository.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("test");
+            
         }
     }
 

@@ -90,8 +90,8 @@ public class FXMLMainMenuController implements Initializable {
             Pane pane = FXMLLoader.load(getClass().getResource(FXMLDocument));
             switchingPane.getChildren().setAll(pane);
         } catch (IOException ex) {
-            System.out.println("Fejl med at indlæse " + FXMLDocument);
-            Logger.getLogger(FXMLLoginController.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
+
         }
     }
 
@@ -101,8 +101,7 @@ public class FXMLMainMenuController implements Initializable {
             setLoginWindowSize(event);
             mainMenuPane.getChildren().setAll(pane);
         } catch (IOException ex) {
-            System.out.println("Fejl med at indlæse " + FXMLDocument);
-            Logger.getLogger(FXMLLoginController.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
         }
     }
 
