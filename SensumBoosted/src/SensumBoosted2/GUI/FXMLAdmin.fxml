@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SensumBoosted2.GUI.FXMLAdminController">
+   <children>
+      <Pane prefHeight="700.0" prefWidth="1000.0">
+         <children>
+            <Button layoutX="211.0" layoutY="91.0" mnemonicParsing="false" onAction="#createEmployeeBTN" prefHeight="60.0" prefWidth="180.0" text="Opret medarbejder" />
+            <Button fx:id="seeLogLoginBTN" accessibleRole="TOGGLE_BUTTON" layoutX="24.0" layoutY="91.0" mnemonicParsing="false" onAction="#seeLogLoginBTNHandler" prefHeight="60.0" prefWidth="180.0" text="Se log for Log ind" />
+            <TextArea fx:id="logTextArea" layoutX="24.0" layoutY="158.0" prefHeight="532.0" prefWidth="949.0" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
