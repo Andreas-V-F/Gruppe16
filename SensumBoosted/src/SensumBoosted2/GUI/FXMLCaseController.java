@@ -62,8 +62,7 @@ public class FXMLCaseController implements Initializable {
     private TextArea taskPurpose;
     @FXML
     private TextArea taskGoal;
-    @FXML
-    private ImageView imgView;
+    
     @FXML
     private RadioButton radioButtonCitizen;
     @FXML
@@ -97,9 +96,7 @@ public class FXMLCaseController implements Initializable {
         caseService = new CaseService();
         clear();
         update(boo);
-        File file = new File("src/Pictures/123.png");
-        Image image = new Image(file.toURI().toString());
-        imgView.setImage(image);
+        
     }
 
     @FXML

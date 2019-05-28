@@ -57,7 +57,6 @@ public class CreateEmployeeRepository {
             sql = "SELECT user_id FROM users WHERE username='" + username + "';";
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
-                
                 createEmployeeInformation(rs.getInt("user_id"), firstname, middlename, lastname, email, usertype);
             }
         } catch (SQLException ex) {
